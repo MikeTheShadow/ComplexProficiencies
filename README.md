@@ -9,3 +9,8 @@ A list of proficiencies currently added include:
 -Leatherworking
 -Mining
 ```
+Features include:
+```
+-Level gating
+-Bonus stats/drops
+```
