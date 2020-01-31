@@ -1,0 +1,6 @@
+name: ComplexProficiencies
+version: 1.0
+main: com.miketheshadow.complexproficiencies.ComplexProficiencies
+api-version: 1.13
+authors: [MikeTheShadow]
+description: Creates complex proficiencies For MC.
