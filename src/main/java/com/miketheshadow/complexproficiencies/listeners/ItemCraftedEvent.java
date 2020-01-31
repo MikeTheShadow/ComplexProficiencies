@@ -11,10 +11,8 @@ public class ItemCraftedEvent implements Listener
     @EventHandler
     public void onItemCraftedEvent(CraftItemEvent event)
     {
-        //Bukkit.broadcastMessage((event.getRecipe().getResult().getType().toString()));
         event.setCancelled(true);
         event.getWhoClicked().sendMessage("You aren't high enough level to craft this!");
     }
-
 
 }

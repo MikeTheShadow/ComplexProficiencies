@@ -4,3 +4,14 @@ main: com.miketheshadow.complexproficiencies.ComplexProficiencies
 api-version: 1.13
 authors: [MikeTheShadow]
 description: Creates complex proficiencies For MC.
+commands:
+  weaponsmithinggui:
+    description: Displays the weaponsmithing gui
+    usage: /<weaponsmithinggui>
+    permission: ComplexProficiencies.gui
+    permission-message: You don't have ComplexProficiencies.gui permission
+  getitemtype:
+    description: Gets the type as a string of an item
+    usage: /<getitemtype>
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
