@@ -1,7 +1,7 @@
 package com.miketheshadow.complexproficiencies;
 
 
-import com.miketheshadow.complexproficiencies.crafting.WeaponsmithingGUI;
+import com.miketheshadow.complexproficiencies.crafting.GenericGUI;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomItem;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
@@ -9,11 +9,9 @@ import com.miketheshadow.complexproficiencies.listeners.CustomCommandEvent;
 import com.miketheshadow.complexproficiencies.listeners.InventoryClickedEvent;
 import com.miketheshadow.complexproficiencies.listeners.ItemCraftedEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.rmi.server.UID;
 import java.util.*;
 
 //TODO make it so that the person who has eaten the most carrots gets nightvision
@@ -29,7 +27,7 @@ public class ComplexProficiencies extends JavaPlugin
         itemList.add(new CustomItem(1,"METALLURGY_KALENDRITE_INGOT",""));
         itemList.add(new CustomItem(4,"STICK",""));
         CustomRecipe recipe = new CustomRecipe(itemList,new CustomItem(1,"METALLURGY_BRONZE_SWORD","Bronze Sword"));
-        WeaponsmithingGUI.recipes.add(recipe);
+        GenericGUI.recipes.add(recipe);
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(new ItemCraftedEvent(), this);

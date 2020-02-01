@@ -1,11 +1,11 @@
 package com.miketheshadow.complexproficiencies.crafting.recipe;
 
+import com.miketheshadow.complexproficiencies.crafting.GenericGUI;
 import com.miketheshadow.complexproficiencies.utils.Util;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 
 public class Crafter
 {
@@ -15,10 +15,13 @@ public class Crafter
     public CustomRecipe recipe = null;
     public Player player;
     public boolean transfer = false;
-    public Crafter(Player player)
+    public GenericGUI currentGUI;
+    public Crafter(Player player, GenericGUI currentGUI)
     {
         this.player = player;
+        this.currentGUI = currentGUI;
     }
+
     public boolean canCraft()
     {
         if(itemToCraft != null && itemType != null && recipe != null)
