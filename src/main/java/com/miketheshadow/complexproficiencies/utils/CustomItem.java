@@ -1,6 +1,8 @@
 package com.miketheshadow.complexproficiencies.utils;
 
+import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
@@ -34,5 +36,10 @@ public class CustomItem implements Serializable
         }
         return stack;
     }
+    public static CustomItem toCustom(ItemStack stack)
+    {
+        return new CustomItem(1,stack.getType().toString(),stack.getItemMeta().getDisplayName());
+    }
+
 
 }

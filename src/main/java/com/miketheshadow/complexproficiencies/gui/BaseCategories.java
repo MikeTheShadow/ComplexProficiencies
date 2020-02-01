@@ -10,6 +10,7 @@ import java.util.List;
 
 public class BaseCategories
 {
+
     public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD","SWORDS");
     public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER","GREATSWORDS");
     public static final ItemStack RAPIER = register("TCONSTRUCT_RAPIER","RAPIERS");
@@ -18,9 +19,7 @@ public class BaseCategories
     public static final ItemStack HAMMER = register("TCONSTRUCT_HAMMER","HAMMERS");
     public static final ItemStack SPEAR = register("TCONSTRUCT_ARROW_HEAD","SPEARS");
 
-
-
-    public static List<ItemStack> getWeaponsmithing()
+    public static List<ItemStack> weaponsmithingItems()
     {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(SWORD);

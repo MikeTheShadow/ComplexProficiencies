@@ -9,16 +9,19 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class GenericGUI
 {
     public List<ItemStack> categoryList;
-    public List<CustomRecipe> recipes = new ArrayList<>();
-    public GenericGUI(Player player, List<ItemStack> buildItems,String title)
+    public HashMap<String,List<CustomRecipe>> recipes;
+    public GenericGUI(Player player, List<ItemStack> buildItems, HashMap<String, List<CustomRecipe>> recipes, String title)
     {
+        this.recipes = recipes;
         categoryList = buildItems;
         //generate the options
         Inventory inventory = Bukkit.createInventory(player, 18, title);
@@ -30,13 +33,17 @@ public class GenericGUI
         ComplexProficiencies.crafters.put(player.getUniqueId(),new Crafter(player,this));
     }
 
-    public static void craftingList(Player player, ItemStack itemStack)
+    public void craftingList(Player player, String itemName)
     {
-        Inventory inventory = Bukkit.createInventory(player, 54, itemStack.getItemMeta().getDisplayName());
+        Inventory inventory = Bukkit.createInventory(player, 54, itemName);
+        for (CustomRecipe recipe: recipes.get(itemName))
+        {
+            inventory.addItem(recipe.getItemToBeCrafted().toItem());
+        }
         player.openInventory(inventory);
     }
 
-    public static void craftingInventory(Player player,CustomRecipe recipe)
+    public void craftingInventory(Player player,CustomRecipe recipe)
     {
         ItemStack stack = new ItemStack(Material.valueOf(recipe.getItemToBeCrafted().getTypeName()));
         Crafter crafter = ComplexProficiencies.crafters.get(player.getUniqueId());
@@ -51,7 +58,7 @@ public class GenericGUI
             i++;
         }
     }
-    public static boolean craftItem(Player player, CustomRecipe recipe)
+    public boolean craftItem(Player player, CustomRecipe recipe)
     {
         for (CustomItem item:recipe.getRequiredItems())
         {

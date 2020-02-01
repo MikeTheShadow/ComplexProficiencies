@@ -1,13 +1,10 @@
 package com.miketheshadow.complexproficiencies;
 
 
-import com.miketheshadow.complexproficiencies.gui.GenericGUI;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
-import com.miketheshadow.complexproficiencies.utils.CustomItem;
-import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
-import com.miketheshadow.complexproficiencies.listeners.CustomCommandEvent;
-import com.miketheshadow.complexproficiencies.listeners.InventoryClickedEvent;
-import com.miketheshadow.complexproficiencies.listeners.ItemCraftedEvent;
+import com.miketheshadow.complexproficiencies.listener.CustomCommandEvent;
+import com.miketheshadow.complexproficiencies.listener.InventoryClickedEvent;
+import com.miketheshadow.complexproficiencies.listener.ItemCraftedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,12 +19,6 @@ public class ComplexProficiencies extends JavaPlugin
     @Override
     public void onEnable()
     {
-        List<CustomItem> itemList = new ArrayList<>();
-        itemList.add(new CustomItem(16,"METALLURGY_BRONZE_INGOT",""));
-        itemList.add(new CustomItem(1,"METALLURGY_KALENDRITE_INGOT",""));
-        itemList.add(new CustomItem(4,"STICK",""));
-        CustomRecipe recipe = new CustomRecipe(itemList,new CustomItem(1,"METALLURGY_BRONZE_SWORD","Bronze Sword"));
-        //GenericGUI.recipes.add(recipe);
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(new ItemCraftedEvent(), this);

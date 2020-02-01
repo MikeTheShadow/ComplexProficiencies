@@ -1,6 +1,7 @@
-package com.miketheshadow.complexproficiencies.listeners;
+package com.miketheshadow.complexproficiencies.listener;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
 import org.bukkit.command.Command;
@@ -23,7 +24,13 @@ public class CustomCommandEvent implements CommandExecutor
         if (cmd.getName().equalsIgnoreCase("weaponsmithinggui"))
         {
             if(!(sender instanceof Player)) return false;
-            GenericGUI genericGUI = new GenericGUI((Player)sender, BaseCategories.getWeaponsmithing(),"Weaponsmithing");
+            GenericGUI genericGUI = new GenericGUI((Player)sender, BaseCategories.weaponsmithingItems(), Recipes.fakeRecipe(),"Weaponsmithing");
+            return true;
+        }
+        if (cmd.getName().equalsIgnoreCase("addrecipe"))
+        {
+            if(!(sender instanceof Player)) return false;
+            GenericGUI genericGUI = new GenericGUI((Player)sender, BaseCategories.weaponsmithingItems(), Recipes.fakeRecipe(),"Weaponsmithing");
             return true;
         }
         if (cmd.getName().equalsIgnoreCase("getitemtype"))

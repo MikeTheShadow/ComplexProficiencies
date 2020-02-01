@@ -1,6 +1,5 @@
-package com.miketheshadow.complexproficiencies.listeners;
+package com.miketheshadow.complexproficiencies.listener;
 
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.CraftItemEvent;
