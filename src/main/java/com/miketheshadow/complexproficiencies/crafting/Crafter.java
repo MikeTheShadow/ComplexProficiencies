@@ -1,7 +1,8 @@
-package com.miketheshadow.complexproficiencies.crafting.recipe;
+package com.miketheshadow.complexproficiencies.crafting;
 
-import com.miketheshadow.complexproficiencies.crafting.GenericGUI;
-import com.miketheshadow.complexproficiencies.utils.Util;
+import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -11,7 +12,6 @@ public class Crafter
 {
     public ItemStack itemToCraft = null;
     public ItemStack itemType = null;
-    public Util.CustomInventoryType inventoryType = null;
     public CustomRecipe recipe = null;
     public Player player;
     public boolean transfer = false;

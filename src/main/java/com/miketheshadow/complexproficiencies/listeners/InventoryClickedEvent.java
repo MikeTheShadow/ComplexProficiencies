@@ -1,8 +1,8 @@
 package com.miketheshadow.complexproficiencies.listeners;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
-import com.miketheshadow.complexproficiencies.crafting.GenericGUI;
-import com.miketheshadow.complexproficiencies.crafting.recipe.Crafter;
+import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

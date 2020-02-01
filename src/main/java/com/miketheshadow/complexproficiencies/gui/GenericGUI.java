@@ -1,8 +1,8 @@
-package com.miketheshadow.complexproficiencies.crafting;
+package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
-import com.miketheshadow.complexproficiencies.crafting.recipe.Crafter;
-import com.miketheshadow.complexproficiencies.crafting.recipe.CustomItem;
+import com.miketheshadow.complexproficiencies.crafting.Crafter;
+import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,13 +15,13 @@ import java.util.List;
 
 public class GenericGUI
 {
-    public static List<ItemStack> categoryList;
-    public static List<CustomRecipe> recipes = new ArrayList<>();
-    public GenericGUI(Player player, List<ItemStack> buildItems)
+    public List<ItemStack> categoryList;
+    public List<CustomRecipe> recipes = new ArrayList<>();
+    public GenericGUI(Player player, List<ItemStack> buildItems,String title)
     {
         categoryList = buildItems;
         //generate the options
-        Inventory inventory = Bukkit.createInventory(player, 18, "Weaponsmithing");
+        Inventory inventory = Bukkit.createInventory(player, 18, title);
         for (int i = 0; i < categoryList.size() - 1; i++)
         {
             inventory.setItem(i, categoryList.get(i));

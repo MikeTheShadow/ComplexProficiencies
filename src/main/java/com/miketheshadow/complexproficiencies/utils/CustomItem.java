@@ -1,4 +1,4 @@
-package com.miketheshadow.complexproficiencies.crafting.recipe;
+package com.miketheshadow.complexproficiencies.utils;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -7,9 +7,9 @@ import java.io.Serializable;
 
 public class CustomItem implements Serializable
 {
-    int amount;
-    String typeName;
-    String name;
+    public int amount;
+    public String typeName;
+    public String name;
 
     public CustomItem(int amount, String typeName, String name)
     {

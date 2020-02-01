@@ -1,4 +1,4 @@
-package com.miketheshadow.complexproficiencies.utils;
+package com.miketheshadow.complexproficiencies.gui;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -8,7 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUIBaseItems
+public class BaseCategories
 {
     public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD","SWORDS");
     public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER","GREATSWORDS");
@@ -17,6 +17,21 @@ public class GUIBaseItems
     public static final ItemStack AXE = register("TCONSTRUCT_HATCHET","AXES");
     public static final ItemStack HAMMER = register("TCONSTRUCT_HAMMER","HAMMERS");
     public static final ItemStack SPEAR = register("TCONSTRUCT_ARROW_HEAD","SPEARS");
+
+
+
+    public static List<ItemStack> getWeaponsmithing()
+    {
+        List<ItemStack> itemStack = new ArrayList<>();
+        itemStack.add(SWORD);
+        itemStack.add(GREATSWORD);
+        itemStack.add(RAPIER);
+        itemStack.add(DAGGER);
+        itemStack.add(AXE);
+        itemStack.add(HAMMER);
+        itemStack.add(SPEAR);
+        return itemStack;
+    }
 
     public static ItemStack register(String itemStack,String name)
     {
@@ -29,19 +44,4 @@ public class GUIBaseItems
         item.setItemMeta(meta);
         return item;
     }
-
-    public static void getWeaponsmithing()
-    {
-        List<ItemStack> itemStack = new ArrayList<>();
-        itemStack.add(SWORD);
-        itemStack.add(GREATSWORD);
-        itemStack.add(RAPIER);
-        itemStack.add(DAGGER);
-        itemStack.add(AXE);
-        itemStack.add(HAMMER);
-        itemStack.add(SPEAR);
-
-
-    }
-
 }
