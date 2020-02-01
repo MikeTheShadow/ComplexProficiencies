@@ -49,7 +49,7 @@ public class WeaponsmithingGUI
         inventory.setItem(5,HAMMER);
         inventory.setItem(6,SPEAR);
         player.openInventory(inventory);
-        ComplexProficiencies.players.add(new Crafter(player));
+        ComplexProficiencies.crafters.put(player.getUniqueId(),new Crafter(player));
     }
     public static ItemStack register(String itemStack,String name)
     {
@@ -84,7 +84,7 @@ public class WeaponsmithingGUI
     public static void craftingInventory(Player player,CustomRecipe recipe)
     {
         ItemStack stack = new ItemStack(Material.valueOf(recipe.getItemToBeCrafted().getTypeName()));
-        Crafter crafter = ComplexProficiencies.getCrafter(player);
+        Crafter crafter = ComplexProficiencies.crafters.get(player.getUniqueId());
         if(crafter == null)return;
         Inventory inventory = Bukkit.createInventory(player, 54, recipe.getItemToBeCrafted().getName());
         player.openInventory(inventory);
@@ -100,7 +100,7 @@ public class WeaponsmithingGUI
     {
         for (CustomItem item:recipe.getRequiredItems())
         {
-            player.getInventory().remove(new ItemStack(Material.valueOf(item.getTypeName()),item.getAmount()));
+            player.getInventory().removeItem(new ItemStack(Material.valueOf(item.getTypeName()),item.getAmount()));
         }
         player.getInventory().addItem(recipe.getItemToBeCrafted().toItem());
         return true;

@@ -26,38 +26,31 @@ public class InventoryClickedEvent implements Listener
 
     public boolean weaponSmithing(InventoryClickEvent event)
     {
-        if(!event.getClick().isLeftClick())return false;
-        if(event.getCursor() == null)return false;
-
-        for (Crafter crafter: ComplexProficiencies.players)
+        if(!event.getClick().isLeftClick() || event.getCursor() == null)return false;
+        Crafter crafter = ComplexProficiencies.crafters.get(event.getWhoClicked().getUniqueId());
+        if(crafter == null)return false;
+        if(event.getClickedInventory().getType().equals(InventoryType.PLAYER))return true;
+        ItemStack itemClicked = event.getInventory().getItem(event.getSlot());
+        if(itemClicked == null)return false;
+        CustomRecipe recipe = WeaponsmithingGUI.recipes.get(0);
+        if(crafter.itemType == null)
         {
-            if(crafter.player == event.getWhoClicked())
-            {
-                if(event.getClickedInventory().getType().equals(InventoryType.PLAYER))return true;
-                ItemStack itemStack = event.getInventory().getItem(event.getSlot());
-                if(itemStack == null)return false;
-                CustomRecipe recipe = WeaponsmithingGUI.recipes.get(0);
-                if(crafter.itemType == null)
-                {
-                    crafter.transfer = true;
-                    WeaponsmithingGUI.subWeaponInventory((Player)event.getWhoClicked(),itemStack);
-                    crafter.itemType = itemStack;
-                }
-                else if(crafter.itemToCraft == null)
-                {
-                    crafter.transfer = true;
-                    WeaponsmithingGUI.craftingInventory((Player)event.getWhoClicked(),recipe);
-                    crafter.itemToCraft = itemStack;
-                    crafter.recipe = recipe;
-                }
-                else if(crafter.canCraft())
-                {
-                    WeaponsmithingGUI.craftItem((Player)event.getWhoClicked(),recipe);
-                }
-                return true;
-            }
+            crafter.transfer = true;
+            WeaponsmithingGUI.subWeaponInventory((Player)event.getWhoClicked(),itemClicked);
+            crafter.itemType = itemClicked;
         }
-        return false;
+        else if(crafter.itemToCraft == null)
+        {
+            crafter.transfer = true;
+            WeaponsmithingGUI.craftingInventory((Player)event.getWhoClicked(),recipe);
+            crafter.itemToCraft = itemClicked;
+            crafter.recipe = recipe;
+        }
+        else if(itemClicked.equals(crafter.recipe.getItemToBeCrafted().toItem()))
+        {
+            if(crafter.canCraft()) WeaponsmithingGUI.craftItem((Player)event.getWhoClicked(),recipe);
+        }
+        return true;
     }
 
 
@@ -65,21 +58,16 @@ public class InventoryClickedEvent implements Listener
     @EventHandler
     public void inventoryClosedEvent(InventoryCloseEvent event)
     {
-
-        for (Crafter c: ComplexProficiencies.players)
-        {
-            if(c.player == event.getPlayer())
-            {
-                if(c.transfer) { c.transfer = false; }
-                else { ComplexProficiencies.players.removeIf(crafter -> (event.getPlayer() == crafter.player)); }
-                return;
-            }
-        }
+        Crafter crafter = ComplexProficiencies.crafters.get(event.getPlayer().getUniqueId());
+        if(crafter == null)return;
+        if(crafter.transfer) { crafter.transfer = false; }
+        else { ComplexProficiencies.crafters.remove(event.getPlayer().getUniqueId()); }
     }
     @EventHandler
     public void playerLeaveEvent(PlayerQuitEvent event)
     {
-        ComplexProficiencies.players.removeIf(crafter -> event.getPlayer() == crafter.player);
+        Crafter crafter = ComplexProficiencies.crafters.get(event.getPlayer().getUniqueId());
+        if(crafter != null)ComplexProficiencies.crafters.remove(event.getPlayer().getUniqueId());
     }
 
 

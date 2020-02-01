@@ -10,18 +10,17 @@ import com.miketheshadow.complexproficiencies.listeners.InventoryClickedEvent;
 import com.miketheshadow.complexproficiencies.listeners.ItemCraftedEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.rmi.server.UID;
+import java.util.*;
 
 //TODO make it so that the person who has eaten the most carrots gets nightvision
 
 public class ComplexProficiencies extends JavaPlugin
 {
-    public static List<Crafter> players = new ArrayList<>();
+    public static Map<UUID,Crafter> crafters = new HashMap<>();
     @Override
     public void onEnable()
     {
@@ -44,13 +43,13 @@ public class ComplexProficiencies extends JavaPlugin
     {
 
     }
-    public static Crafter getCrafter(Player player)
+    public static Crafter getCrafter(UUID uuid)
     {
-        for (Crafter crafter: players)
+        if(crafters.get(uuid) == null)
         {
-            if(crafter.player == player) return crafter;
+            return null;
         }
-        return null;
+        return crafters.get(uuid);
     }
 
 }
