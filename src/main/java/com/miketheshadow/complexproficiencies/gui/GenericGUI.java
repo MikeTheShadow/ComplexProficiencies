@@ -7,6 +7,7 @@ import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,7 @@ import java.util.List;
 public class GenericGUI
 {
     public List<ItemStack> categoryList;
-    public GenericGUI(Player player, List<ItemStack> buildItems, String title,int size)
+    public GenericGUI(Player player, List<ItemStack> buildItems, String title,int size,boolean isfalse)
     {
         categoryList = buildItems;
         //generate the options
@@ -25,7 +26,9 @@ public class GenericGUI
             inventory.setItem(i, categoryList.get(i));
         }
         player.openInventory(inventory);
-        ComplexProficiencies.crafters.put(player.getUniqueId(),new Crafter(player,this));
+        Crafter crafter = new Crafter(player,this);
+        crafter.crafting = isfalse;
+        ComplexProficiencies.crafters.put(player.getUniqueId(),crafter);
     }
 
     public void craftingList(Player player, String itemName)
@@ -65,6 +68,13 @@ public class GenericGUI
             player.getInventory().removeItem(new ItemStack(Material.valueOf(item.getTypeName()),item.getAmount()));
         }
         player.getInventory().addItem(recipe.getItemToBeCrafted().toItem());
+    }
+
+    public void itemBuilder(Player player,String guiName)
+    {
+        Inventory inventory = Bukkit.createInventory(player, 54, guiName);
+        inventory.setItem(53,new ItemStack(Material.GREEN_SHULKER_BOX));
+        player.openInventory(inventory);
     }
 
 }

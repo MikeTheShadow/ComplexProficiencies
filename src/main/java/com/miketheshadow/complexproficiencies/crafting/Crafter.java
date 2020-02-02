@@ -19,6 +19,7 @@ public class Crafter
     public Player player;
     public boolean transfer = false;
     public GenericGUI currentGUI;
+    public boolean crafting = false;
     public Crafter(Player player, GenericGUI currentGUI)
     {
         this.player = player;

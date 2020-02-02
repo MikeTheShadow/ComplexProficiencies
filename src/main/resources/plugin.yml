@@ -15,3 +15,8 @@ commands:
     usage: /<getitemtype>
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
+  addrecipe:
+    description: add a recipe to the plugin
+    usage: /<addrecipe>
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission

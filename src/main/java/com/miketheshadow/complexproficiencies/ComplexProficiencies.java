@@ -35,6 +35,7 @@ public class ComplexProficiencies extends JavaPlugin
         //register commands
         this.getCommand("weaponsmithinggui").setExecutor(new CustomCommandEvent(this));
         this.getCommand("getitemtype").setExecutor(new CustomCommandEvent(this));
+        this.getCommand("addrecipe").setExecutor(new CustomCommandEvent(this));
     }
     @Override
     public void onDisable()

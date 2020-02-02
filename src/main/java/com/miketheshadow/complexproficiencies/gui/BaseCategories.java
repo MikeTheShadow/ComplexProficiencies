@@ -34,6 +34,11 @@ public class BaseCategories
         itemStack.add(SPEAR);
         return itemStack;
     }
+    public static List<ItemStack> getAllItems()
+    {
+        List<ItemStack> allItems = new ArrayList<>(weaponsmithingItems());
+        return allItems;
+    }
 
     public static ItemStack register(String itemStack,String name)
     {
@@ -47,7 +52,6 @@ public class BaseCategories
 
         List<CustomRecipe> crep = new ArrayList<>();
         Recipes.recipes.put( meta.getDisplayName(),crep);
-        List<CustomRecipe> recipe =Recipes.recipes.get(meta.getDisplayName());
         return item;
     }
 }
