@@ -2,10 +2,16 @@ package com.miketheshadow.complexproficiencies;
 
 
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
+import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandEvent;
 import com.miketheshadow.complexproficiencies.listener.InventoryClickedEvent;
 import com.miketheshadow.complexproficiencies.listener.ItemCraftedEvent;
+import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +25,9 @@ public class ComplexProficiencies extends JavaPlugin
     @Override
     public void onEnable()
     {
+        //TODO remove this. Just used to register the items;
+        List<ItemStack> stacks = BaseCategories.weaponsmithingItems();
+        Recipes.register(BaseCategories.SWORD.getItemMeta().getDisplayName(),Recipes.fakeRecipe());
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(new ItemCraftedEvent(), this);

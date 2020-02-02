@@ -1,5 +1,8 @@
 package com.miketheshadow.complexproficiencies.gui;
 
+import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -41,6 +44,10 @@ public class BaseCategories
         meta.setDisplayName(ChatColor.GREEN + name);
         meta.setLore(list);
         item.setItemMeta(meta);
+
+        List<CustomRecipe> crep = new ArrayList<>();
+        Recipes.recipes.put( meta.getDisplayName(),crep);
+        List<CustomRecipe> recipe =Recipes.recipes.get(meta.getDisplayName());
         return item;
     }
 }

@@ -2,17 +2,19 @@ package com.miketheshadow.complexproficiencies.listener;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
-import com.miketheshadow.complexproficiencies.gui.BaseCategories;
+import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.utils.CustomItem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
 
 public class InventoryClickedEvent implements Listener
 {
@@ -21,35 +23,46 @@ public class InventoryClickedEvent implements Listener
     {
         Crafter crafter = ComplexProficiencies.crafters.get(event.getWhoClicked().getUniqueId());
         if(crafter == null)return;
-        event.setCancelled(weaponSmithing(event));
+        craftingEvent(event);
         event.setCancelled(true);
     }
 
-    public boolean weaponSmithing(InventoryClickEvent event)
+    public void craftingEvent(InventoryClickEvent event)
     {
-        if(!event.getClick().isLeftClick() || event.getCursor() == null)return false;
+        if(!event.getClick().isLeftClick() || event.getCursor() == null)return;
         Crafter crafter = ComplexProficiencies.crafters.get(event.getWhoClicked().getUniqueId());
-        if(event.getClickedInventory().getType().equals(InventoryType.PLAYER))return true;
+        if(event.getClickedInventory() == null) return;
+        if(event.getClickedInventory().getType().equals(InventoryType.PLAYER))return;
         ItemStack itemClicked = event.getInventory().getItem(event.getSlot());
-        if(itemClicked == null)return false;
+        if(itemClicked == null)return;
         if(crafter.itemType == null)
         {
             crafter.transfer = true;
             crafter.currentGUI.craftingList((Player)event.getWhoClicked(),itemClicked.getItemMeta().getDisplayName());
             crafter.itemType = itemClicked;
-            crafter.recipe = crafter.currentGUI.recipes.get(itemClicked.getItemMeta().getDisplayName()).get(0);
+            crafter.recipes = Recipes.recipes.get(itemClicked.getItemMeta().getDisplayName());
         }
         else if(crafter.itemToCraft == null)
         {
-            crafter.transfer = true;
-            crafter.currentGUI.craftingInventory((Player)event.getWhoClicked(),crafter.recipe);
-            crafter.itemToCraft = itemClicked;
+            Bukkit.broadcastMessage("RECIPE: " + crafter.recipes.get(0).getItemToBeCrafted().name);
+
+            for (CustomRecipe recipe: crafter.recipes)
+            {
+                if(recipe.getItemToBeCrafted().getTypeName().equals(itemClicked.getType().toString()))
+                {
+                    crafter.transfer = true;
+                    crafter.currentGUI.craftingInventory((Player)event.getWhoClicked(),recipe);
+                    crafter.itemToCraft = itemClicked;
+                    crafter.recipe = recipe;
+                    break;
+                }
+            }
+
         }
-        else if(itemClicked.equals(crafter.recipe.getItemToBeCrafted().toItem()))
+        else if(itemClicked.getType().toString().equals(crafter.recipe.getItemToBeCrafted().toItem().getType().toString()))
         {
             if(crafter.canCraft()) crafter.currentGUI.craftItem((Player)event.getWhoClicked(),crafter.recipe);
         }
-        return true;
     }
 
 
