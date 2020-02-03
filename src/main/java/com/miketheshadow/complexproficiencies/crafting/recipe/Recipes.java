@@ -2,6 +2,9 @@ package com.miketheshadow.complexproficiencies.crafting.recipe;
 
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.utils.CustomItem;
+import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import java.util.ArrayList;
@@ -12,13 +15,13 @@ public class Recipes
 {
     public static HashMap<String,List<CustomRecipe>> recipes = new HashMap<>();
 
-    public static CustomRecipe fakeRecipe()
+    public static CustomRecipe testRecipe()
     {
         List<CustomItem> itemList = new ArrayList<>();
         itemList.add(new CustomItem(16,"METALLURGY_BRONZE_INGOT",""));
         itemList.add(new CustomItem(1,"METALLURGY_KALENDRITE_INGOT",""));
         itemList.add(new CustomItem(4,"STICK",""));
-        return new CustomRecipe(itemList,new CustomItem(1,"METALLURGY_BRONZE_SWORD","Bronze Sword"));
+        return new CustomRecipe(itemList, NBTItem.convertItemtoNBT(new ItemStack(Material.DIRT)));
     }
     public static void register(String location,CustomRecipe recipe)
     {

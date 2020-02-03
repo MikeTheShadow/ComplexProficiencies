@@ -5,6 +5,7 @@ import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.utils.CustomItem;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -86,7 +87,7 @@ public class InventoryClickedEvent implements Listener
                 }
 
             }
-            CustomRecipe customRecipe = new CustomRecipe(ingredients,itemToBuild);
+            CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]));
             Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
             if(itemClicked.getType() == Material.GREEN_SHULKER_BOX)
             {
@@ -121,7 +122,7 @@ public class InventoryClickedEvent implements Listener
 
             for (CustomRecipe recipe: crafter.recipes)
             {
-                if(recipe.getItemToBeCrafted().getTypeName().equals(itemClicked.getType().toString()))
+                if(recipe.getItemToBeCrafted().getString("id").equals(NBTItem.convertItemtoNBT(itemClicked).getString("id")))
                 {
                     crafter.transfer = true;
                     crafter.currentGUI.craftingInventory((Player)event.getWhoClicked(),recipe);
@@ -131,7 +132,7 @@ public class InventoryClickedEvent implements Listener
                 }
             }
         }
-        else if(itemClicked.getType().toString().equals(crafter.recipe.getItemToBeCrafted().toItem().getType().toString()))
+        else if (NBTItem.convertItemtoNBT(itemClicked).getString("id").equals(crafter.recipe.getItemToBeCrafted().getString("id")))
         {
             if(crafter.canCraft()) crafter.currentGUI.craftItem((Player)event.getWhoClicked(),crafter.recipe);
         }

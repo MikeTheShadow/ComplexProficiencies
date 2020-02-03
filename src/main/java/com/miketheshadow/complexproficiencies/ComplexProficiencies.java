@@ -25,15 +25,14 @@ public class ComplexProficiencies extends JavaPlugin
     @Override
     public void onEnable()
     {
+        List<ItemStack> LIST = BaseCategories.getAllItems();
         //TODO remove this. Just used to register the items;
-        List<ItemStack> stacks = BaseCategories.weaponsmithingItems();
-        Recipes.register(BaseCategories.SWORD.getItemMeta().getDisplayName(),Recipes.fakeRecipe());
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
         pluginManager.registerEvents(new ItemCraftedEvent(), this);
         pluginManager.registerEvents(new InventoryClickedEvent(), this);
         //register commands
-        this.getCommand("weaponsmithinggui").setExecutor(new CustomCommandEvent(this));
+        this.getCommand("craftinggui").setExecutor(new CustomCommandEvent(this));
         this.getCommand("getitemtype").setExecutor(new CustomCommandEvent(this));
         this.getCommand("addrecipe").setExecutor(new CustomCommandEvent(this));
     }

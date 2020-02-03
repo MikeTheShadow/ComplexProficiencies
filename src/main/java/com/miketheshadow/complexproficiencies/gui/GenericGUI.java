@@ -5,6 +5,7 @@ import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
@@ -21,7 +22,7 @@ public class GenericGUI
         categoryList = buildItems;
         //generate the options
         Inventory inventory = Bukkit.createInventory(player, size, title);
-        for (int i = 0; i < categoryList.size() - 1; i++)
+        for (int i = 0; i < categoryList.size(); i++)
         {
             inventory.setItem(i, categoryList.get(i));
         }
@@ -41,17 +42,17 @@ public class GenericGUI
         }
         for (CustomRecipe recipe: Recipes.recipes.get(itemName))
         {
-            inventory.addItem(recipe.getItemToBeCrafted().toItem());
+            inventory.addItem(NBTItem.convertNBTtoItem(recipe.itemToBeCrafted));
         }
         player.openInventory(inventory);
     }
 
     public void craftingInventory(Player player,CustomRecipe recipe)
     {
-        ItemStack stack = new ItemStack(Material.valueOf(recipe.getItemToBeCrafted().getTypeName()));
+        ItemStack stack = NBTItem.convertNBTtoItem(recipe.itemToBeCrafted);
         Crafter crafter = ComplexProficiencies.crafters.get(player.getUniqueId());
         if(crafter == null)return;
-        Inventory inventory = Bukkit.createInventory(player, 54, recipe.getItemToBeCrafted().getName());
+        Inventory inventory = Bukkit.createInventory(player, 54, recipe.getItemToBeCrafted().getString("id"));
         player.openInventory(inventory);
         inventory.setItem(0,stack);
         int i = 9;
@@ -67,13 +68,13 @@ public class GenericGUI
         {
             player.getInventory().removeItem(new ItemStack(Material.valueOf(item.getTypeName()),item.getAmount()));
         }
-        player.getInventory().addItem(recipe.getItemToBeCrafted().toItem());
+        player.getInventory().addItem(NBTItem.convertNBTtoItem(recipe.itemToBeCrafted));
     }
 
     public void itemBuilder(Player player,String guiName)
     {
         Inventory inventory = Bukkit.createInventory(player, 54, guiName);
-        inventory.setItem(53,new ItemStack(Material.GREEN_SHULKER_BOX));
+        inventory.setItem(53,BaseCategories.register(Material.GREEN_SHULKER_BOX.toString(),"CREATE"));
         player.openInventory(inventory);
     }
 
