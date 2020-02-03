@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataHolder;
 
 public class CustomCommandEvent implements CommandExecutor
 {
@@ -38,9 +39,14 @@ public class CustomCommandEvent implements CommandExecutor
             player.sendMessage(item.toString());
             if(item.hasItemMeta())
             {
-                player.sendMessage(item.getItemMeta().getDisplayName());
+                player.sendMessage(item.getItemMeta().toString());
             }
             else player.sendMessage("Item has no meta!");
+            if(item.getData() != null)
+            {
+                player.sendMessage(item.getData().toString());
+            }
+            else player.sendMessage("Item has no data");
             return true;
         }
         else if (cmd.getName().equalsIgnoreCase("addrecipe"))
