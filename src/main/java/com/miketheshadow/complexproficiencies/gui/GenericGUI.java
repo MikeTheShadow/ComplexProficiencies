@@ -7,6 +7,7 @@ import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -42,33 +43,33 @@ public class GenericGUI
         }
         for (CustomRecipe recipe: Recipes.recipes.get(itemName))
         {
-            inventory.addItem(NBTItem.convertNBTtoItem(recipe.itemToBeCrafted));
+            inventory.addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
         }
         player.openInventory(inventory);
     }
 
     public void craftingInventory(Player player,CustomRecipe recipe)
     {
-        ItemStack stack = NBTItem.convertNBTtoItem(recipe.itemToBeCrafted);
+        ItemStack stack = NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted());
         Crafter crafter = ComplexProficiencies.crafters.get(player.getUniqueId());
         if(crafter == null)return;
         Inventory inventory = Bukkit.createInventory(player, 54, recipe.getItemToBeCrafted().getString("id"));
         player.openInventory(inventory);
         inventory.setItem(0,stack);
         int i = 9;
-        for (CustomItem item: recipe.getRequiredItems())
+        for (ItemStack item: recipe.getRequiredItems())
         {
-            inventory.setItem(i,item.toItem());
+            inventory.setItem(i,item);
             i++;
         }
     }
     public void craftItem(Player player, CustomRecipe recipe)
     {
-        for (CustomItem item:recipe.getRequiredItems())
+        for (ItemStack item:recipe.getRequiredItems())
         {
-            player.getInventory().removeItem(new ItemStack(Material.valueOf(item.getTypeName()),item.getAmount()));
+            player.getInventory().removeItem(item);
         }
-        player.getInventory().addItem(NBTItem.convertNBTtoItem(recipe.itemToBeCrafted));
+        player.getInventory().addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
     }
 
     public void itemBuilder(Player player,String guiName)

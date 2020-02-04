@@ -75,14 +75,14 @@ public class InventoryClickedEvent implements Listener
                 return false;
             }
             CustomItem itemToBuild = CustomItem.toCustom(stack[0]);
-            List<CustomItem> ingredients = new ArrayList<>();
+            List<ItemStack> ingredients = new ArrayList<>();
             for (ItemStack item: inventory.getContents())
             {
                 if(item != null)
                 {
                     if(item.getType() != Material.GREEN_SHULKER_BOX && item.getType() != stack[0].getType())
                     {
-                        ingredients.add(CustomItem.toStackCustom(item));
+                        ingredients.add(item);
                     }
                 }
 
@@ -95,6 +95,7 @@ public class InventoryClickedEvent implements Listener
                 Bukkit.broadcastMessage("Item created!");
                 ComplexProficiencies.crafters.remove(event.getWhoClicked().getUniqueId());
                 player.closeInventory();
+                Recipes.saveRecipes();
             }
         }
         return false;

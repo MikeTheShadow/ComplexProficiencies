@@ -162,7 +162,6 @@ public class BaseCategories
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
         nbtItem.setString("Name",ChatColor.GREEN + name);
         item = NBTItem.convertNBTtoItem(nbtItem);
-        System.out.println(ChatColor.RED + nbtItem.getString("name"));
         //add the rest of the tags
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.GREEN + name);
@@ -171,7 +170,7 @@ public class BaseCategories
 
 
         List<CustomRecipe> crep = new ArrayList<>();
-        Recipes.recipes.put( meta.getDisplayName(),crep);
+        Recipes.recipes.putIfAbsent(meta.getDisplayName(), crep);
         return item;
     }
 }
