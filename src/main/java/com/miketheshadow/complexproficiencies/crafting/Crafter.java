@@ -2,9 +2,7 @@ package com.miketheshadow.complexproficiencies.crafting;
 
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
-import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;

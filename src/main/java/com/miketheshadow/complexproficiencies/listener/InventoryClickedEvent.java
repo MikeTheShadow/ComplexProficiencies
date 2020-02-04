@@ -4,7 +4,6 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
-import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -74,7 +73,6 @@ public class InventoryClickedEvent implements Listener
                 player.sendMessage("You don't have enough items!");
                 return false;
             }
-            CustomItem itemToBuild = CustomItem.toCustom(stack[0]);
             List<ItemStack> ingredients = new ArrayList<>();
             for (ItemStack item: inventory.getContents())
             {

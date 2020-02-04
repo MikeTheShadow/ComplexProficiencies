@@ -1,6 +1,5 @@
 package com.miketheshadow.complexproficiencies.crafting.recipe;
 
-import com.miketheshadow.complexproficiencies.utils.CustomItem;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;

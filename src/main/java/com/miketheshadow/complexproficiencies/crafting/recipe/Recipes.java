@@ -1,20 +1,12 @@
 package com.miketheshadow.complexproficiencies.crafting.recipe;
 
-import com.miketheshadow.complexproficiencies.ComplexProficiencies;
-import com.miketheshadow.complexproficiencies.gui.BaseCategories;
-import com.miketheshadow.complexproficiencies.utils.CustomItem;
-import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
