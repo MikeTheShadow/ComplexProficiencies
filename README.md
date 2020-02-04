@@ -8,9 +8,13 @@ A list of proficiencies currently added include:
 -Fishing
 -Leatherworking
 -Mining
+-Handicrafts
+-Metalworking
 ```
 Features include:
 ```
 -Level gating
 -Bonus stats/drops
+-Custom crafting
+-NBT support
 ```
