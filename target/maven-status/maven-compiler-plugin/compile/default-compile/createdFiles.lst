@@ -3,7 +3,6 @@ com\miketheshadow\complexproficiencies\proficiencies\Proficiency.class
 com\miketheshadow\complexproficiencies\proficiencies\Handicrafts.class
 com\miketheshadow\complexproficiencies\proficiencies\Weaponsmithing.class
 com\miketheshadow\complexproficiencies\proficiencies\Metalworking.class
-com\miketheshadow\complexproficiencies\Database\CustomUser.class
 com\miketheshadow\complexproficiencies\utils\Util$CustomInventoryType.class
 com\miketheshadow\complexproficiencies\proficiencies\Fishing.class
 com\miketheshadow\complexproficiencies\proficiencies\Leatherworking.class
@@ -14,11 +13,12 @@ com\miketheshadow\complexproficiencies\utils\Util.class
 com\miketheshadow\complexproficiencies\gui\BaseCategories.class
 com\miketheshadow\complexproficiencies\utils\ModifyStats.class
 com\miketheshadow\complexproficiencies\proficiencies\Mining.class
-com\miketheshadow\complexproficiencies\Database\DBHandler.class
 com\miketheshadow\complexproficiencies\proficiencies\Armorsmithing.class
 com\miketheshadow\complexproficiencies\proficiencies\Farming.class
+com\miketheshadow\complexproficiencies\utils\CustomPlayer.class
 com\miketheshadow\complexproficiencies\ComplexProficiencies.class
 com\miketheshadow\complexproficiencies\crafting\Crafter.class
 com\miketheshadow\complexproficiencies\listener\PlayerJoinListener.class
 com\miketheshadow\complexproficiencies\crafting\recipe\CustomRecipe.class
 com\miketheshadow\complexproficiencies\listener\CustomCommandListener.class
+com\miketheshadow\complexproficiencies\utils\DBHandler.class

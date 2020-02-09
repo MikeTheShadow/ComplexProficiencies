@@ -1,21 +1,23 @@
 package com.miketheshadow.complexproficiencies;
 
 
-import com.miketheshadow.complexproficiencies.Database.DBHandler;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
 import com.miketheshadow.complexproficiencies.listener.InventoryClickedListener;
 import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
+import com.miketheshadow.complexproficiencies.utils.DBHandler;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 //TODO make it so that the person who has eaten the most carrots gets nightvision
 
@@ -23,17 +25,16 @@ public class ComplexProficiencies extends JavaPlugin
 {
     public static Map<UUID,Crafter> crafters = new HashMap<>();
 
-    public static final String[] profList = new String[]{"armorsmithing","Cooking","Farming","Fishing","Handicrafts","Leatherworking","Metalworking","Mining","Weaponsmithing"};
+    public static final String[] profList = new String[]{"Armorsmithing","Cooking","Farming","Fishing","Handicrafts","Leatherworking","Metalworking","Mining","Weaponsmithing"};
     @Override
     public void onEnable()
     {
+        DBHandler.init();
         Recipes.location = this.getDataFolder().getAbsolutePath() + "/";
         File file = new File(Recipes.location);
         if(!file.exists()) { file.mkdir(); }
         Recipes.loadRecipes();
         List<ItemStack> LIST = BaseCategories.getAllItems();
-
-        buildDatabases();
 
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
@@ -50,6 +51,7 @@ public class ComplexProficiencies extends JavaPlugin
     {
         Recipes.saveRecipes();
     }
+
     public static Crafter getCrafter(UUID uuid)
     {
         if(crafters.get(uuid) == null)
@@ -58,21 +60,6 @@ public class ComplexProficiencies extends JavaPlugin
         }
         return crafters.get(uuid);
     }
-
-    public static void buildDatabases()
-    {
-        File folder = new File(ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\proficiencies\\");
-        if(!folder.exists())
-        {
-            if(!folder.mkdir())Bukkit.broadcastMessage(ChatColor.RED + "Cannot create folder!");
-        }
-        for (String prof: profList)
-        {
-            DBHandler.createDatabase(prof);
-            DBHandler.createUserTable(prof);
-        }
-    }
-
 
 
 }

@@ -1,7 +1,6 @@
 package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
-import com.miketheshadow.complexproficiencies.Database.DBHandler;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
@@ -104,7 +103,6 @@ public class GenericGUI
         //add the random stats to the tag tag
         ItemStack item = NBTItem.convertNBTtoItem(container);
         player.getInventory().addItem(item);
-        DBHandler.getUserByID(player.getUniqueId().toString(),"");
     }
     public void itemBuilder(Player player,String guiName)
     {
