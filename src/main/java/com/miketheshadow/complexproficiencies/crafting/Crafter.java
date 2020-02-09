@@ -2,6 +2,8 @@ package com.miketheshadow.complexproficiencies.crafting;
 
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -32,7 +34,6 @@ public class Crafter
             Inventory inventory = player.getInventory();
             for (ItemStack item: recipe.getRequiredItems())
             {
-                Bukkit.broadcastMessage(item.toString());
                 if(!inventory.containsAtLeast(item,item.getAmount()))
                 {
                     player.sendMessage("You don't have enough materials!");

@@ -44,7 +44,7 @@ public class BaseCategories
     public static final ItemStack RODS = register("FISHING_ROD","RODS");
     public static final ItemStack RINGS = register("BAUBLES_RING","RINGS");
     public static final ItemStack NECKLACES = register("ARTIFACTS_PANIC_NECKLACE","AMULETS");
-    public static final ItemStack CHARM = register("GRIMOIREOFGAIA_ACCESSORY_TRINKET_POISON","CHARM");
+    public static final ItemStack CHARMS = register("GRIMOIREOFGAIA_ACCESSORY_TRINKET_POISON","CHARMS");
     //public static final ItemStack BELT = register("GOLD_NUGGET","BELT");
     //public static final ItemStack HEAD = register("GOLD_NUGGET","HEAD");
     //public static final ItemStack BODY = register("GOLD_NUGGET","BODY");
@@ -102,7 +102,7 @@ public class BaseCategories
         itemStack.add(RODS);
         itemStack.add(RINGS);
         itemStack.add(NECKLACES);
-        itemStack.add(CHARM);
+        itemStack.add(CHARMS);
         //itemStack.add(BELT);
         //itemStack.add(HEAD);
         //itemStack.add(BODY);

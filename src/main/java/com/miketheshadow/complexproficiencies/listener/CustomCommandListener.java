@@ -3,22 +3,20 @@ package com.miketheshadow.complexproficiencies.listener;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataHolder;
 
-public class CustomCommandEvent implements CommandExecutor
+public class CustomCommandListener implements CommandExecutor
 {
     private final ComplexProficiencies complexProficiencies;
 
-    public CustomCommandEvent(ComplexProficiencies complexProficiencies)
+    public CustomCommandListener(ComplexProficiencies complexProficiencies)
     {
         this.complexProficiencies = complexProficiencies;
     }
@@ -71,19 +69,32 @@ public class CustomCommandEvent implements CommandExecutor
             }
             return true;
         }
-        else if (cmd.getName().equalsIgnoreCase("getitemtype"))
+        else if (cmd.getName().equalsIgnoreCase("getitemtags"))
         {
             if(!(sender instanceof Player)) return false;
             Player player = (Player)sender;
-            ItemStack item = new ItemStack(Material.valueOf(player.getItemInHand().getType().toString()));
-            player.sendMessage(item.toString());
+            ItemStack item = player.getItemInHand();
+            NBTItem nbtItem = new NBTItem(item);
             player.sendMessage(NBTItem.convertItemtoNBT(item).toString());
+            player.sendMessage(nbtItem.getKeys().toString());
+            if(item.getItemMeta() != null)
+            {
+                player.sendMessage("NAME: " + item.getItemMeta().getDisplayName());
+            }
             return true;
         }
         else if (cmd.getName().equalsIgnoreCase("addrecipe"))
         {
             if(!(sender instanceof Player)) return false;
-            GenericGUI genericGUI = new GenericGUI((Player)sender, BaseCategories.getAllItems(),"Recipe Builder",54,true);
+            if(args.length != 2)return false;
+            Player player = (Player)sender;
+            try{Integer.parseInt(args[0]);}
+            catch (Exception e)
+            {
+                player.sendMessage("\"" + args[0] + "\"" + " is not a number!");
+                return true;
+            }
+            GenericGUI genericGUI = new GenericGUI((Player)sender, BaseCategories.getAllItems(),"Recipe Builder",54,true,Integer.parseInt(args[0]),Integer.parseInt(args[1]));
             return true;
         }
         return false;

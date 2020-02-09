@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InventoryClickedEvent implements Listener
+public class InventoryClickedListener implements Listener
 {
     @EventHandler
     public void InventorySlotClickedEvent(InventoryClickEvent event)
@@ -85,12 +85,11 @@ public class InventoryClickedEvent implements Listener
                 }
 
             }
-            CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]));
+            CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]),crafter.currentGUI.levelReq,crafter.currentGUI.xpValue);
             Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
             if(itemClicked.getType() == Material.GREEN_SHULKER_BOX)
             {
-
-                Bukkit.broadcastMessage("Item created!");
+                player.sendMessage("Item created!");
                 ComplexProficiencies.crafters.remove(event.getWhoClicked().getUniqueId());
                 player.closeInventory();
                 Recipes.saveRecipes();
@@ -118,7 +117,6 @@ public class InventoryClickedEvent implements Listener
         }
         else if(crafter.itemToCraft == null)
         {
-
             for (CustomRecipe recipe: crafter.recipes)
             {
                 if(recipe.getItemToBeCrafted().getString("id").equals(NBTItem.convertItemtoNBT(itemClicked).getString("id")))

@@ -1,13 +1,15 @@
 package com.miketheshadow.complexproficiencies;
 
 
+import com.miketheshadow.complexproficiencies.Database.DBHandler;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
-import com.miketheshadow.complexproficiencies.listener.CustomCommandEvent;
-import com.miketheshadow.complexproficiencies.listener.InventoryClickedEvent;
-import com.miketheshadow.complexproficiencies.listener.ItemCraftedEvent;
+import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
+import com.miketheshadow.complexproficiencies.listener.InventoryClickedListener;
+import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +22,8 @@ import java.util.*;
 public class ComplexProficiencies extends JavaPlugin
 {
     public static Map<UUID,Crafter> crafters = new HashMap<>();
+
+    public static final String[] profList = new String[]{"armorsmithing","Cooking","Farming","Fishing","Handicrafts","Leatherworking","Metalworking","Mining","Weaponsmithing"};
     @Override
     public void onEnable()
     {
@@ -28,15 +32,18 @@ public class ComplexProficiencies extends JavaPlugin
         if(!file.exists()) { file.mkdir(); }
         Recipes.loadRecipes();
         List<ItemStack> LIST = BaseCategories.getAllItems();
-        //TODO remove this. Just used to register the items;
+
+        buildDatabases();
+
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        pluginManager.registerEvents(new ItemCraftedEvent(), this);
-        pluginManager.registerEvents(new InventoryClickedEvent(), this);
+        pluginManager.registerEvents(new InventoryClickedListener(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
+
         //register commands
-        this.getCommand("craftinggui").setExecutor(new CustomCommandEvent(this));
-        this.getCommand("getitemtype").setExecutor(new CustomCommandEvent(this));
-        this.getCommand("addrecipe").setExecutor(new CustomCommandEvent(this));
+        this.getCommand("craftinggui").setExecutor(new CustomCommandListener(this));
+        this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
+        this.getCommand("addrecipe").setExecutor(new CustomCommandListener(this));
     }
     @Override
     public void onDisable()
@@ -51,5 +58,21 @@ public class ComplexProficiencies extends JavaPlugin
         }
         return crafters.get(uuid);
     }
+
+    public static void buildDatabases()
+    {
+        File folder = new File(ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\proficiencies\\");
+        if(!folder.exists())
+        {
+            if(!folder.mkdir())Bukkit.broadcastMessage(ChatColor.RED + "Cannot create folder!");
+        }
+        for (String prof: profList)
+        {
+            DBHandler.createDatabase(prof);
+            DBHandler.createUserTable(prof);
+        }
+    }
+
+
 
 }

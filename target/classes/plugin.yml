@@ -11,13 +11,13 @@ commands:
     usage: /<craftingui> [GUI Name]
     permission: ComplexProficiencies.gui
     permission-message: You don't have ComplexProficiencies.gui permission
-  getitemtype:
+  getitemtags:
     description: Gets the type as a string of an item
     usage: /<getitemtype>
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
   addrecipe:
     description: add a recipe to the plugin
-    usage: /<addrecipe>
+    usage: /<addrecipe> [level req] [experience amount]
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
