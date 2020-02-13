@@ -32,7 +32,6 @@ public class DBHandler
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding player" + player.getName());
         }
     }
-
     public static CustomPlayer getPlayer(Player player)
     {
         FindIterable<Document> cursor = players.find(new BasicDBObject("uid",player.getUniqueId().toString()));

@@ -4,10 +4,13 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import com.miketheshadow.complexproficiencies.utils.CustomPlayer;
+import com.miketheshadow.complexproficiencies.utils.DBHandler;
 import com.miketheshadow.complexproficiencies.utils.ModifyStats;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -20,10 +23,12 @@ public class GenericGUI
     public List<ItemStack> categoryList;
     public int levelReq;
     public int xpValue;
+    private String title;
     public GenericGUI(Player player, List<ItemStack> buildItems, String title,int size,boolean isfalse,int levelReq,int xpValue)
     {
         this.levelReq = levelReq;
         this.xpValue = xpValue;
+        this.title = title;
         categoryList = buildItems;
         //generate the options
         Inventory inventory = Bukkit.createInventory(player, size, title);
@@ -39,6 +44,7 @@ public class GenericGUI
     public GenericGUI(Player player, List<ItemStack> buildItems, String title,int size,boolean isfalse)
     {
         this.levelReq = -1;
+        this.title = title;
         categoryList = buildItems;
         //generate the options
         Inventory inventory = Bukkit.createInventory(player, size, title);
@@ -103,6 +109,9 @@ public class GenericGUI
         //add the random stats to the tag tag
         ItemStack item = NBTItem.convertNBTtoItem(container);
         player.getInventory().addItem(item);
+        CustomPlayer customPlayer = DBHandler.getPlayer(player);
+        customPlayer.addExperience(title,recipe.xpGain,player);
+        DBHandler.updatePlayer(customPlayer);
     }
     public void itemBuilder(Player player,String guiName)
     {

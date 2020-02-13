@@ -36,10 +36,10 @@ public class CustomCommandListener implements CommandExecutor
             switch (args[0].toLowerCase())
             {
                 case "armorsmithing":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.armorsmithingItems(), "armorsmithing",18,false);
+                    genericGUI = new GenericGUI((Player) sender, BaseCategories.armorsmithingItems(), "Armorsmithing",18,false);
                     break;
                 case "cooking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.cookingItems(), "cooking",18,false);
+                    genericGUI = new GenericGUI((Player) sender, BaseCategories.cookingItems(), "Cooking",18,false);
                     break;
                     /* uncomment if fishing needs recipes
                 case "fishing":
@@ -47,13 +47,13 @@ public class CustomCommandListener implements CommandExecutor
                     break;
                     */
                 case "handicrafts":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.handicraftItems(), "handicrafts",18,false);
+                    genericGUI = new GenericGUI((Player) sender, BaseCategories.handicraftItems(), "Handicrafts",18,false);
                     break;
                 case "metalworking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.metalworkingItems(), "metalworking",18,false);
+                    genericGUI = new GenericGUI((Player) sender, BaseCategories.metalworkingItems(), "Metalworking",18,false);
                     break;
                 case "leatherworking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.leatherworkingItems(), "leatherworking",18,false);
+                    genericGUI = new GenericGUI((Player) sender, BaseCategories.leatherworkingItems(), "Leatherworking",18,false);
                     break;
                     /* same comment as above
                 case "mining":

@@ -14,7 +14,5 @@ public class PlayerJoinListener implements Listener
     {
         DBHandler.checkPlayer(event.getPlayer());
         CustomPlayer player = DBHandler.getPlayer(event.getPlayer());
-        player.addExperience("Weaponsmithing",50);
-        DBHandler.updatePlayer(player);
     }
 }
