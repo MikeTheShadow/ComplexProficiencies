@@ -102,7 +102,7 @@ public class UserDBHandler
     }
     public static CustomUser getUserByID(String UUID)
     {
-        String sql = "SELECT name,UID,level,professions "
+        String sql = "SELECT name,UID,professions "
                 + "FROM Users WHERE UID = ?";
 
         try (Connection conn = connect();
