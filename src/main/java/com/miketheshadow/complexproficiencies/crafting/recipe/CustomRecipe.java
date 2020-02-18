@@ -11,10 +11,10 @@ import java.util.List;
 
 public class CustomRecipe implements Serializable
 {
-    public List<String> requiredItems;
-    public String nbtRecipe;
-    public int levelReq;
-    public int xpGain;
+    private List<String> requiredItems;
+    private String nbtRecipe;
+    private int levelReq;
+    private int xpGain;
     public List<ItemStack> getRequiredItems()
     {
         List<ItemStack> items = new ArrayList<>();
@@ -37,6 +37,8 @@ public class CustomRecipe implements Serializable
 
 
     public void setItemToBeCrafted(NBTItem itemToBeCrafted) { this.nbtRecipe = itemToBeCrafted.toString(); }
+
+
     public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted,int levelReq,int xpGain)
     {
         List<String> items = new ArrayList<>();
@@ -49,4 +51,8 @@ public class CustomRecipe implements Serializable
         this.levelReq = levelReq;
     }
 
+    public int getLevelReq() { return levelReq; }
+    public void setLevelReq(int levelReq) { this.levelReq = levelReq; }
+    public int getXpGain() { return xpGain; }
+    public void setXpGain(int xpGain) { this.xpGain = xpGain; }
 }

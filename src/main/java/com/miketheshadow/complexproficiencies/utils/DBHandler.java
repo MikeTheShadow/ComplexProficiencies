@@ -41,6 +41,4 @@ public class DBHandler
     {
         players.replaceOne(new BasicDBObject("uid",player.getUid()),player.toDocument());
     }
-
-
 }
