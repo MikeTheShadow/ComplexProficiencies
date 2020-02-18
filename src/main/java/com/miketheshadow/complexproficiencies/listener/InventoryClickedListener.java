@@ -86,8 +86,8 @@ public class InventoryClickedListener implements Listener
 
             }
             CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]),crafter.currentGUI.levelReq,crafter.currentGUI.xpValue);
-            customRecipe.xpGain = crafter.currentGUI.xpValue;
-            customRecipe.levelReq = crafter.currentGUI.levelReq;
+            customRecipe.setXpGain(crafter.currentGUI.xpValue);
+            customRecipe.setLevelReq(crafter.currentGUI.levelReq);
             Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
             if(itemClicked.getType() == Material.GREEN_SHULKER_BOX)
             {

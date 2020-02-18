@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomPlayer
+public class CustomUser
 {
     private String name;
     private String uid;
@@ -20,19 +20,19 @@ public class CustomPlayer
     public void setProfessions(HashMap<String, Integer> professions) { this.professions = professions; }
 
 
-    public CustomPlayer(String name,String uid)
+    public CustomUser(String name, String uid)
     {
         this.name = name;
         this.uid = uid;
         setProfessions();
     }
-    public CustomPlayer(String name, String uid, HashMap<String,Integer> professions)
+    public CustomUser(String name, String uid, HashMap<String,Integer> professions)
     {
         this.name = name;
         this.uid = uid;
         this.professions = professions;
     }
-    public CustomPlayer(Document document)
+    public CustomUser(Document document)
     {
         this.name = document.getString("name");
         this.uid = document.getString("uid");

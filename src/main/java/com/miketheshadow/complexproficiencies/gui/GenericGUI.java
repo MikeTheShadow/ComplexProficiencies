@@ -4,13 +4,12 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
-import com.miketheshadow.complexproficiencies.utils.CustomPlayer;
-import com.miketheshadow.complexproficiencies.utils.DBHandler;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
+import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ModifyStats;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -109,9 +108,9 @@ public class GenericGUI
         //add the random stats to the tag tag
         ItemStack item = NBTItem.convertNBTtoItem(container);
         player.getInventory().addItem(item);
-        CustomPlayer customPlayer = DBHandler.getPlayer(player);
-        customPlayer.addExperience(title,recipe.xpGain,player);
-        DBHandler.updatePlayer(customPlayer);
+        CustomUser customPlayer = UserDBHandler.getUserByID(player.getUniqueId().toString());
+        customPlayer.addExperience(title,recipe.getXpGain(),player);
+        UserDBHandler.updateCustomUser(customPlayer);
     }
     public void itemBuilder(Player player,String guiName)
     {

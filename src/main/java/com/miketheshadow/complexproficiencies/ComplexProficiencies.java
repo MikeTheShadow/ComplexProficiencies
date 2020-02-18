@@ -7,8 +7,9 @@ import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
 import com.miketheshadow.complexproficiencies.listener.InventoryClickedListener;
 import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
-import com.miketheshadow.complexproficiencies.utils.DBHandler;
+import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,7 +30,8 @@ public class ComplexProficiencies extends JavaPlugin
     @Override
     public void onEnable()
     {
-        DBHandler.init();
+        if(!this.getDataFolder().exists()) { this.getDataFolder().mkdir(); }
+        UserDBHandler.createDatabase();
         Recipes.location = this.getDataFolder().getAbsolutePath() + "/";
         File file = new File(Recipes.location);
         if(!file.exists()) { file.mkdir(); }
