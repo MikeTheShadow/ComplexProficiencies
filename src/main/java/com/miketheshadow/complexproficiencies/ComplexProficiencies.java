@@ -7,6 +7,7 @@ import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
 import com.miketheshadow.complexproficiencies.listener.InventoryClickedListener;
 import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
+import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
 import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,17 +26,14 @@ import java.util.UUID;
 public class ComplexProficiencies extends JavaPlugin
 {
     public static Map<UUID,Crafter> crafters = new HashMap<>();
-
     public static final String[] profList = new String[]{"Armorsmithing","Cooking","Farming","Fishing","Handicrafts","Leatherworking","Metalworking","Mining","Weaponsmithing"};
+
     @Override
     public void onEnable()
     {
         if(!this.getDataFolder().exists()) { this.getDataFolder().mkdir(); }
         UserDBHandler.createDatabase();
-        Recipes.location = this.getDataFolder().getAbsolutePath() + "/";
-        File file = new File(Recipes.location);
-        if(!file.exists()) { file.mkdir(); }
-        Recipes.loadRecipes();
+        RecipeDBHandler.createDatabase();
         List<ItemStack> LIST = BaseCategories.getAllItems();
 
         //register events
@@ -51,7 +49,7 @@ public class ComplexProficiencies extends JavaPlugin
     @Override
     public void onDisable()
     {
-        Recipes.saveRecipes();
+
     }
 
     public static Crafter getCrafter(UUID uuid)

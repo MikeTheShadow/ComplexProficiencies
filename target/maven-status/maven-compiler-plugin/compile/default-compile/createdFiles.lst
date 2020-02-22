@@ -5,6 +5,7 @@ com\miketheshadow\complexproficiencies\utils\UserDBHandler.class
 com\miketheshadow\complexproficiencies\proficiencies\Weaponsmithing.class
 com\miketheshadow\complexproficiencies\proficiencies\Metalworking.class
 com\miketheshadow\complexproficiencies\utils\Util$CustomInventoryType.class
+com\miketheshadow\complexproficiencies\utils\RecipeDBHandler$1.class
 com\miketheshadow\complexproficiencies\proficiencies\Fishing.class
 com\miketheshadow\complexproficiencies\proficiencies\Leatherworking.class
 com\miketheshadow\complexproficiencies\utils\CustomUser.class
@@ -15,6 +16,7 @@ com\miketheshadow\complexproficiencies\utils\Util.class
 com\miketheshadow\complexproficiencies\gui\BaseCategories.class
 com\miketheshadow\complexproficiencies\utils\ModifyStats.class
 com\miketheshadow\complexproficiencies\proficiencies\Mining.class
+com\miketheshadow\complexproficiencies\utils\RecipeDBHandler.class
 com\miketheshadow\complexproficiencies\proficiencies\Armorsmithing.class
 com\miketheshadow\complexproficiencies\proficiencies\Farming.class
 com\miketheshadow\complexproficiencies\ComplexProficiencies.class

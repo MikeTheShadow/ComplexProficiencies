@@ -12,6 +12,7 @@ import java.util.List;
 
 public class Recipes
 {
+    /*
     public static HashMap<String,List<CustomRecipe>> recipes = new HashMap<>();
     public static String location;
     public static String name = "recipes.storage";
@@ -50,5 +51,5 @@ public class Recipes
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING CANNOT LOAD RECIPES FROM FILE!!!");
         }
     }
-
+    */
 }

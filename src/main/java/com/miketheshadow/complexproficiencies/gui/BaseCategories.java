@@ -170,7 +170,7 @@ public class BaseCategories
 
 
         List<CustomRecipe> crep = new ArrayList<>();
-        Recipes.recipes.putIfAbsent(meta.getDisplayName(), crep);
+        //Recipes.recipes.putIfAbsent(meta.getDisplayName(), crep);
         return item;
     }
 }

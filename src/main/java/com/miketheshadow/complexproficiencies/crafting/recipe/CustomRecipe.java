@@ -13,8 +13,19 @@ public class CustomRecipe implements Serializable
 {
     private List<String> requiredItems;
     private String nbtRecipe;
+    private String parent;
     private int levelReq;
     private int xpGain;
+
+    public CustomRecipe(List<String> requiredItems, String nbtRecipe, String parent, int levelReq, int xpGain)
+    {
+        this.requiredItems = requiredItems;
+        this.nbtRecipe = nbtRecipe;
+        this.parent = parent;
+        this.levelReq = levelReq;
+        this.xpGain = xpGain;
+    }
+
     public List<ItemStack> getRequiredItems()
     {
         List<ItemStack> items = new ArrayList<>();
@@ -55,4 +66,6 @@ public class CustomRecipe implements Serializable
     public void setLevelReq(int levelReq) { this.levelReq = levelReq; }
     public int getXpGain() { return xpGain; }
     public void setXpGain(int xpGain) { this.xpGain = xpGain; }
+    public String getParent() { return parent; }
+    public void setParent(String parent) { this.parent = parent; }
 }

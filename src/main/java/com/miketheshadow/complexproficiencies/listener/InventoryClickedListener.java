@@ -4,6 +4,8 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
+import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -88,13 +90,14 @@ public class InventoryClickedListener implements Listener
             CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]),crafter.currentGUI.levelReq,crafter.currentGUI.xpValue);
             customRecipe.setXpGain(crafter.currentGUI.xpValue);
             customRecipe.setLevelReq(crafter.currentGUI.levelReq);
-            Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
+            //Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
+            RecipeDBHandler.insertNewRecipe(customRecipe);
             if(itemClicked.getType() == Material.GREEN_SHULKER_BOX)
             {
                 player.sendMessage("Item created!");
                 ComplexProficiencies.crafters.remove(event.getWhoClicked().getUniqueId());
                 player.closeInventory();
-                Recipes.saveRecipes();
+                //Recipes.saveRecipes();
             }
         }
         return false;
@@ -113,9 +116,11 @@ public class InventoryClickedListener implements Listener
         if(crafter.itemType == null)
         {
             crafter.transfer = true;
-            crafter.currentGUI.craftingList((Player)event.getWhoClicked(),itemClicked.getItemMeta().getDisplayName());
+            //crafter.currentGUI.craftingList((Player)event.getWhoClicked(),itemClicked.getItemMeta().getDisplayName());
+            crafter.currentGUI.craftingList((Player)event.getWhoClicked(),NBTItem.convertItemtoNBT(itemClicked).toString());
             crafter.itemType = itemClicked;
-            crafter.recipes = Recipes.recipes.get(itemClicked.getItemMeta().getDisplayName());
+            //crafter.recipes = Recipes.recipes.get(itemClicked.getItemMeta().getDisplayName());
+            crafter.recipes = RecipeDBHandler.getRecipesByParent(NBTItem.convertItemtoNBT(itemClicked).toString());
         }
         else if(crafter.itemToCraft == null)
         {

@@ -5,6 +5,7 @@ import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
 import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
+import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
 import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ModifyStats;
 import de.tr7zw.nbtapi.NBTCompound;
@@ -59,12 +60,17 @@ public class GenericGUI
     public void craftingList(Player player, String itemName)
     {
         Inventory inventory = Bukkit.createInventory(player, 54, itemName);
-        if(Recipes.recipes.get(itemName).isEmpty())
+        if(RecipeDBHandler.getRecipesByParent(itemName) == null)
         {
             player.openInventory(inventory);
             return;
         }
-        for (CustomRecipe recipe: Recipes.recipes.get(itemName))
+        if(RecipeDBHandler.getRecipesByParent(itemName).isEmpty())
+        {
+            player.openInventory(inventory);
+            return;
+        }
+        for (CustomRecipe recipe: RecipeDBHandler.getRecipesByParent(itemName))
         {
             inventory.addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
         }

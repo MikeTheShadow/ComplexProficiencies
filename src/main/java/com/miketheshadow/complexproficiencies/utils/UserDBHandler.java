@@ -31,7 +31,7 @@ public class UserDBHandler
             if (conn != null)
             {
                 DatabaseMetaData meta = conn.getMetaData();
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Database creation successful!");
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "User Database creation successful!");
             }
         }
         catch (SQLException e)
@@ -41,22 +41,22 @@ public class UserDBHandler
         createUserTable();
     }
     public static Connection connect()
+{
+    Connection conn = null;
+    try
     {
-        Connection conn = null;
-        try
-        {
-            // db parameters
-            String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            return conn;
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
-        }
-        return null;
+        // db parameters
+        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
+        // create a connection to the database
+        conn = DriverManager.getConnection(url);
+        return conn;
     }
+    catch (SQLException e)
+    {
+        Bukkit.getConsoleSender().sendMessage(e.getMessage());
+    }
+    return null;
+}
 
     public static void createUserTable()
     {
