@@ -17,40 +17,33 @@ import java.util.List;
 
 public class CategoryDBHandler {
 
-    public static void checkCategory(Category category)
-    {
+    public static void checkCategory(Category category) {
         FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path",category.getPath()));
-        try
-        {
-            if(cursor.first() == null)
-            {
+        try {
+            if(cursor.first() == null) {
                 loadCategories().insertOne(category.toDocument());
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
             }
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             loadCategories().insertOne(category.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Adding new category: " + category.getTitle());
         }
     }
-    public static List<Category> getSubCategories(String path)
-    {
+
+    public static List<Category> getSubCategories(String path) {
         FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path",path));
         List<Category> categories = new ArrayList<>();
-        for (Document document: cursor)
-        {
+        for (Document document: cursor) {
             categories.add(new Category(document));
         }
         return categories;
     }
-    public static void updateCategory(Category category)
-    {
+    public static void updateCategory(Category category) {
         loadCategories().replaceOne(new BasicDBObject("path",category.getPath()),category.toDocument());
     }
 
-    public static MongoCollection<Document> loadCategories()
-    {
+    public static MongoCollection<Document> loadCategories() {
         MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
         MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
         return database.getCollection("Categories");

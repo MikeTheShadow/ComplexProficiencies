@@ -6,8 +6,6 @@ import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
 import com.miketheshadow.complexproficiencies.listener.InventoryListener;
 import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
-import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
