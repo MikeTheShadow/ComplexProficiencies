@@ -19,7 +19,6 @@ public class PlayerJoinListener implements Listener
     {
         //Check if player is in database
         Player player = event.getPlayer();
-        CustomUser user = UserDBHandler.getUserByID(player.getUniqueId().toString());
-        if(user == null) { UserDBHandler.insertNewUser(player.getName(),player.getUniqueId().toString()); }
+        UserDBHandler.checkPlayer(player);
     }
 }

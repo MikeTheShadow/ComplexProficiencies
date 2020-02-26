@@ -8,6 +8,7 @@ import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +40,6 @@ public class InventoryClickedListener implements Listener
         }
         else
         {
-
             craftingEvent(event);
         }
         event.setCancelled(true);
@@ -57,6 +57,7 @@ public class InventoryClickedListener implements Listener
             crafter.transfer = true;
             crafter.currentGUI.itemBuilder((Player)event.getWhoClicked(),"BUILDER");
             crafter.itemType = itemClicked;
+            crafter.parent = NBTItem.convertItemtoNBT(itemClicked).toString();
             return true;
         }
         if(itemClicked == null) return false;
@@ -85,19 +86,18 @@ public class InventoryClickedListener implements Listener
                         ingredients.add(item);
                     }
                 }
-
             }
             CustomRecipe customRecipe = new CustomRecipe(ingredients, NBTItem.convertItemtoNBT(stack[0]),crafter.currentGUI.levelReq,crafter.currentGUI.xpValue);
             customRecipe.setXpGain(crafter.currentGUI.xpValue);
             customRecipe.setLevelReq(crafter.currentGUI.levelReq);
-            //Recipes.register(crafter.itemType.getItemMeta().getDisplayName(),customRecipe);
-            RecipeDBHandler.insertNewRecipe(customRecipe);
+            customRecipe.setParent(crafter.parent);
+            Bukkit.broadcastMessage(ChatColor.GOLD + "PARENT" + crafter.parent);
+            RecipeDBHandler.checkRecipe(customRecipe);
             if(itemClicked.getType() == Material.GREEN_SHULKER_BOX)
             {
                 player.sendMessage("Item created!");
                 ComplexProficiencies.crafters.remove(event.getWhoClicked().getUniqueId());
                 player.closeInventory();
-                //Recipes.saveRecipes();
             }
         }
         return false;
@@ -116,10 +116,8 @@ public class InventoryClickedListener implements Listener
         if(crafter.itemType == null)
         {
             crafter.transfer = true;
-            //crafter.currentGUI.craftingList((Player)event.getWhoClicked(),itemClicked.getItemMeta().getDisplayName());
             crafter.currentGUI.craftingList((Player)event.getWhoClicked(),NBTItem.convertItemtoNBT(itemClicked).toString());
             crafter.itemType = itemClicked;
-            //crafter.recipes = Recipes.recipes.get(itemClicked.getItemMeta().getDisplayName());
             crafter.recipes = RecipeDBHandler.getRecipesByParent(NBTItem.convertItemtoNBT(itemClicked).toString());
         }
         else if(crafter.itemToCraft == null)

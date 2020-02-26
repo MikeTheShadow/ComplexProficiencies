@@ -32,8 +32,8 @@ public class ComplexProficiencies extends JavaPlugin
     public void onEnable()
     {
         if(!this.getDataFolder().exists()) { this.getDataFolder().mkdir(); }
-        UserDBHandler.createDatabase();
-        RecipeDBHandler.createDatabase();
+        UserDBHandler.init();
+        RecipeDBHandler.init();
         List<ItemStack> LIST = BaseCategories.getAllItems();
 
         //register events

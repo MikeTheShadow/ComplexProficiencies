@@ -1,172 +1,44 @@
 package com.miketheshadow.complexproficiencies.utils;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.lang.reflect.Type;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
 
 public class UserDBHandler
 {
-    public static String DBName = "Users.sqlite";
-    public static void createDatabase()
+    public static MongoCollection<Document> players;
+    public static void init()
     {
-        File db = new File(ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName);
-        if(db.exists())
-        {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "DB exists ignoring...");
-            return;
-        }
-        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-
-        try (Connection conn = DriverManager.getConnection(url))
-        {
-            if (conn != null)
-            {
-                DatabaseMetaData meta = conn.getMetaData();
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "User Database creation successful!");
-            }
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
-        }
-        createUserTable();
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+        MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
+        players = database.getCollection("Players");
     }
-    public static Connection connect()
-{
-    Connection conn = null;
-    try
+    public static void checkPlayer(Player player)
     {
-        // db parameters
-        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-        // create a connection to the database
-        conn = DriverManager.getConnection(url);
-        return conn;
-    }
-    catch (SQLException e)
-    {
-        Bukkit.getConsoleSender().sendMessage(e.getMessage());
-    }
-    return null;
-}
-
-    public static void createUserTable()
-    {
-        // SQLite connection string
-        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS Users (\n"
-                + "    name text NOT NULL,\n"
-                + "    UID text NOT NULL,\n"
-                + "    professions text NOT NULL"
-                + ");";
-
-        try (Connection conn = connect();
-             Statement stmt = conn.createStatement())
+        FindIterable<Document> cursor = players.find(new BasicDBObject("uid",player.getUniqueId().toString()));
+        if(cursor.first() == null)
         {
-            // create a new table
-            stmt.execute(sql);
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
+            CustomUser customPlayer = new CustomUser(player.getName(),player.getUniqueId().toString());
+            players.insertOne(customPlayer.toDocument());
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new player: " + player.getName());
         }
     }
-    public static void insertNewUser(String name, String UID)
+    public static CustomUser getPlayer(Player player)
     {
-        String sql = "INSERT INTO Users(name,UID,professions) VALUES(?,?,?)";
-        CustomUser user = new CustomUser(name,UID);
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql))
-        {
-            Gson gson = new Gson();
-            String profs = gson.toJson(user.getProfessions());
-            pstmt.setString(1, name);
-            pstmt.setString(2, UID);
-            pstmt.setString(3, profs);
-            pstmt.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getSQLState());
-        }
+        FindIterable<Document> cursor = players.find(new BasicDBObject("uid",player.getUniqueId().toString()));
+        return new CustomUser(Objects.requireNonNull(cursor.first()));
     }
-    public static CustomUser getUserByID(String UUID)
+    public static void updatePlayer(CustomUser player)
     {
-        String sql = "SELECT name,UID,professions "
-                + "FROM Users WHERE UID = ?";
-
-        try (Connection conn = connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql))
-        {
-
-            // set the value
-            pstmt.setString(1,UUID);
-            //
-            ResultSet rs  = pstmt.executeQuery();
-            // loop through the result set
-            while (rs.next())
-            {
-                return new CustomUser(rs.getString("name"),rs.getString("UID"),  Util.fixMap(rs));
-            }
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getMessage());
-        }
-        return null;
-    }
-    public static void updateCustomUser(CustomUser user)
-    {
-        String sql = "UPDATE Users SET professions = ? "
-                + "WHERE UID = ?";
-
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql))
-        {
-            Gson gson = new Gson();
-            String profs = gson.toJson(user.getProfessions());
-            // set the corresponding param
-            pstmt.setString(1, profs);
-            pstmt.setString(2, user.getUid());
-            // update
-            pstmt.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getMessage());
-        }
-    }
-    public static List<CustomUser> getAllUsers()
-    {
-        String sql = "SELECT name,UID,level,professions "
-                + "FROM Users";
-
-        try (Connection conn = connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql))
-        {
-            ResultSet rs  = pstmt.executeQuery();
-            // loop through the result set
-            List<CustomUser> returnList = new ArrayList<>();
-            while (rs.next())
-            {
-                returnList.add(new CustomUser(rs.getString("name"),rs.getString("UID"),  Util.fixMap(rs)));
-            }
-            return returnList;
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getMessage());
-        }
-        return null;
+        players.replaceOne(new BasicDBObject("uid",player.getUid()),player.toDocument());
     }
 }

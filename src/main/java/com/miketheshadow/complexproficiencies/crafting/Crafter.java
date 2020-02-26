@@ -21,6 +21,7 @@ public class Crafter
     public boolean transfer = false;
     public GenericGUI currentGUI;
     public boolean crafting = false;
+    public String parent = "";
     public Crafter(Player player, GenericGUI currentGUI)
     {
         this.player = player;

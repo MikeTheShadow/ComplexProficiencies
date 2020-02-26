@@ -1,13 +1,16 @@
 package com.miketheshadow.complexproficiencies.crafting.recipe;
 
+import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bson.Document;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class CustomRecipe implements Serializable
 {
@@ -35,6 +38,7 @@ public class CustomRecipe implements Serializable
         }
         return items;
     }
+
     public void setRequiredItems(List<ItemStack> requiredItems)
     {
         List<String> items = new ArrayList<>();
@@ -44,6 +48,7 @@ public class CustomRecipe implements Serializable
         }
         this.requiredItems = items;
     }
+
     public NBTCompound getItemToBeCrafted() { return new NBTContainer(nbtRecipe); }
 
 
@@ -60,6 +65,26 @@ public class CustomRecipe implements Serializable
         this.requiredItems = items;
         this.nbtRecipe = itemToBeCrafted.toString();
         this.levelReq = levelReq;
+    }
+
+    public CustomRecipe (Document document)
+    {
+        this.nbtRecipe = document.getString("item");
+        this.requiredItems = document.getList("ingredients",String.class);
+        this.parent = document.getString("parent");
+        this.levelReq = document.getInteger("levelReq");
+        this.xpGain = document.getInteger("xpGain");
+    }
+    public Document toDocument()
+    {
+        Document document = new Document();
+        document.append("ingredients",requiredItems);
+        document.append("item",nbtRecipe);
+        document.append("parent",parent);
+        document.append("levelReq",levelReq);
+        document.append("xpGain",xpGain);
+
+        return document;
     }
 
     public int getLevelReq() { return levelReq; }

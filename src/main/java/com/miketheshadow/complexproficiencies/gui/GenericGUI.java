@@ -114,9 +114,9 @@ public class GenericGUI
         //add the random stats to the tag tag
         ItemStack item = NBTItem.convertNBTtoItem(container);
         player.getInventory().addItem(item);
-        CustomUser customPlayer = UserDBHandler.getUserByID(player.getUniqueId().toString());
+        CustomUser customPlayer = UserDBHandler.getPlayer(player);
         customPlayer.addExperience(title,recipe.getXpGain(),player);
-        UserDBHandler.updateCustomUser(customPlayer);
+        UserDBHandler.updatePlayer(customPlayer);
     }
     public void itemBuilder(Player player,String guiName)
     {

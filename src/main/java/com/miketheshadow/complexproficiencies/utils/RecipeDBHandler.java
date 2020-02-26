@@ -1,137 +1,57 @@
 package com.miketheshadow.complexproficiencies.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
+import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import java.io.File;
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class RecipeDBHandler
 {
-    public static String DBName = "Recipes.sqlite";
-    public static void createDatabase()
+    public static MongoCollection<Document> recipes;
+    public static void init()
     {
-        File db = new File(ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName);
-        if(db.exists())
-        {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "DB exists ignoring...");
-            return;
-        }
-        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-
-        try (Connection conn = DriverManager.getConnection(url))
-        {
-            if (conn != null)
-            {
-                DatabaseMetaData meta = conn.getMetaData();
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Recipe Database creation successful!");
-            }
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
-        }
-        createRecipeTable();
+        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+        MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
+        recipes = database.getCollection("Recipes");
     }
-
-    public static Connection connect()
+    public static void checkRecipe(CustomRecipe recipe)
     {
-        Connection conn = null;
+        FindIterable<Document> cursor = recipes.find(new BasicDBObject("item",recipe.getItemToBeCrafted()));
         try
         {
-            // db parameters
-            String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-            // create a connection to the database
-            conn = DriverManager.getConnection(url);
-            return conn;
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
-        }
-        return null;
-    }
-
-    public static void createRecipeTable()
-    {
-        // SQLite connection string
-        String url = "jdbc:sqlite:" + ComplexProficiencies.getPlugin(ComplexProficiencies.class).getDataFolder() + "\\" + DBName;
-
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS Recipes (\n"
-                + "    item text NOT NULL,\n"
-                + "    ingredients text NOT NULL,\n"
-                + "    parent text NOT NULL,\n"
-                + "    level integer NOT NULL,\n"
-                + "    experience integer NOT NULL"
-                + ");";
-
-        try (Connection conn = connect();
-             Statement stmt = conn.createStatement())
-        {
-            // create a new table
-            stmt.execute(sql);
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage(e.getMessage());
-        }
-    }
-
-    public static void insertNewRecipe(CustomRecipe recipe)
-    {
-        String sql = "INSERT INTO Recipes(item,ingredients,parent,level,experience) VALUES(?,?,?,?,?)";
-        try (Connection conn = connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql))
-        {
-            Gson gson = new Gson();
-            String profs = gson.toJson(recipe.getRequiredItems());
-            pstmt.setString(1, recipe.getItemToBeCrafted().toString());
-            pstmt.setString(2,profs);
-            pstmt.setString(3, recipe.getParent());
-            pstmt.setInt(4, recipe.getLevelReq());
-            pstmt.setInt(5, recipe.getXpGain());
-            pstmt.executeUpdate();
-        }
-        catch (SQLException e)
-        {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getSQLState());
-        }
-    }
-
-    public static List<CustomRecipe> getRecipesByParent(String parent)
-    {
-        String sql = "SELECT item,ingredients,parent,level,experience "
-                + "FROM Recipes WHERE parent = ?";
-
-        try (Connection conn = connect();
-             PreparedStatement pstmt  = conn.prepareStatement(sql))
-        {
-            // set the value
-            pstmt.setString(1,parent);
-            //
-            ResultSet rs  = pstmt.executeQuery();
-            // loop through the result set
-            List<CustomRecipe> recipes = new ArrayList<>();
-            while (rs.next())
+            if(cursor.first() == null)
             {
-                Gson gson = new Gson();
-                List<String> items = gson.fromJson(rs.getString("ingredients"),new TypeToken<List<String>>(){}.getType());
-                recipes.add(new CustomRecipe(items,rs.getString("item"),rs.getString("parent"),rs.getInt("level"),rs.getInt("experience")));
+                recipes.insertOne(recipe.toDocument());
+                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new item: " + recipe.getItemToBeCrafted());
             }
-            return recipes;
         }
-        catch (SQLException e)
+        catch (Exception e)
         {
-            Bukkit.getConsoleSender().sendMessage("Error! " + e.getMessage());
+            recipes.insertOne(recipe.toDocument());
+            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Adding new item: " + recipe.getItemToBeCrafted());
         }
-        return null;
+    }
+    public static List<CustomRecipe> getRecipesByParent(String recipe)
+    {
+        FindIterable<Document> cursor = recipes.find(new BasicDBObject("parent",recipe));
+        List<CustomRecipe> recipes = new ArrayList<>();
+        for (Document document: cursor)
+        {
+            recipes.add(new CustomRecipe(document));
+        }
+        return recipes;
+    }
+    public static void updateRecipe(CustomRecipe recipe)
+    {
+        recipes.replaceOne(new BasicDBObject("item",recipe.getItemToBeCrafted()),recipe.toDocument());
     }
 }
