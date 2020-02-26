@@ -197,10 +197,8 @@ public class BaseCategories {
         //adding custom tags
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
         Bukkit.broadcastMessage(ChatColor.RED + nbtItem.toString());
-        nbtItem.getCompound("tag").getCompound("display").setString("Name","OVERRIDE");
-        nbtItem.getCompound("tag").getCompound("display").setString("TEST","TEST123");
+        nbtItem.getCompound("tag").getCompound("display").setString("location","default");
         item = NBTItem.convertNBTtoItem(nbtItem);
-
 
         return item;
     }
