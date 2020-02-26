@@ -14,8 +14,9 @@ import java.util.List;
 public class BaseCategories {
     //ez copy paste keep commented dumbass
     //public static final ItemStack BASIC = register("","");
-
-
+    public static ItemStack previousPage = BaseCategories.register2(Material.GREEN_SHULKER_BOX.toString(), "PREVIOUS PAGE");
+    public static ItemStack nextPage = BaseCategories.register2(Material.GREEN_SHULKER_BOX.toString(), "NEXT PAGE");
+    public static ItemStack pageNumber = BaseCategories.registerTitle(Material.RED_SHULKER_BOX.toString(), "PAGE 1");
     //register basic weapons
     public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD", "SWORDS");
     public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER", "GREATSWORDS");
@@ -162,10 +163,37 @@ public class BaseCategories {
         meta.setDisplayName(ChatColor.GREEN + name);
         meta.setLore(list);
         item.setItemMeta(meta);
+        return item;
+    }
+    public static ItemStack register2(String itemStack, String name) {
+        List<String> list = new ArrayList<>();
+        list.add("Click to go to the " + name.toLowerCase());
 
+        //create the item
+        ItemStack item = new ItemStack(Material.valueOf(itemStack));
+        NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
+        nbtItem.setString("Name", ChatColor.GREEN + name);
+        item = NBTItem.convertNBTtoItem(nbtItem);
+        //add the rest of the tags
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + name);
+        meta.setLore(list);
+        item.setItemMeta(meta);
 
-        List<CustomRecipe> crep = new ArrayList<>();
-        //Recipes.recipes.putIfAbsent(meta.getDisplayName(), crep);
+        return item;
+    }
+    public static ItemStack registerTitle(String itemStack, String name) {
+
+        //create the item
+        ItemStack item = new ItemStack(Material.valueOf(itemStack));
+        NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
+        nbtItem.setString("Name", ChatColor.GREEN + name);
+        item = NBTItem.convertNBTtoItem(nbtItem);
+        //add the rest of the tags
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + name);
+        item.setItemMeta(meta);
+
         return item;
     }
 }

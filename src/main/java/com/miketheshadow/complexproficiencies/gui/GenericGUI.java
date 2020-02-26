@@ -28,12 +28,9 @@ public class GenericGUI {
         this.xpValue = xpValue;
         this.title = title;
         categoryList = buildItems;
-        //generate the options
-        Inventory inventory = Bukkit.createInventory(player, size, title);
-        for (int i = 0; i < categoryList.size(); i++) {
-            inventory.setItem(i, categoryList.get(i));
-        }
-        player.openInventory(inventory);
+        //open gui
+        baseGUI(player,title);
+
         Crafter crafter = new Crafter(player, this);
         crafter.crafting = isfalse;
         ComplexProficiencies.crafters.put(player.getUniqueId(), crafter);
@@ -43,12 +40,9 @@ public class GenericGUI {
         this.levelReq = -1;
         this.title = title;
         categoryList = buildItems;
-        //generate the options
-        Inventory inventory = Bukkit.createInventory(player, size, title);
-        for (int i = 0; i < categoryList.size(); i++) {
-            inventory.setItem(i, categoryList.get(i));
-        }
-        player.openInventory(inventory);
+        //open gui
+        baseGUI(player,title);
+
         Crafter crafter = new Crafter(player, this);
         crafter.crafting = isfalse;
         ComplexProficiencies.crafters.put(player.getUniqueId(), crafter);
@@ -110,5 +104,15 @@ public class GenericGUI {
         inventory.setItem(53, BaseCategories.register(Material.GREEN_SHULKER_BOX.toString(), "CREATE"));
         player.openInventory(inventory);
     }
+
+    public void baseGUI(Player player, String inventoryName)
+    {
+        Inventory inventory = Bukkit.createInventory(player, 54, inventoryName);
+        inventory.setItem(45,BaseCategories.previousPage);
+        inventory.setItem(49,BaseCategories.pageNumber);
+        inventory.setItem(53,BaseCategories.nextPage);
+        player.openInventory(inventory);
+    }
+
 
 }
