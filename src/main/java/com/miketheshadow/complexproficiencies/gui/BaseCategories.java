@@ -189,7 +189,9 @@ public class BaseCategories {
         ItemStack item = new ItemStack(Material.valueOf(itemStack));
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
         nbtItem.setString("Name", ChatColor.GREEN + name);
-        nbtItem.setString("location","default");
+        NBTCompound compound = nbtItem.getCompound("display");
+        compound.setString("test","test123");
+        nbtItem.setCompound(compound);
         item = NBTItem.convertNBTtoItem(nbtItem);
         //add the rest of the tags
         ItemMeta meta = item.getItemMeta();
