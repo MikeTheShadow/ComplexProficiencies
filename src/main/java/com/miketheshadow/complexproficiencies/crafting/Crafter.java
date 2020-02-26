@@ -25,9 +25,9 @@ public class Crafter {
     }
 
     public boolean canCraft() {
-        if(itemToCraft != null && itemType != null && recipe != null) {
+        if (itemToCraft != null && itemType != null && recipe != null) {
             Inventory inventory = player.getInventory();
-            for (ItemStack item: recipe.getRequiredItems()) {
+            for (ItemStack item : recipe.getRequiredItems()) {
                 if (!inventory.containsAtLeast(item, item.getAmount())) {
                     player.sendMessage("You don't have enough materials!");
                     return false;

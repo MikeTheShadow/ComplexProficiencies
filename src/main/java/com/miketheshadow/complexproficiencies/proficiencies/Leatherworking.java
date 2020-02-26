@@ -1,5 +1,4 @@
 package com.miketheshadow.complexproficiencies.proficiencies;
 
-public class Leatherworking
-{
+public class Leatherworking {
 }

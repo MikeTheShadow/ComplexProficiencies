@@ -13,29 +13,26 @@ import org.bukkit.entity.Player;
 
 import java.util.Objects;
 
-public class UserDBHandler
-{
-    public static void checkPlayer(Player player)
-    {
-        FindIterable<Document> cursor = loadUsers().find(new BasicDBObject("uid",player.getUniqueId().toString()));
-        if(cursor.first() == null)
-        {
-            CustomUser customPlayer = new CustomUser(player.getName(),player.getUniqueId().toString());
+public class UserDBHandler {
+    public static void checkPlayer(Player player) {
+        FindIterable<Document> cursor = loadUsers().find(new BasicDBObject("uid", player.getUniqueId().toString()));
+        if (cursor.first() == null) {
+            CustomUser customPlayer = new CustomUser(player.getName(), player.getUniqueId().toString());
             loadUsers().insertOne(customPlayer.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new player: " + player.getName());
         }
     }
-    public static CustomUser getPlayer(Player player)
-    {
-        FindIterable<Document> cursor = loadUsers().find(new BasicDBObject("uid",player.getUniqueId().toString()));
+
+    public static CustomUser getPlayer(Player player) {
+        FindIterable<Document> cursor = loadUsers().find(new BasicDBObject("uid", player.getUniqueId().toString()));
         return new CustomUser(Objects.requireNonNull(cursor.first()));
     }
-    public static void updatePlayer(CustomUser player)
-    {
-        loadUsers().replaceOne(new BasicDBObject("uid",player.getUid()),player.toDocument());
+
+    public static void updatePlayer(CustomUser player) {
+        loadUsers().replaceOne(new BasicDBObject("uid", player.getUid()), player.toDocument());
     }
-    public static MongoCollection<Document> loadUsers()
-    {
+
+    public static MongoCollection<Document> loadUsers() {
         MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
         MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
         return database.getCollection("Players");

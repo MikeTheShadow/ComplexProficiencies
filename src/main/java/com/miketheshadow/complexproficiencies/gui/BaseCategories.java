@@ -11,32 +11,31 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BaseCategories
-{
+public class BaseCategories {
     //ez copy paste keep commented dumbass
     //public static final ItemStack BASIC = register("","");
 
 
     //register basic weapons
-    public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD","SWORDS");
-    public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER","GREATSWORDS");
-    public static final ItemStack RAPIER = register("TCONSTRUCT_RAPIER","RAPIERS");
-    public static final ItemStack DAGGER = register("METALLURGY_SILVER_SWORD","DAGGERS");
-    public static final ItemStack AXE = register("TCONSTRUCT_HATCHET","AXES");
-    public static final ItemStack HAMMER = register("TCONSTRUCT_HAMMER","HAMMERS");
-    public static final ItemStack SPEAR = register("TCONSTRUCT_ARROW_HEAD","SPEARS");
+    public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD", "SWORDS");
+    public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER", "GREATSWORDS");
+    public static final ItemStack RAPIER = register("TCONSTRUCT_RAPIER", "RAPIERS");
+    public static final ItemStack DAGGER = register("METALLURGY_SILVER_SWORD", "DAGGERS");
+    public static final ItemStack AXE = register("TCONSTRUCT_HATCHET", "AXES");
+    public static final ItemStack HAMMER = register("TCONSTRUCT_HAMMER", "HAMMERS");
+    public static final ItemStack SPEAR = register("TCONSTRUCT_ARROW_HEAD", "SPEARS");
 
     //register basic cooking
-    public static final ItemStack POTION = register("POTION","POTIONS");
-    public static final ItemStack FOOD = register("COOKED_BEEF","HEALTH BUFF FOOD");
-    public static final ItemStack SOUP = register("MUSHROOM_SOUP","HEALTH REGEN FOOD");
-    public static final ItemStack RAREFOOD = register("GOLDEN_APPLE","RARE RECIPES");
+    public static final ItemStack POTION = register("POTION", "POTIONS");
+    public static final ItemStack FOOD = register("COOKED_BEEF", "HEALTH BUFF FOOD");
+    public static final ItemStack SOUP = register("MUSHROOM_SOUP", "HEALTH REGEN FOOD");
+    public static final ItemStack RAREFOOD = register("GOLDEN_APPLE", "RARE RECIPES");
 
     //register fishing
-    public static final ItemStack RODS = register("FISHING_ROD","RODS");
-    public static final ItemStack OILS = register("HARVESTCRAFT_OLIVEOILITEM","OILS");
-    public static final ItemStack PIGMENTS = register("INK_SACK","PIGMENTS");
-    public static final ItemStack POLISH = register("FAIRYLIGHTS_LIGHT","POLISH");
+    public static final ItemStack RODS = register("FISHING_ROD", "RODS");
+    public static final ItemStack OILS = register("HARVESTCRAFT_OLIVEOILITEM", "OILS");
+    public static final ItemStack PIGMENTS = register("INK_SACK", "PIGMENTS");
+    public static final ItemStack POLISH = register("FAIRYLIGHTS_LIGHT", "POLISH");
 
     //register handicrafts -> being moved to fishing
     //public static final ItemStack RINGS = register("BAUBLES_RING","RINGS");
@@ -47,27 +46,26 @@ public class BaseCategories
     //public static final ItemStack BODY = register("GOLD_NUGGET","BODY");
 
     //register leatherworking
-    public static final ItemStack LEATHERGOODS = register("LEATHER","LEATHER GOODS");
-    public static final ItemStack LEATHER_HELMETS = register("LEATHER_HELMET","CAPS");
-    public static final ItemStack LEATHER_CHESTPLATE = register("LEATHER_CHESTPLATE","JERKINS");
-    public static final ItemStack LEATHER_LEGGINGS = register("LEATHER_LEGGINGS","BREECHES");
-    public static final ItemStack LEATHER_BOOTS = register("LEATHER_BOOTS","BOOTS");
+    public static final ItemStack LEATHERGOODS = register("LEATHER", "LEATHER GOODS");
+    public static final ItemStack LEATHER_HELMETS = register("LEATHER_HELMET", "CAPS");
+    public static final ItemStack LEATHER_CHESTPLATE = register("LEATHER_CHESTPLATE", "JERKINS");
+    public static final ItemStack LEATHER_LEGGINGS = register("LEATHER_LEGGINGS", "BREECHES");
+    public static final ItemStack LEATHER_BOOTS = register("LEATHER_BOOTS", "BOOTS");
 
     //register metalworking
-    public static final ItemStack METALS = register("IRON_INGOT","METALS");
-    public static final ItemStack PICKAXES = register("METALLURGY_SHADOW_STEEL_PICKAXE","PICKAXES");
-    public static final ItemStack HOES = register("METALLURGY_SHADOW_STEEL_HOE","HOES");
-    public static final ItemStack SHOVELS = register("METALLURGY_SHADOW_STEEL_SHOVEL","SHOVELS");
-    public static final ItemStack AXES = register("METALLURGY_SHADOW_STEEL_AXE","AXES");
+    public static final ItemStack METALS = register("IRON_INGOT", "METALS");
+    public static final ItemStack PICKAXES = register("METALLURGY_SHADOW_STEEL_PICKAXE", "PICKAXES");
+    public static final ItemStack HOES = register("METALLURGY_SHADOW_STEEL_HOE", "HOES");
+    public static final ItemStack SHOVELS = register("METALLURGY_SHADOW_STEEL_SHOVEL", "SHOVELS");
+    public static final ItemStack AXES = register("METALLURGY_SHADOW_STEEL_AXE", "AXES");
 
     //register armorsmithing
-    public static final ItemStack HELMET = register("METALLURGY_SHADOW_IRON_HELMET","HELMS");
-    public static final ItemStack CUIRASS = register("METALLURGY_SHADOW_IRON_CHESTPLATE","CUIRASS");
-    public static final ItemStack GREAVES = register("METALLURGY_SHADOW_IRON_LEGGINGS","GREAVES");
-    public static final ItemStack SABATONS = register("METALLURGY_SHADOW_IRON_BOOTS","SABATONS");
+    public static final ItemStack HELMET = register("METALLURGY_SHADOW_IRON_HELMET", "HELMS");
+    public static final ItemStack CUIRASS = register("METALLURGY_SHADOW_IRON_CHESTPLATE", "CUIRASS");
+    public static final ItemStack GREAVES = register("METALLURGY_SHADOW_IRON_LEGGINGS", "GREAVES");
+    public static final ItemStack SABATONS = register("METALLURGY_SHADOW_IRON_BOOTS", "SABATONS");
 
-    public static List<ItemStack> armorsmithingItems()
-    {
+    public static List<ItemStack> armorsmithingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(HELMET);
         itemStack.add(CUIRASS);
@@ -75,8 +73,8 @@ public class BaseCategories
         itemStack.add(SABATONS);
         return itemStack;
     }
-    public static List<ItemStack> cookingItems()
-    {
+
+    public static List<ItemStack> cookingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(POTION);
         itemStack.add(FOOD);
@@ -85,8 +83,8 @@ public class BaseCategories
 
         return itemStack;
     }
-    public static List<ItemStack> fishingItems()
-    {
+
+    public static List<ItemStack> fishingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(RODS);
         itemStack.add(OILS);
@@ -94,8 +92,8 @@ public class BaseCategories
         itemStack.add(POLISH);
         return itemStack;
     }
-    public static List<ItemStack> handicraftItems()
-    {
+
+    public static List<ItemStack> handicraftItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         //itemStack.add(RODS);
         //itemStack.add(RINGS);
@@ -106,8 +104,8 @@ public class BaseCategories
         //itemStack.add(BODY);
         return itemStack;
     }
-    public static List<ItemStack> leatherworkingItems()
-    {
+
+    public static List<ItemStack> leatherworkingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(LEATHERGOODS);
         itemStack.add(LEATHER_HELMETS);
@@ -116,8 +114,8 @@ public class BaseCategories
         itemStack.add(LEATHER_BOOTS);
         return itemStack;
     }
-    public static List<ItemStack> metalworkingItems()
-    {
+
+    public static List<ItemStack> metalworkingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(METALS);
         itemStack.add(PICKAXES);
@@ -126,8 +124,8 @@ public class BaseCategories
         itemStack.add(AXES);
         return itemStack;
     }
-    public static List<ItemStack> weaponsmithingItems()
-    {
+
+    public static List<ItemStack> weaponsmithingItems() {
         List<ItemStack> itemStack = new ArrayList<>();
         itemStack.add(SWORD);
         itemStack.add(GREATSWORD);
@@ -138,8 +136,8 @@ public class BaseCategories
         itemStack.add(SPEAR);
         return itemStack;
     }
-    public static List<ItemStack> getAllItems()
-    {
+
+    public static List<ItemStack> getAllItems() {
         List<ItemStack> allItems = new ArrayList<>(weaponsmithingItems());
         allItems.addAll(cookingItems());
         allItems.addAll(fishingItems());
@@ -150,15 +148,14 @@ public class BaseCategories
         return allItems;
     }
 
-    public static ItemStack register(String itemStack,String name)
-    {
+    public static ItemStack register(String itemStack, String name) {
         List<String> list = new ArrayList<>();
         list.add("Click to open the " + name.toLowerCase() + " menu.");
 
         //create the item
         ItemStack item = new ItemStack(Material.valueOf(itemStack));
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
-        nbtItem.setString("Name",ChatColor.GREEN + name);
+        nbtItem.setString("Name", ChatColor.GREEN + name);
         item = NBTItem.convertNBTtoItem(nbtItem);
         //add the rest of the tags
         ItemMeta meta = item.getItemMeta();

@@ -1,5 +1,4 @@
 package com.miketheshadow.complexproficiencies.proficiencies;
 
-public class Armorsmithing
-{
+public class Armorsmithing {
 }

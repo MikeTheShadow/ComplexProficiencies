@@ -2,14 +2,13 @@ package com.miketheshadow.complexproficiencies.crafting;
 
 import org.bson.Document;
 
-public class Category
-{
+public class Category {
 
     String title;
     String icon;
     String path;
 
-    public Category(String title, String icon,String path) {
+    public Category(String title, String icon, String path) {
         this.title = title;
         this.icon = icon;
         this.path = path;

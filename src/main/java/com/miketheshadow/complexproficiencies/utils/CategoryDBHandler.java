@@ -1,7 +1,6 @@
 package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.crafting.Category;
-import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -18,29 +17,29 @@ import java.util.List;
 public class CategoryDBHandler {
 
     public static void checkCategory(Category category) {
-        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path",category.getPath()));
+        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path", category.getPath()));
         try {
-            if(cursor.first() == null) {
+            if (cursor.first() == null) {
                 loadCategories().insertOne(category.toDocument());
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             loadCategories().insertOne(category.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Adding new category: " + category.getTitle());
         }
     }
 
     public static List<Category> getSubCategories(String path) {
-        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path",path));
+        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path", path));
         List<Category> categories = new ArrayList<>();
-        for (Document document: cursor) {
+        for (Document document : cursor) {
             categories.add(new Category(document));
         }
         return categories;
     }
+
     public static void updateCategory(Category category) {
-        loadCategories().replaceOne(new BasicDBObject("path",category.getPath()),category.toDocument());
+        loadCategories().replaceOne(new BasicDBObject("path", category.getPath()), category.toDocument());
     }
 
     public static MongoCollection<Document> loadCategories() {

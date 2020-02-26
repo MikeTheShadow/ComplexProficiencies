@@ -1,5 +1,4 @@
 package com.miketheshadow.complexproficiencies.proficiencies;
 
-public class Cooking
-{
+public class Cooking {
 }

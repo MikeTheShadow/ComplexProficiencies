@@ -18,15 +18,15 @@ import java.util.UUID;
 
 //TODO make it so that the person who has eaten the most carrots gets nightvision
 
-public class ComplexProficiencies extends JavaPlugin
-{
-    public static Map<UUID,Crafter> crafters = new HashMap<>();
-    public static final String[] profList = new String[]{"Armorsmithing","Cooking","Farming","Fishing","Handicrafts","Leatherworking","Metalworking","Mining","Weaponsmithing"};
+public class ComplexProficiencies extends JavaPlugin {
+    public static final String[] profList = new String[]{"Armorsmithing", "Cooking", "Farming", "Fishing", "Handicrafts", "Leatherworking", "Metalworking", "Mining", "Weaponsmithing"};
+    public static Map<UUID, Crafter> crafters = new HashMap<>();
 
     @Override
-    public void onEnable()
-    {
-        if(!this.getDataFolder().exists()) { this.getDataFolder().mkdir(); }
+    public void onEnable() {
+        if (!this.getDataFolder().exists()) {
+            this.getDataFolder().mkdir();
+        }
         List<ItemStack> LIST = BaseCategories.getAllItems();
 
         //register events
@@ -39,9 +39,9 @@ public class ComplexProficiencies extends JavaPlugin
         this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
         this.getCommand("addrecipe").setExecutor(new CustomCommandListener(this));
     }
+
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
 
     }
 
