@@ -188,12 +188,12 @@ public class BaseCategories {
         //create the item
         ItemStack item = new ItemStack(Material.valueOf(itemStack));
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
-        nbtItem.setString("Name", ChatColor.GREEN + name);
+        nbtItem.setString("Name", "super secret name UwU");
         item = NBTItem.convertNBTtoItem(nbtItem);
         //add the rest of the tags
-        //ItemMeta meta = item.getItemMeta();
-        //meta.setDisplayName(ChatColor.GREEN + name);
-        //item.setItemMeta(meta);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + name);
+        item.setItemMeta(meta);
 
         return item;
     }
