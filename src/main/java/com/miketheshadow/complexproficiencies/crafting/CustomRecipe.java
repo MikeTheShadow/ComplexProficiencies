@@ -12,31 +12,31 @@ import java.util.List;
 
 public class CustomRecipe implements Serializable {
     private List<String> requiredItems;
-    private String nbtRecipe;
+    private String item ;
     private String parent;
     private int levelReq;
     private int xpGain;
-    private String proffesion;
+    private String profession;
 
-    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted, int levelReq, int xpGain, String proffesion) {
+    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted, int levelReq, int xpGain, String profession) {
         List<String> items = new ArrayList<>();
         for (ItemStack item : requiredItems) {
             items.add(NBTItem.convertItemtoNBT(item).toString());
         }
         this.requiredItems = items;
-        this.nbtRecipe = itemToBeCrafted.toString();
+        this.item = itemToBeCrafted.toString();
         this.levelReq = levelReq;
         this.xpGain = xpGain;
-        this.proffesion = proffesion;
+        this.profession = profession;
     }
 
     public CustomRecipe(Document document) {
-        this.nbtRecipe = document.getString("item");
+        this.item = document.getString("item");
         this.requiredItems = document.getList("ingredients", String.class);
         this.parent = document.getString("parent");
         this.levelReq = document.getInteger("levelReq");
         this.xpGain = document.getInteger("xpGain");
-        this.proffesion = document.getString("profession");
+        this.profession = document.getString("profession");
     }
 
     public List<ItemStack> getRequiredItems() {
@@ -56,21 +56,21 @@ public class CustomRecipe implements Serializable {
     }
 
     public NBTCompound getItemToBeCrafted() {
-        return new NBTContainer(nbtRecipe);
+        return new NBTContainer(item);
     }
 
     public void setItemToBeCrafted(NBTItem itemToBeCrafted) {
-        this.nbtRecipe = itemToBeCrafted.toString();
+        this.item = itemToBeCrafted.toString();
     }
 
     public Document toDocument() {
         Document document = new Document();
         document.append("ingredients", requiredItems);
-        document.append("item", nbtRecipe);
+        document.append("item", item);
         document.append("parent", parent);
         document.append("levelReq", levelReq);
         document.append("xpGain", xpGain);
-        document.append("profession", proffesion);
+        document.append("profession", profession);
         return document;
     }
 
