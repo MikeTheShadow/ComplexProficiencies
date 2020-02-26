@@ -2,8 +2,7 @@ package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
-import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
-import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
 import com.miketheshadow.complexproficiencies.utils.UserDBHandler;

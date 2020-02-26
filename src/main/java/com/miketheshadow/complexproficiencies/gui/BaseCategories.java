@@ -1,13 +1,10 @@
 package com.miketheshadow.complexproficiencies.gui;
 
-import com.miketheshadow.complexproficiencies.crafting.recipe.CustomRecipe;
-import com.miketheshadow.complexproficiencies.crafting.recipe.Recipes;
+import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -36,15 +33,15 @@ public class BaseCategories
     public static final ItemStack RAREFOOD = register("GOLDEN_APPLE","RARE RECIPES");
 
     //register fishing
+    public static final ItemStack RODS = register("FISHING_ROD","RODS");
     public static final ItemStack OILS = register("HARVESTCRAFT_OLIVEOILITEM","OILS");
     public static final ItemStack PIGMENTS = register("INK_SACK","PIGMENTS");
     public static final ItemStack POLISH = register("FAIRYLIGHTS_LIGHT","POLISH");
 
-    //register handicrafts
-    public static final ItemStack RODS = register("FISHING_ROD","RODS");
-    public static final ItemStack RINGS = register("BAUBLES_RING","RINGS");
-    public static final ItemStack NECKLACES = register("ARTIFACTS_PANIC_NECKLACE","AMULETS");
-    public static final ItemStack CHARMS = register("GRIMOIREOFGAIA_ACCESSORY_TRINKET_POISON","CHARMS");
+    //register handicrafts -> being moved to fishing
+    //public static final ItemStack RINGS = register("BAUBLES_RING","RINGS");
+    //public static final ItemStack NECKLACES = register("ARTIFACTS_PANIC_NECKLACE","AMULETS");
+    //public static final ItemStack CHARMS = register("GRIMOIREOFGAIA_ACCESSORY_TRINKET_POISON","CHARMS");
     //public static final ItemStack BELT = register("GOLD_NUGGET","BELT");
     //public static final ItemStack HEAD = register("GOLD_NUGGET","HEAD");
     //public static final ItemStack BODY = register("GOLD_NUGGET","BODY");
@@ -91,6 +88,7 @@ public class BaseCategories
     public static List<ItemStack> fishingItems()
     {
         List<ItemStack> itemStack = new ArrayList<>();
+        itemStack.add(RODS);
         itemStack.add(OILS);
         itemStack.add(PIGMENTS);
         itemStack.add(POLISH);
@@ -99,10 +97,10 @@ public class BaseCategories
     public static List<ItemStack> handicraftItems()
     {
         List<ItemStack> itemStack = new ArrayList<>();
-        itemStack.add(RODS);
-        itemStack.add(RINGS);
-        itemStack.add(NECKLACES);
-        itemStack.add(CHARMS);
+        //itemStack.add(RODS);
+        //itemStack.add(RINGS);
+        //itemStack.add(NECKLACES);
+        //itemStack.add(CHARMS);
         //itemStack.add(BELT);
         //itemStack.add(HEAD);
         //itemStack.add(BODY);

@@ -1,6 +1,5 @@
-package com.miketheshadow.complexproficiencies.crafting.recipe;
+package com.miketheshadow.complexproficiencies.crafting;
 
-import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
@@ -10,7 +9,6 @@ import org.bukkit.inventory.ItemStack;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CustomRecipe implements Serializable
 {
@@ -19,15 +17,7 @@ public class CustomRecipe implements Serializable
     private String parent;
     private int levelReq;
     private int xpGain;
-
-    public CustomRecipe(List<String> requiredItems, String nbtRecipe, String parent, int levelReq, int xpGain)
-    {
-        this.requiredItems = requiredItems;
-        this.nbtRecipe = nbtRecipe;
-        this.parent = parent;
-        this.levelReq = levelReq;
-        this.xpGain = xpGain;
-    }
+    private String proffesion;
 
     public List<ItemStack> getRequiredItems()
     {
@@ -55,7 +45,7 @@ public class CustomRecipe implements Serializable
     public void setItemToBeCrafted(NBTItem itemToBeCrafted) { this.nbtRecipe = itemToBeCrafted.toString(); }
 
 
-    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted,int levelReq,int xpGain)
+    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted,int levelReq,int xpGain,String proffesion)
     {
         List<String> items = new ArrayList<>();
         for (ItemStack item: requiredItems)
@@ -65,6 +55,8 @@ public class CustomRecipe implements Serializable
         this.requiredItems = items;
         this.nbtRecipe = itemToBeCrafted.toString();
         this.levelReq = levelReq;
+        this.xpGain = xpGain;
+        this.proffesion = proffesion;
     }
 
     public CustomRecipe (Document document)
@@ -74,6 +66,7 @@ public class CustomRecipe implements Serializable
         this.parent = document.getString("parent");
         this.levelReq = document.getInteger("levelReq");
         this.xpGain = document.getInteger("xpGain");
+        this.proffesion = document.getString("profession");
     }
     public Document toDocument()
     {
@@ -83,7 +76,7 @@ public class CustomRecipe implements Serializable
         document.append("parent",parent);
         document.append("levelReq",levelReq);
         document.append("xpGain",xpGain);
-
+        document.append("profession", proffesion);
         return document;
     }
 
