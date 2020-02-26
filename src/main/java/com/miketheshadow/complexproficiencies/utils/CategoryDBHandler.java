@@ -16,21 +16,22 @@ import java.util.List;
 
 public class CategoryDBHandler {
 
+    public static  MongoCollection<Document> collection = init();
     public static void checkCategory(Category category) {
-        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path", category.getPath()));
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", category.getPath()));
         try {
             if (cursor.first() == null) {
-                loadCategories().insertOne(category.toDocument());
+                collection.insertOne(category.toDocument());
                 Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
             }
         } catch (Exception e) {
-            loadCategories().insertOne(category.toDocument());
+            collection.insertOne(category.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Adding new category: " + category.getTitle());
         }
     }
 
     public static List<Category> getSubCategories(String path) {
-        FindIterable<Document> cursor = loadCategories().find(new BasicDBObject("path", path));
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", path));
         List<Category> categories = new ArrayList<>();
         for (Document document : cursor) {
             categories.add(new Category(document));
@@ -39,13 +40,17 @@ public class CategoryDBHandler {
     }
 
     public static void updateCategory(Category category) {
-        loadCategories().replaceOne(new BasicDBObject("path", category.getPath()), category.toDocument());
+        collection.replaceOne(new BasicDBObject("path", category.getPath()), category.toDocument());
     }
 
-    public static MongoCollection<Document> loadCategories() {
-        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-        MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
-        return database.getCollection("Categories");
+    public static MongoCollection<Document> init() {
+        if(collection == null)
+        {
+            MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+            MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
+            return database.getCollection("Categories");
+        }
+        return collection;
     }
 
 }
