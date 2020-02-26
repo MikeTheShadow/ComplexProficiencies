@@ -1,14 +1,18 @@
 package com.miketheshadow.complexproficiencies.listener;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import com.miketheshadow.complexproficiencies.utils.CategoryDBHandler;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class CustomCommandListener implements CommandExecutor {
     private final ComplexProficiencies complexProficiencies;
@@ -24,41 +28,7 @@ public class CustomCommandListener implements CommandExecutor {
             if (args.length != 1) {
                 return false;
             }
-            Player player = (Player) sender;
-            GenericGUI genericGUI;
-            switch (args[0].toLowerCase()) {
-                case "armorsmithing":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.armorsmithingItems(), "Armorsmithing", 18, false);
-                    break;
-                case "cooking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.cookingItems(), "Cooking", 18, false);
-                    break;
-                    /* uncomment if fishing needs recipes
-                case "fishing":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.fishingItems(), "fishing",18,false);
-                    break;
-                    */
-                case "handicrafts":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.handicraftItems(), "Handicrafts", 18, false);
-                    break;
-                case "metalworking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.metalworkingItems(), "Metalworking", 18, false);
-                    break;
-                case "leatherworking":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.leatherworkingItems(), "Leatherworking", 18, false);
-                    break;
-                    /* same comment as above
-                case "mining":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.weaponsmithingItems(), "mining",18,false);
-                    break;
-                     */
-                case "weaponsmithing":
-                    genericGUI = new GenericGUI((Player) sender, BaseCategories.weaponsmithingItems(), "Weaponsmithing", 18, false);
-                    break;
-                default:
-                    player.sendMessage("Error! GUI \"" + args[0] + "\" does not exist!");
-                    break;
-            }
+            List<Category> categoryList = CategoryDBHandler.getSubCategories("");
             return true;
         } else if (cmd.getName().equalsIgnoreCase("getitemtags")) {
             if (!(sender instanceof Player)) return false;

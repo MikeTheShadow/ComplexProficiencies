@@ -16,7 +16,7 @@ import java.util.List;
 
 public class RecipeDBHandler {
 
-    public static  MongoCollection<Document> collection = init();
+    private static  MongoCollection<Document> collection = init();
     public static void checkRecipe(CustomRecipe recipe) {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("item", recipe.getItemToBeCrafted()));
         try {
@@ -42,7 +42,9 @@ public class RecipeDBHandler {
     public static void updateRecipe(CustomRecipe recipe) {
         collection.replaceOne(new BasicDBObject("item", recipe.getItemToBeCrafted()), recipe.toDocument());
     }
-    
+    public static void removeRecipe(CustomRecipe recipe) {
+        collection.deleteOne(new BasicDBObject("item", recipe.getItemToBeCrafted()));
+    }
     public static MongoCollection<Document> init() {
         if(collection == null)
         {

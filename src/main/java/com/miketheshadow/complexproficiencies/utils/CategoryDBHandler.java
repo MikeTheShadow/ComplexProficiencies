@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CategoryDBHandler {
 
-    public static  MongoCollection<Document> collection = init();
+    private static  MongoCollection<Document> collection = init();
     public static void checkCategory(Category category) {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("path", category.getPath()));
         try {
@@ -41,6 +41,22 @@ public class CategoryDBHandler {
 
     public static void updateCategory(Category category) {
         collection.replaceOne(new BasicDBObject("path", category.getPath()), category.toDocument());
+    }
+
+    public static boolean removeCategory(Category category){
+        Document doc = getCategoryByTitle(category);
+        if(doc == null)return false;
+        collection.deleteOne(getCategoryByTitle(category));
+        return true;
+    }
+
+    public static Document getCategoryByTitle(Category category){
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("title", category.getTitle()));
+        for (Document doc : cursor)
+        {
+            if(doc.getString("path").equals(""))return doc;
+        }
+        return null;
     }
 
     public static MongoCollection<Document> init() {
