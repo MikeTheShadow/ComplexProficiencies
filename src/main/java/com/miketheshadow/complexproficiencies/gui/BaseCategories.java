@@ -4,6 +4,7 @@ import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -195,9 +196,9 @@ public class BaseCategories {
 
         //adding custom tags
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
-        nbtItem.getCompound("display").setString("Name","OVERRIDE");
-        nbtItem.getCompound("display").setString("TEST","TEST123");
-        nbtItem.setString("Name", "super secret name UwU");
+        Bukkit.broadcastMessage(ChatColor.RED + nbtItem.toString());
+        nbtItem.getCompound("tag").getCompound("display").setString("Name","OVERRIDE");
+        nbtItem.getCompound("tag").getCompound("display").setString("TEST","TEST123");
         item = NBTItem.convertNBTtoItem(nbtItem);
 
 
