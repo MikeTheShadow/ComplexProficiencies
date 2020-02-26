@@ -1,7 +1,9 @@
 package com.miketheshadow.complexproficiencies.listener;
 
+import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.BaseCategories;
-import de.tr7zw.nbtapi.NBTCompound;
+import com.miketheshadow.complexproficiencies.utils.CategoryDBHandler;
+import de.tr7zw.changeme.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
@@ -12,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class InventoryListener implements Listener {
 
@@ -30,7 +34,11 @@ public class InventoryListener implements Listener {
         //Locate the current directory the user is in using the hidden NBT tags on the page located in position 49
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(topInventory.getItem(49));
         String location = nbtItem.getCompound("tag").getCompound("display").getString("location");
-        Bukkit.broadcastMessage(ChatColor.GOLD + "DEBUG LOCATION: " + location);
+        List<Category> categoryList =  CategoryDBHandler.getSubCategories(location);
+        for(int i = 0; i < categoryList.size(); i++) {
+            ItemStack stack = NBTItem.convertNBTtoItem(new NBTContainer(categoryList.get(i).getIcon()));
+            topInventory.addItem(stack);
+        }
 
     }
 
