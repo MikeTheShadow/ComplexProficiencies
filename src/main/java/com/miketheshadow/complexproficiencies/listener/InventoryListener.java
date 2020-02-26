@@ -30,7 +30,7 @@ public class InventoryListener implements Listener {
         //Locate the current directory the user is in using the hidden NBT tags on the page located in position 49
         NBTContainer compound = NBTItem.convertItemtoNBT(topInventory.getItem(49));
         String location = compound.getString("location");
-        Bukkit.broadcastMessage(ChatColor.GOLD + "DEBUG LOCATION: " + location);
+        Bukkit.broadcastMessage(ChatColor.GOLD + "DEBUG COMPOUND: " + compound.toString());
 
     }
 

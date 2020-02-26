@@ -1,6 +1,7 @@
 package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
+import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
@@ -188,7 +189,14 @@ public class BaseCategories {
         ItemStack item = new ItemStack(Material.valueOf(itemStack));
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
         nbtItem.setString("Name", ChatColor.GREEN + name);
-        nbtItem.setString("location","default");
+
+        //start of test
+        nbtItem.addCompound("testing123");
+        NBTCompound comp = nbtItem.getCompound("testing123");
+        comp.setString("location","general");
+        nbtItem.setCompound(comp);
+        //end of test
+        
         item = NBTItem.convertNBTtoItem(nbtItem);
         //add the rest of the tags
         ItemMeta meta = item.getItemMeta();
