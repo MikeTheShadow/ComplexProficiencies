@@ -1,5 +1,6 @@
 package com.miketheshadow.complexproficiencies.gui;
 
+import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
@@ -16,9 +17,8 @@ import java.util.List;
 public class BaseCategories {
     //ez copy paste keep commented dumbass
     //public static final ItemStack BASIC = register("","");
-    public static ItemStack previousPage = BaseCategories.register2(Material.GREEN_SHULKER_BOX.toString(), "PREVIOUS PAGE");
-    public static ItemStack nextPage = BaseCategories.register2(Material.GREEN_SHULKER_BOX.toString(), "NEXT PAGE");
-    public static ItemStack pageNumber = BaseCategories.registerTitle(Material.RED_SHULKER_BOX.toString(), "PAGE 1");
+    public static ItemStack previousPage = register2(Material.GREEN_SHULKER_BOX.toString(), "PREVIOUS PAGE");
+    public static ItemStack nextPage = register2(Material.GREEN_SHULKER_BOX.toString(), "NEXT PAGE");
     //register basic weapons
     public static final ItemStack SWORD = register("TCONSTRUCT_BROADSWORD", "SWORDS");
     public static final ItemStack GREATSWORD = register("TCONSTRUCT_CLEAVER", "GREATSWORDS");
@@ -184,7 +184,7 @@ public class BaseCategories {
 
         return item;
     }
-    public static ItemStack registerTitle(String itemStack, String name) {
+    public static ItemStack registerTitle(String itemStack, String name,String location) {
 
         //create the item
         ItemStack item = new ItemStack(Material.valueOf(itemStack));
@@ -196,10 +196,31 @@ public class BaseCategories {
 
         //adding custom tags
         NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
-        Bukkit.broadcastMessage(ChatColor.RED + nbtItem.toString());
-        nbtItem.getCompound("tag").getCompound("display").setString("location","default");
+        nbtItem.getCompound("tag").getCompound("display").setString("path","/" + location);
+        //gui type
+        nbtItem.getCompound("tag").getCompound("display").setString("type","crafting");
         item = NBTItem.convertNBTtoItem(nbtItem);
+        return item;
+    }
+    public static ItemStack registerBuilder(String location,String name) {
 
+        //create the item
+        ItemStack item = new ItemStack(Material.valueOf(Material.RED_SHULKER_BOX.toString()));
+
+        //modify tags
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(ChatColor.GREEN + "ADD ITEM");
+        item.setItemMeta(meta);
+
+        //adding custom tags
+        NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
+        nbtItem.getCompound("tag").getCompound("display").setString("title","");
+        nbtItem.getCompound("tag").getCompound("display").setString("icon","");
+        nbtItem.getCompound("tag").getCompound("display").setString("path","/" + location.toLowerCase());
+        nbtItem.getCompound("tag").getCompound("display").setString("location","");
+        //gui type
+        nbtItem.getCompound("tag").getCompound("display").setString("type",name);
+        item = NBTItem.convertNBTtoItem(nbtItem);
         return item;
     }
 }

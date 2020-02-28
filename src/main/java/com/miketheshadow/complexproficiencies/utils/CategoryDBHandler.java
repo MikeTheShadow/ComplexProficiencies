@@ -17,46 +17,51 @@ import java.util.List;
 public class CategoryDBHandler {
 
     private static  MongoCollection<Document> collection = init();
-    public static void checkCategory(Category category) {
+    public static boolean checkCategory(Category category) {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("path", category.getPath()));
-        try {
-            if (cursor.first() == null) {
-                collection.insertOne(category.toDocument());
-                Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
-            }
-        } catch (Exception e) {
+        if (cursor.first() == null) {
             collection.insertOne(category.toDocument());
-            Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + "Adding new category: " + category.getTitle());
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
+            return true;
         }
+        return false;
     }
-
-    public static List<Category> getSubCategories(String path) {
-        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", path));
+    public static boolean addSubCategory(Category category) {
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", category.getPath()));
+        if (cursor.first() == null) {
+            collection.insertOne(category.toDocument());
+            Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new category: " + category.getTitle());
+            return true;
+        }
+        else
+        {
+            Bukkit.broadcastMessage(cursor.first().toJson());
+        }
+        return false;
+    }
+    public static List<Category> getSubCategories(String location) {
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("location", location));
         List<Category> categories = new ArrayList<>();
         for (Document document : cursor) {
             categories.add(new Category(document));
         }
         return categories;
     }
-
+    public static Category getCategory(String path){
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", path));
+        if(cursor.first() == null) return null;
+        return new Category(cursor.first());
+    }
     public static void updateCategory(Category category) {
         collection.replaceOne(new BasicDBObject("path", category.getPath()), category.toDocument());
     }
 
     public static boolean removeCategory(Category category){
-        Document doc = getCategoryByTitle(category);
-        if(doc == null)return false;
-        collection.deleteOne(getCategoryByTitle(category));
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("path", category.getPath()));
+        Document remove = cursor.first();
+        if(remove == null) return false;
+        collection.deleteOne(remove);
         return true;
-    }
-
-    public static Document getCategoryByTitle(Category category){
-        FindIterable<Document> cursor = collection.find(new BasicDBObject("title", category.getTitle()));
-        for (Document doc : cursor)
-        {
-            if(doc.getString("path").equals(""))return doc;
-        }
-        return null;
     }
 
     public static MongoCollection<Document> init() {

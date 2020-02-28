@@ -1,13 +1,12 @@
 package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
-import com.miketheshadow.complexproficiencies.utils.CustomUser;
-import com.miketheshadow.complexproficiencies.utils.ModifyStats;
-import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.*;
 import de.tr7zw.nbtapi.NBTCompound;
+import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -99,20 +98,63 @@ public class GenericGUI {
         UserDBHandler.updatePlayer(customPlayer);
     }
 
-    public void itemBuilder(Player player, String guiName) {
+    public static void addCategory(Player player, String guiName) {
         Inventory inventory = Bukkit.createInventory(player, 54, guiName);
-        inventory.setItem(53, BaseCategories.register(Material.GREEN_SHULKER_BOX.toString(), "CREATE"));
-        player.openInventory(inventory);
-    }
-
-    public void baseGUI(Player player, String inventoryName)
-    {
-        Inventory inventory = Bukkit.createInventory(player, 54, inventoryName);
         inventory.setItem(45,BaseCategories.previousPage);
-        inventory.setItem(49,BaseCategories.pageNumber);
+        inventory.setItem(49,BaseCategories.registerBuilder(guiName,"subcategory"));
         inventory.setItem(53,BaseCategories.nextPage);
-        player.openInventory(inventory);
+        player.openInventory(addCategories(inventory, guiName));
     }
 
+    public static void baseGUI(Player player, String guiName)
+    {
+        Inventory inventory = Bukkit.createInventory(player, 54, guiName);
+        inventory.setItem(45,BaseCategories.previousPage);
+        inventory.setItem(49,BaseCategories.registerTitle(Material.RED_SHULKER_BOX.toString(),"PAGE 1",guiName));
+        inventory.setItem(53,BaseCategories.nextPage);
+        player.openInventory(addCategories(inventory, guiName));
+    }
+    public static void nextWindowGUI(Player player, String guiName,ItemStack item)
+    {
+        NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
+        String location = nbtItem.getCompound("tag").getCompound("display").getString("path");
+        location = location + "/" + guiName;
+        nbtItem.getCompound("tag").getCompound("display").setString("path",location);
+        item = NBTItem.convertNBTtoItem(nbtItem);
+        Inventory inventory = Bukkit.createInventory(player, 54, guiName);
+        inventory.setItem(45,BaseCategories.previousPage);
+        inventory.setItem(49,item);
+        inventory.setItem(53,BaseCategories.nextPage);
+        player.openInventory(addCategories(inventory, location));
+    }
+    public static void subCategoryBuilderGUI(Player player, String guiName,ItemStack item)
+    {
+        NBTContainer nbtItem = NBTItem.convertItemtoNBT(item);
+        nbtItem.getCompound("tag").getCompound("display").setString("type","subBuilder");
+        item = NBTItem.convertNBTtoItem(nbtItem);
+        Inventory inventory = Bukkit.createInventory(player, 54, guiName);
+        inventory.setItem(45,BaseCategories.previousPage);
+        inventory.setItem(49,item);
+        inventory.setItem(53,BaseCategories.nextPage);
+        player.openInventory(addCategories(inventory, guiName));
+    }
+    public static Inventory addCategories(Inventory inventory,String path)
+    {
+        path = path.toLowerCase();
+        if(path.charAt(0) != '/') path = "/" + path;
+        List<Category> categories = CategoryDBHandler.getSubCategories(path);
+        Bukkit.broadcastMessage("DEBUG PATH: " + path);
+        Bukkit.broadcastMessage(categories.size() + " big");
+        for (Category category: categories)
+        {
+            try
+            {
+                NBTContainer container = new NBTContainer(category.getIcon());
+                inventory.addItem(NBTItem.convertNBTtoItem(container));
+            }catch (Exception ignored){}
+
+        }
+        return inventory;
+    }
 
 }

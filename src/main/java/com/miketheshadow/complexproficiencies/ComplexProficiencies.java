@@ -38,6 +38,9 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("craftinggui").setExecutor(new CustomCommandListener(this));
         this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
         this.getCommand("addrecipe").setExecutor(new CustomCommandListener(this));
+        this.getCommand("addcategory").setExecutor(new CustomCommandListener(this));
+        this.getCommand("removecategory").setExecutor(new CustomCommandListener(this));
+        this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
     }
 
     @Override
