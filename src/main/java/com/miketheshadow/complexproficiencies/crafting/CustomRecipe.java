@@ -16,11 +16,14 @@ public class CustomRecipe implements Serializable {
     private String parent;
     private int levelReq;
     private int xpGain;
+
     private String profession;
 
-    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted, int levelReq, int xpGain, String profession) {
+    private String name;
+    public CustomRecipe(List<ItemStack> requiredItems, NBTContainer itemToBeCrafted, int levelReq, int xpGain, String profession,String parent,String name) {
         List<String> items = new ArrayList<>();
-        for (ItemStack item : requiredItems) {
+        for (ItemStack item : requiredItems)
+        {
             items.add(NBTItem.convertItemtoNBT(item).toString());
         }
         this.requiredItems = items;
@@ -28,6 +31,8 @@ public class CustomRecipe implements Serializable {
         this.levelReq = levelReq;
         this.xpGain = xpGain;
         this.profession = profession;
+        this.parent = parent;
+        this.name = name;
     }
 
     public CustomRecipe(Document document) {
@@ -37,6 +42,7 @@ public class CustomRecipe implements Serializable {
         this.levelReq = document.getInteger("levelReq");
         this.xpGain = document.getInteger("xpGain");
         this.profession = document.getString("profession");
+        this.name = document.getString("name");
     }
 
     public List<ItemStack> getRequiredItems() {
@@ -71,6 +77,7 @@ public class CustomRecipe implements Serializable {
         document.append("levelReq", levelReq);
         document.append("xpGain", xpGain);
         document.append("profession", profession);
+        document.append("name", name);
         return document;
     }
 
@@ -97,4 +104,8 @@ public class CustomRecipe implements Serializable {
     public void setParent(String parent) {
         this.parent = parent;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 }

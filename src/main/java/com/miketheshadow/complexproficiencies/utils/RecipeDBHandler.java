@@ -18,7 +18,7 @@ public class RecipeDBHandler {
 
     private static  MongoCollection<Document> collection = init();
     public static void checkRecipe(CustomRecipe recipe) {
-        FindIterable<Document> cursor = collection.find(new BasicDBObject("item", recipe.getItemToBeCrafted()));
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("name", recipe.getName()));
         try {
             if (cursor.first() == null) {
                 collection.insertOne(recipe.toDocument());
@@ -37,6 +37,11 @@ public class RecipeDBHandler {
             recipes.add(new CustomRecipe(document));
         }
         return recipes;
+    }
+    public static CustomRecipe getRecipeByItem(String name)
+    {
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("name", name));
+        return new CustomRecipe(cursor.first());
     }
 
     public static void updateRecipe(CustomRecipe recipe) {

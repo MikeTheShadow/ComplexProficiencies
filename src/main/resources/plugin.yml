@@ -6,7 +6,7 @@ authors: [MikeTheShadow]
 description: Creates complex proficiencies For MC.
 depend: [NBTAPI]
 commands:
-  craftinggui:
+  opengui:
     description: Displays a craftingui gui
     usage: /<craftingui> [GUI Name]
     permission: ComplexProficiencies.gui
@@ -18,7 +18,7 @@ commands:
     permission-message: You don't have ComplexProficiencies.admin permission
   addrecipe:
     description: add a recipe to a prof
-    usage: /<addrecipe> [level req] [experience amount]
+    usage: /<addrecipe> [level req] [experience amount] [gui name] [proffession]
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
   addcategory:
