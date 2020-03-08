@@ -2,6 +2,7 @@ package com.miketheshadow.complexproficiencies.api;
 
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ public class ProficiencyAPI
     public static int getProfLevel(Player player,String profname)
     {
         CustomUser user = UserDBHandler.getPlayer(player);
+        if(user.getProfessions() == null) return -1;
         return user.getProfessions().get(profname);
     }
 

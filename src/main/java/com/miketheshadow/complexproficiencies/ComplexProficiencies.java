@@ -14,11 +14,11 @@ public class ComplexProficiencies extends JavaPlugin {
     public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing"};
 
     //Create a singleton here.
-    public ComplexProficiencies complexProficiencies;
+    public static ComplexProficiencies complexProficiencies;
 
     public ComplexProficiencies getInstance()
     {
-        if(complexProficiencies == null) { this.complexProficiencies = this; }
+        if(complexProficiencies == null) { complexProficiencies = this; }
         return complexProficiencies;
     }
 
