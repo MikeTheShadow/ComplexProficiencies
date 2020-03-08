@@ -8,23 +8,21 @@ import java.util.HashMap;
 
 public class ProficiencyAPI
 {
-    public int getProfLevel(Player player,String profname)
+    public static int getProfLevel(Player player,String profname)
     {
         CustomUser user = UserDBHandler.getPlayer(player);
         return user.getProfessions().get(profname);
     }
 
-    public HashMap<String, Integer> getAllProfs(Player player)
+    public static HashMap<String, Integer> getAllProfs(Player player)
     {
         CustomUser user = UserDBHandler.getPlayer(player);
         return user.getProfessions();
     }
 
-    public void updateProf(Player player,String profname,int experienceAmount)
+    public static void updateProf(Player player,String profname,int experienceAmount)
     {
         CustomUser user = UserDBHandler.getPlayer(player);
         user.addExperience(profname,experienceAmount,player);
     }
-
-
 }
