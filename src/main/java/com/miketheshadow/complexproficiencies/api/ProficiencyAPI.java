@@ -13,12 +13,13 @@ public class ProficiencyAPI
     {
         CustomUser user = UserDBHandler.getPlayer(player);
         if(user.getProfessions() == null) return -1;
-        return user.getProfessions().get(profname);
+        return user.getLevelFromProf(profname);
     }
 
     public static HashMap<String, Integer> getAllProfs(Player player)
     {
         CustomUser user = UserDBHandler.getPlayer(player);
+        if(user.getProfessions() == null) return null;
         return user.getProfessions();
     }
 
