@@ -1,7 +1,6 @@
 package com.miketheshadow.complexproficiencies;
 
 
-import com.miketheshadow.complexproficiencies.crafting.Crafter;
 import com.miketheshadow.complexproficiencies.listener.CustomCommandListener;
 import com.miketheshadow.complexproficiencies.listener.InventoryListener;
 import com.miketheshadow.complexproficiencies.listener.PlayerJoinListener;
@@ -9,18 +8,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 //TODO make it so that the person who has eaten the most carrots gets nightvision
 
 public class ComplexProficiencies extends JavaPlugin {
-    public static final String[] profList = new String[]{"Armorsmithing", "Cooking", "Farming", "Fishing", "Handicrafts", "Leatherworking", "Metalworking", "Mining", "Weaponsmithing"};
-    public static Map<UUID, Crafter> crafters = new HashMap<>();
+    public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing"};
+
+    //Create a singleton here.
+    public ComplexProficiencies complexProficiencies;
+
+    public ComplexProficiencies getInstance()
+    {
+        if(complexProficiencies == null) { this.complexProficiencies = this; }
+        return complexProficiencies;
+    }
+
 
     @Override
     public void onEnable() {
+        getInstance();
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdir();
         }
