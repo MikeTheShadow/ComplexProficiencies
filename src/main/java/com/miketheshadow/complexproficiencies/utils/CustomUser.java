@@ -12,6 +12,7 @@ public class CustomUser {
     private String name;
     private String uid;
     private HashMap<String, Integer> professions = new HashMap<>();
+
     private int balance = 0;
     public CustomUser(String name, String uid) {
         this.name = name;
@@ -39,11 +40,11 @@ public class CustomUser {
     public String getName() {
         return name;
     }
-
     public String getUid() {
         return uid;
     }
-
+    public int getBalance() { return balance; }
+    public void setBalance(int balance) { this.balance = balance; }
     public HashMap<String, Integer> getProfessions() {
         return professions;
     }
