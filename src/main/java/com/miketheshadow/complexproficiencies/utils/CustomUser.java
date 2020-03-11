@@ -12,8 +12,8 @@ public class CustomUser {
     private String name;
     private String uid;
     private HashMap<String, Integer> professions = new HashMap<>();
-
     private int balance = 0;
+    private int labor = 0;
     public CustomUser(String name, String uid) {
         this.name = name;
         this.uid = uid;
@@ -31,6 +31,7 @@ public class CustomUser {
         this.name = document.getString("name");
         this.uid = document.getString("uid");
         this.balance = document.getInteger("balance");
+        this.labor = document.getInteger("labor");
         for (String prof : ComplexProficiencies.profList) {
             professions.put(prof, document.getInteger(prof));
         }
@@ -40,11 +41,17 @@ public class CustomUser {
     public String getName() {
         return name;
     }
+
     public String getUid() {
         return uid;
     }
+
     public int getBalance() { return balance; }
     public void setBalance(int balance) { this.balance = balance; }
+
+    public int getLabor() { return labor; }
+    public void setLabor(int labor) { this.labor = labor; }
+
     public HashMap<String, Integer> getProfessions() {
         return professions;
     }
@@ -64,6 +71,7 @@ public class CustomUser {
         document.append("name", name);
         document.append("uid", uid);
         document.append("balance",balance);
+        document.append("labor",labor);
         for (Map.Entry<String, Integer> map : professions.entrySet()) {
             document.append(map.getKey(), map.getValue());
         }
