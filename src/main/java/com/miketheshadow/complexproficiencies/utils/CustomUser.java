@@ -1,6 +1,10 @@
 package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import org.bson.BSONObject;
+import org.bson.BasicBSONObject;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -34,8 +38,10 @@ public class CustomUser {
         this.uid = document.getString("uid");
         this.balance = document.getInteger("balance");
         this.labor = document.getInteger("labor");
-        this.professions = (HashMap<String, Integer>)document.get("professions");
-        this.purses = (HashMap<String, Integer>)document.get("purses");
+        BasicDBObject prof = new BasicDBObject((Document)document.get("professions"));
+        this.professions = (HashMap<String, Integer>) prof.toMap();
+        BasicDBObject purse = new BasicDBObject((Document)document.get("purses"));
+        this.purses = (HashMap<String, Integer>) purse.toMap();
     }
 
 
