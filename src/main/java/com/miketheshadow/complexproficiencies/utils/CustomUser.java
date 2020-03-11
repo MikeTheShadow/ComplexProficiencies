@@ -6,14 +6,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class CustomUser {
     private String name;
     private String uid;
     private HashMap<String, Integer> professions = new HashMap<>();
+    private HashMap<String, Integer> purses = new HashMap<>();
     private int balance = 0;
     private int labor = 0;
+
+
     public CustomUser(String name, String uid) {
         this.name = name;
         this.uid = uid;
@@ -32,9 +34,8 @@ public class CustomUser {
         this.uid = document.getString("uid");
         this.balance = document.getInteger("balance");
         this.labor = document.getInteger("labor");
-        for (String prof : ComplexProficiencies.profList) {
-            professions.put(prof, document.getInteger(prof));
-        }
+        this.professions = (HashMap<String, Integer>)document.get("professions");
+        this.purses = (HashMap<String, Integer>)document.get("purses");
     }
 
 
@@ -51,6 +52,9 @@ public class CustomUser {
 
     public int getLabor() { return labor; }
     public void setLabor(int labor) { this.labor = labor; }
+
+    public HashMap<String, Integer> getPurses() { return purses; }
+    public void setPurses(HashMap<String, Integer> purses) { this.purses = purses; }
 
     public HashMap<String, Integer> getProfessions() {
         return professions;
@@ -72,9 +76,8 @@ public class CustomUser {
         document.append("uid", uid);
         document.append("balance",balance);
         document.append("labor",labor);
-        for (Map.Entry<String, Integer> map : professions.entrySet()) {
-            document.append(map.getKey(), map.getValue());
-        }
+        document.append("professions",professions);
+        document.append("purses",purses);
         return document;
     }
 
