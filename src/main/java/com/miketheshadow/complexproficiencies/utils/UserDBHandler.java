@@ -11,6 +11,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class UserDBHandler {
@@ -32,6 +34,16 @@ public class UserDBHandler {
 
     public static void updatePlayer(CustomUser player) {
         collection.replaceOne(new BasicDBObject("uid", player.getUid()), player.toDocument());
+    }
+
+    public static List<CustomUser> getAllPlayers() {
+        List<CustomUser> users = new ArrayList<>();
+        for (Document document: collection.find())
+        {
+            users.add(new CustomUser(document));
+            Bukkit.broadcastMessage(document.getString("uid"));
+        }
+        return users;
     }
 
     public static MongoCollection<Document> init() {
