@@ -8,6 +8,7 @@ import java.util.List;
 
 public class LaborThread implements Runnable {
 
+    Thread thread;
     @Override
     public void run() {
         while(true){
@@ -25,6 +26,14 @@ public class LaborThread implements Runnable {
             try { Thread.sleep(300000);
             } catch (InterruptedException e) {
                 e.printStackTrace(); }
+        }
+    }
+    public void start()
+    {
+        if(thread == null)
+        {
+            thread = new Thread(this,"laborThread");
+            thread.start();
         }
     }
 }

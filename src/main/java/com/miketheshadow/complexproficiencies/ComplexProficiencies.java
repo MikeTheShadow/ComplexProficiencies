@@ -52,7 +52,7 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
 
         LaborThread laborThread = new LaborThread();
-        laborThread.run();
+        laborThread.start();
     }
 
     @Override
