@@ -55,7 +55,7 @@ public class ComplexProficiencies extends JavaPlugin {
             for (CustomUser user : players)
             {
                 int labor = user.getLabor();
-                if(!(labor > 1995)){
+                if(!(labor > 1990)){
                     Player player = Bukkit.getPlayer(user.getName());
                     if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained " + ChatColor.GOLD +"10" + ChatColor.YELLOW + " labor!");
                     user.setLabor(labor + 10);
