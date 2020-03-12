@@ -41,7 +41,6 @@ public class UserDBHandler {
         for (Document document: collection.find())
         {
             users.add(new CustomUser(document));
-            Bukkit.broadcastMessage(document.getString("uid"));
         }
         return users;
     }
