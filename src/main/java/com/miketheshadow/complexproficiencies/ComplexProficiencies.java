@@ -50,14 +50,19 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.GRAY + "Doing labor tick");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Doing labor tick");
             List<CustomUser> players = UserDBHandler.getAllPlayers();
             for (CustomUser user : players)
             {
                 int labor = user.getLabor();
                 if(!(labor > 1990)){
                     Player player = Bukkit.getPlayer(user.getName());
-                    if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained " + ChatColor.GOLD +"10" + ChatColor.YELLOW + " labor!");
+                    if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained "
+                            + ChatColor.GOLD
+                            +"10"
+                            + ChatColor.YELLOW
+                            + " labor!"
+                            + ChatColor.GRAY + "[" + ChatColor.GOLD + labor + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
                     user.setLabor(labor + 10);
                     UserDBHandler.updatePlayer(user);
                 }
