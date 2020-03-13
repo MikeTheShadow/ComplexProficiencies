@@ -62,7 +62,7 @@ public class ComplexProficiencies extends JavaPlugin {
                             +"10"
                             + ChatColor.YELLOW
                             + " labor!"
-                            + ChatColor.GRAY + "[" + ChatColor.GOLD + labor + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                            + ChatColor.GRAY + "[" + ChatColor.GOLD + (labor + 10) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
                     user.setLabor(labor + 10);
                     UserDBHandler.updatePlayer(user);
                 }
