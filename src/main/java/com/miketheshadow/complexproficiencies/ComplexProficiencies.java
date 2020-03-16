@@ -66,6 +66,17 @@ public class ComplexProficiencies extends JavaPlugin {
                     user.setLabor(labor + 10);
                     UserDBHandler.updatePlayer(user);
                 }
+                else if(labor < 2000) {
+                    Player player = Bukkit.getPlayer(user.getName());
+                    if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained "
+                            + ChatColor.GOLD
+                            +"10"
+                            + ChatColor.YELLOW
+                            + " labor! "
+                            + ChatColor.GRAY + "[" + ChatColor.GOLD + (2000 - labor) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                    user.setLabor(2000);
+                    UserDBHandler.updatePlayer(user);
+                }
             }
         }, 0L, 6000L);
     }
