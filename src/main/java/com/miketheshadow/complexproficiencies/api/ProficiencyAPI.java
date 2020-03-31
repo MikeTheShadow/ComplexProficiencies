@@ -21,5 +21,6 @@ public class ProficiencyAPI {
     public static void addExperienceToProf(Player player,String profname,int experienceAmount) {
         CustomUser user = UserDBHandler.getPlayer(player);
         user.addExperience(profname,experienceAmount,player);
+        UserDBHandler.updatePlayer(user);
     }
 }

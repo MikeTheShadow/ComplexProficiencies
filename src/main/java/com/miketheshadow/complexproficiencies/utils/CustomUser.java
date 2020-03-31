@@ -2,9 +2,6 @@ package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import org.bson.BSONObject;
-import org.bson.BasicBSONObject;
 import org.bson.Document;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -16,23 +13,21 @@ public class CustomUser {
     private String uid;
     private HashMap<String, Integer> professions = new HashMap<>();
     private HashMap<String, Integer> purses = new HashMap<>();
+
+    //level then experience
+    private int[] levelXP;
+
     private int balance = 0;
     private int labor = 0;
-
 
     public CustomUser(String name, String uid) {
         this.name = name;
         this.uid = uid;
         setProfessions();
+        levelXP = new int[] {1,0};
     }
 
-    public CustomUser(String name, String uid, HashMap<String, Integer> professions,int balance) {
-        this.name = name;
-        this.uid = uid;
-        this.professions = professions;
-        this.balance = balance;
-    }
-
+    //from document
     public CustomUser(Document document) {
         this.name = document.getString("name");
         this.uid = document.getString("uid");
@@ -42,8 +37,11 @@ public class CustomUser {
         this.professions = (HashMap<String, Integer>) prof.toMap();
         BasicDBObject purse = new BasicDBObject((Document)document.get("purses"));
         this.purses = (HashMap<String, Integer>) purse.toMap();
+        this.levelXP = new int[] {document.getInteger("level"),document.getInteger("xp")};
     }
 
+    public int[] getLevelXP() { return levelXP; }
+    public void setLevelXP(int[] levelXP) { this.levelXP = levelXP; }
 
     public String getName() {
         return name;
@@ -84,6 +82,8 @@ public class CustomUser {
         document.append("labor",labor);
         document.append("professions",professions);
         document.append("purses",purses);
+        document.append("level",levelXP[0]);
+        document.append("xp",levelXP[1]);
         return document;
     }
 

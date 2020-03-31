@@ -4,7 +4,7 @@ main: com.miketheshadow.complexproficiencies.ComplexProficiencies
 api-version: 1.13
 authors: [MikeTheShadow]
 description: Creates complex proficiencies For MC.
-depend: [NBTAPI]
+depend: [NBTAPI,WorldGuard,XPBoost,Vault,Duels]
 commands:
   opengui:
     description: Displays a craftingui gui
@@ -36,3 +36,38 @@ commands:
     usage: /<addsubcategory> [Base Category]
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
+  resetdb:
+    description: wipe the database for Complex Proficiencies
+    permission: ComplexProficiencies.danger
+    permission-message: You don't have UNKOWN_PERMISSION
+#USER STAT STUFF
+  userstats:
+    description: Gets yours/a users current stats.
+    usage: /<checkstats> [player]
+    permission: ComplexProficiencies.misc
+    permission-message: You don't have ComplexProficiencies.misc permission
+  mystats:
+    description: Gets your current stats.
+    usage: /<mystats>
+    permission: ComplexProficiencies.basic
+    permission-message: You don't have ComplexProficiencies.basic permission
+  fixexperience:
+    description: Updates all current players experience to match that of the leveling system.
+    usage: /<fixexperience>
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+  setexperience:
+    description: Sets the experience of a player.
+    usage: /<setexperience> [player] [Amount]
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+  setlevel:
+    description: Sets the level of a player.
+    usage: /<setlevel> [player] [Amount]
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+  addexperience:
+    description: Adds experience to the select player.
+    usage: /<addexperience> [player] [Amount]
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission

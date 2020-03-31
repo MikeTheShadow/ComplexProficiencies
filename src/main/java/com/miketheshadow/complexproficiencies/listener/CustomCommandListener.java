@@ -4,6 +4,10 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
 import com.miketheshadow.complexproficiencies.utils.CategoryDBHandler;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,6 +16,9 @@ import org.bukkit.entity.Player;
 
 public class CustomCommandListener implements CommandExecutor {
     private final ComplexProficiencies complexProficiencies;
+
+    private static boolean reset = false;
+    private static boolean active= false;
 
     public CustomCommandListener(ComplexProficiencies complexProficiencies) {
         this.complexProficiencies = complexProficiencies;
@@ -93,6 +100,27 @@ public class CustomCommandListener implements CommandExecutor {
                 return true;
             }
             return false;
+        }
+        else if(cmd.getName().equalsIgnoreCase("resetdb")) {
+            if(!active && ComplexProficiencies.levelConfig.getBoolean("reset")) {
+                active = true;
+                Bukkit.broadcastMessage(ChatColor.RED + "DELETING ALL USER DATA IN COMPLEX PROFICIENCIES in 30s RUN THIS COMMAND AGAIN TO CANCEL!");
+                Bukkit.getScheduler().scheduleSyncDelayedTask(ComplexProficiencies.complexProficiencies, () -> {
+                    if(active) {
+                        Bukkit.broadcastMessage(ChatColor.RED + "REMOVING PLAYER DATA...");
+                        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+                        MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
+                        database.drop();
+                        Bukkit.broadcastMessage(ChatColor.RED + "COMPLETE!");
+                    }
+                }, 600);
+            } else if(active) {
+                Bukkit.broadcastMessage(ChatColor.RED + "DEACTIVATING DATA REMOVAL!");
+                active = false;
+            } else {
+                sender.sendMessage(ChatColor.RED + "Reset is disabled!");
+            }
+            return true;
         }
         return false;
     }
