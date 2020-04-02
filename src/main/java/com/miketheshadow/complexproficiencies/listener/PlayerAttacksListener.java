@@ -3,7 +3,7 @@ package com.miketheshadow.complexproficiencies.listener;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.sk89q.worldguard.bukkit.RegionContainer;
 import com.sk89q.worldguard.bukkit.RegionQuery;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;

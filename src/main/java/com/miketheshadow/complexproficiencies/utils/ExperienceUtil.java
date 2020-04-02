@@ -1,9 +1,9 @@
 package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;

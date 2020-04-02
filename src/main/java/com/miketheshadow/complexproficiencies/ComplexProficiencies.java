@@ -3,10 +3,11 @@ package com.miketheshadow.complexproficiencies;
 
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 //TODO make it so that the person who has eaten the most carrots gets night-vision
 
@@ -36,6 +38,17 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        //for adding stuff without breaking everything
+        for(Document document : UserDBHandler.getAllDocuments()) {
+            if(document.get("lastHP") == null) {
+                document.append("lastHP",50D);
+                UserDBHandler.updateDocument(document);
+            }
+        }
+
+
+
         loadLevelConfig();
         levelMap  = buildLevelMap();
         getInstance();
@@ -77,8 +90,7 @@ public class ComplexProficiencies extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Doing labor tick");
             List<CustomUser> players = UserDBHandler.getAllPlayers();
-            for (CustomUser user : players)
-            {
+            for (CustomUser user : players) {
                 int labor = user.getLabor();
                 if(!(labor > 1990)){
                     Player player = Bukkit.getPlayer(user.getName());
@@ -130,7 +142,14 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        for (CustomUser user: UserDBHandler.getAllPlayers())
+        {
+            if(Objects.requireNonNull(Bukkit.getPlayer(user.getName())).isOnline()) {
+                double health = Bukkit.getPlayer(user.getName()).getHealth();
+                user.setLastHP(health);
+                UserDBHandler.updatePlayer(user);
+            }
+        }
     }
 
 

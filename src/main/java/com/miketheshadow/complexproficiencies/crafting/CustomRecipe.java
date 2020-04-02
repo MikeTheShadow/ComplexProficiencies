@@ -81,6 +81,14 @@ public class CustomRecipe implements Serializable {
         return document;
     }
 
+    public String getItem() { return item; }
+
+    public void setItem(String item) { this.item = item; }
+
+    public String getProfession() { return profession; }
+
+    public void setProfession(String profession) { this.profession = profession; }
+
     public int getLevelReq() {
         return levelReq;
     }

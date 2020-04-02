@@ -14,6 +14,8 @@ public class CustomUser {
     private HashMap<String, Integer> professions = new HashMap<>();
     private HashMap<String, Integer> purses = new HashMap<>();
 
+    private double lastHP = 1;
+
     //level then experience
     private int[] levelXP;
 
@@ -38,9 +40,15 @@ public class CustomUser {
         BasicDBObject purse = new BasicDBObject((Document)document.get("purses"));
         this.purses = (HashMap<String, Integer>) purse.toMap();
         this.levelXP = new int[] {document.getInteger("level"),document.getInteger("xp")};
+        this.lastHP = document.getDouble("lastHP");
     }
 
+    public double getLastHP() { return lastHP; }
+
+    public void setLastHP(double lastHP) { this.lastHP = lastHP; }
+
     public int[] getLevelXP() { return levelXP; }
+
     public void setLevelXP(int[] levelXP) { this.levelXP = levelXP; }
 
     public String getName() {
@@ -52,6 +60,7 @@ public class CustomUser {
     }
 
     public int getBalance() { return balance; }
+
     public void setBalance(int balance) { this.balance = balance; }
 
     public int getLabor() { return labor; }
@@ -84,6 +93,7 @@ public class CustomUser {
         document.append("purses",purses);
         document.append("level",levelXP[0]);
         document.append("xp",levelXP[1]);
+        document.append("lastHP",lastHP);
         return document;
     }
 

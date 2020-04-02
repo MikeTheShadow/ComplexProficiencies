@@ -1,7 +1,7 @@
 package com.miketheshadow.complexproficiencies.api;
 
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.entity.Player;
 import java.util.HashMap;
 

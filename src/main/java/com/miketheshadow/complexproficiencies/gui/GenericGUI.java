@@ -2,7 +2,8 @@ package com.miketheshadow.complexproficiencies.gui;
 
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
-import com.miketheshadow.complexproficiencies.utils.*;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.RecipeDBHandler;
 import de.tr7zw.nbtapi.NBTCompound;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;

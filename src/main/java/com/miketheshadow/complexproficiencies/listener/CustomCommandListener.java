@@ -3,7 +3,7 @@ package com.miketheshadow.complexproficiencies.listener;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
-import com.miketheshadow.complexproficiencies.utils.CategoryDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoDatabase;
@@ -55,8 +55,7 @@ public class CustomCommandListener implements CommandExecutor {
             if (!(sender instanceof Player)) return false;
             if (args.length != 1) { return false; }
             Category category = CategoryDBHandler.getCategory("/" + args[0].toLowerCase());
-            if(category == null)
-            {
+            if(category == null) {
                 sender.sendMessage(ChatColor.RED + "Error! No category exists with the name: " + args[0]);
                 return true;
             }
@@ -77,8 +76,7 @@ public class CustomCommandListener implements CommandExecutor {
             return true;
         } else if (cmd.getName().equalsIgnoreCase("addrecipe")) {
             if (!(sender instanceof Player)) return false;
-            if (args.length == 4)
-            {
+            if (args.length == 4) {
                 Category category = CategoryDBHandler.getCategory("/" + args[3].toLowerCase());
                 if(category == null)
                 {
@@ -88,8 +86,7 @@ public class CustomCommandListener implements CommandExecutor {
                 GenericGUI.addRecipe((Player)sender,category.getTitle(),Integer.parseInt(args[0]),Integer.parseInt(args[1]),category.getTitle());
                 return true;
             }
-            else if(args.length == 3)
-            {
+            else if(args.length == 3) {
                 Category category = CategoryDBHandler.getCategory("/" + args[2].toLowerCase());
                 if(category == null)
                 {

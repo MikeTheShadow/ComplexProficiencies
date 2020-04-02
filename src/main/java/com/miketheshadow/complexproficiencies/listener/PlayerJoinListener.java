@@ -3,7 +3,7 @@ package com.miketheshadow.complexproficiencies.listener;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,12 +16,14 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
-
         //Check if player is in database
         Player player = event.getPlayer();
         UserDBHandler.checkPlayer(player);
-        int level = UserDBHandler.getPlayer(player).getLevelXP()[0];
-        if(player.getLevel() != level) player.setLevel(level);
+        CustomUser user = UserDBHandler.getPlayer(player);
+        int level = user.getLevelXP()[0];
+        double health = user.getLastHP();
+        player.setHealth(health);
+        player.setLevel(level);
         player.setExp(0);
         //Warn reset
         if(ComplexProficiencies.levelConfig.getBoolean("reset") && player.isOp()) {
@@ -30,8 +32,11 @@ public class PlayerJoinListener implements Listener {
     }
 
 
-    //TODO check to see if the old hp error is still there.
     @EventHandler(priority =  EventPriority.HIGHEST)
     public void playerLeaveEvent(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        CustomUser user = UserDBHandler.getPlayer(player);
+        user.setLastHP(player.getHealth());
+        UserDBHandler.updatePlayer(user);
     }
 }

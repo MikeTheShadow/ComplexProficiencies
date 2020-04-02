@@ -4,11 +4,12 @@ import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
 import com.miketheshadow.complexproficiencies.gui.TagRegister;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
-import com.miketheshadow.complexproficiencies.utils.CategoryDBHandler;
-import com.miketheshadow.complexproficiencies.utils.RecipeDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.RecipeDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -51,7 +52,12 @@ public class InventoryListener implements Listener {
             GenericGUI.BuilderGUI(player,"RECIPE BUILDER",itemClicked,"recipeBuilder");
         } else if(clickedType.equals("crafting")) {
             PlayerInventory playerInventory = player.getInventory();
+            CustomUser user = UserDBHandler.getPlayer(player);
             CustomRecipe recipe = RecipeDBHandler.getRecipeByItem(topInventory.getItem(0).getItemMeta().getDisplayName());
+            if(user.getProfessions().get(recipe.getProfession()) < recipe.getLevelReq()) {
+                player.sendMessage(ChatColor.RED + "Your require level " + recipe.getLevelReq() + " in " + recipe.getProfession());
+                return;
+            }
             for (ItemStack item: recipe.getRequiredItems())
             {
                 if(!playerInventory.containsAtLeast(item,item.getAmount()))
@@ -62,8 +68,7 @@ public class InventoryListener implements Listener {
             }
             for (ItemStack item: recipe.getRequiredItems()) playerInventory.removeItem(item);
             playerInventory.addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
-        }
-        else if(clickedType.equals("subBuilder")) {
+        } else if(clickedType.equals("subBuilder")) {
             for (ItemStack item: topInventory.getContents())
             {
                 if(item == null);
@@ -87,22 +92,18 @@ public class InventoryListener implements Listener {
         } else if(clickedType.equals("recipeBuilder")) {
             ItemStack buildItem = topInventory.getContents()[0];
             List<ItemStack> recipeList = new ArrayList<>();
-            if(buildItem == null)
-            {
+            if(buildItem == null) {
                 player.sendMessage(ChatColor.RED + "You need to add an item to the recipe!");
                 return;
             }
-            for (ItemStack item: topInventory.getContents())
-            {
+            for (ItemStack item: topInventory.getContents()) {
                 if(item == null) continue;
                 if(buildItem == item) continue;
-                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR)
-                {
+                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR) {
                     recipeList.add(item);
                 }
             }
-            if(recipeList.size() < 1)
-            {
+            if(recipeList.size() < 1) {
                 player.sendMessage(ChatColor.RED + "You need to add ingredients to the recipe!");
                 return;
             }

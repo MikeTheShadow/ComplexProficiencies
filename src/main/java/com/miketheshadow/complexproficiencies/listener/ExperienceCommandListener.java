@@ -3,7 +3,7 @@ package com.miketheshadow.complexproficiencies.listener;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
-import com.miketheshadow.complexproficiencies.utils.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;

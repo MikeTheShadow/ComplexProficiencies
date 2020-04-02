@@ -1,5 +1,6 @@
-package com.miketheshadow.complexproficiencies.utils;
+package com.miketheshadow.complexproficiencies.utils.DBHandlers;
 
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -44,6 +45,20 @@ public class UserDBHandler {
         }
         return users;
     }
+
+    //for fixing documents
+    public static List<Document> getAllDocuments() {
+        List<Document> documents = new ArrayList<>();
+        for (Document document: collection.find())
+        {
+            documents.add(document);
+        }
+        return documents;
+    }
+    public static void updateDocument(Document document) {
+        collection.replaceOne(new BasicDBObject("uid",document.get("uid")),document);
+    }
+
 
     public static MongoCollection<Document> init() {
         if(collection == null)

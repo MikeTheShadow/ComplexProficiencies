@@ -1,4 +1,4 @@
-package com.miketheshadow.complexproficiencies.utils;
+package com.miketheshadow.complexproficiencies.utils.DBHandlers;
 
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.mongodb.BasicDBObject;
@@ -74,4 +74,11 @@ public class CategoryDBHandler {
         return collection;
     }
 
+    public static List<Document> getAllDocuments() {
+        return null;
+    }
+
+    public static void updateDocument(Document document) {
+
+    }
 }
