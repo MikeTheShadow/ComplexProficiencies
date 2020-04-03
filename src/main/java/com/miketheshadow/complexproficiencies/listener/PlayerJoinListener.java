@@ -14,7 +14,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerJoinListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
         //Check if player is in database
         Player player = event.getPlayer();
@@ -30,7 +30,6 @@ public class PlayerJoinListener implements Listener {
             player.sendMessage(ChatColor.RED + "WARNING RESET MODE IS ENABLED! PLEASE DISABLE IN THE CONFIG IF THIS WAS NOT INTENDED!");
         }
     }
-
 
     @EventHandler(priority =  EventPriority.HIGHEST)
     public void playerLeaveEvent(PlayerQuitEvent event) {

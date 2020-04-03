@@ -39,8 +39,7 @@ public class UserDBHandler {
 
     public static List<CustomUser> getAllPlayers() {
         List<CustomUser> users = new ArrayList<>();
-        for (Document document: collection.find())
-        {
+        for (Document document: collection.find()) {
             users.add(new CustomUser(document));
         }
         return users;
@@ -49,8 +48,7 @@ public class UserDBHandler {
     //for fixing documents
     public static List<Document> getAllDocuments() {
         List<Document> documents = new ArrayList<>();
-        for (Document document: collection.find())
-        {
+        for (Document document: collection.find()) {
             documents.add(document);
         }
         return documents;
@@ -61,8 +59,7 @@ public class UserDBHandler {
 
 
     public static MongoCollection<Document> init() {
-        if(collection == null)
-        {
+        if(collection == null) {
             MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
             MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
             return database.getCollection("Players");

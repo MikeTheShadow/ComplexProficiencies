@@ -28,7 +28,7 @@ public class CustomCommandListener implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if (cmd.getName().equalsIgnoreCase("opengui")) {
             if (!(sender instanceof Player)) return false;
-            if (args.length != 1) {
+            if ( !(args.length == 1 || args.length == 2)) {
                 return false;
             }
             Category category = CategoryDBHandler.getCategory("/" + args[0].toLowerCase());

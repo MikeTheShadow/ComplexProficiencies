@@ -16,7 +16,7 @@ public class PlayerXPListener implements Listener {
         Player player = event.getPlayer();
         CustomUser user = UserDBHandler.getPlayer(player);
         //update user information
-        ExperienceUtil.addPlayerExperience(user,player,event.getAmount(),false);
+        ExperienceUtil.addPlayerExperience(user,player,event.getAmount(),false,true);
         event.setAmount(0);
         player.setExp(0);
     }

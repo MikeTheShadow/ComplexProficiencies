@@ -116,7 +116,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             ComplexProficiencies.rebuildLevelMap();
             for (CustomUser user: customUsers)
             {
-                ExperienceUtil.addPlayerExperience(user,Bukkit.getPlayer(user.getName()),0,true);
+                ExperienceUtil.addPlayerExperience(user,Bukkit.getPlayer(user.getName()),0,true,false);
             }
             return true;
         }
@@ -130,7 +130,7 @@ public class ExperienceCommandListener implements CommandExecutor {
                 int[] levelXP = user.getLevelXP();
                 levelXP[1] = Integer.parseInt(args[1]);
                 user.setLevelXP(levelXP);
-                ExperienceUtil.addPlayerExperience(user,target,0,true);
+                ExperienceUtil.addPlayerExperience(user,target,0,true,false);
                 return true;
             }
             else return false;
@@ -164,7 +164,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             CustomUser user = UserDBHandler.getPlayer(target);
             try {
                 int xpToAdd = Integer.parseInt(args[1]);
-                ExperienceUtil.addPlayerExperience(user,target,xpToAdd,false);
+                ExperienceUtil.addPlayerExperience(user,target,xpToAdd,false,false);
             }
             catch (Exception e) {
                 Bukkit.getServer().getConsoleSender().sendMessage("Error adding experience check that values are correct!");

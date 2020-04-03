@@ -39,7 +39,7 @@ commands:
   resetdb:
     description: wipe the database for Complex Proficiencies
     permission: ComplexProficiencies.danger
-    permission-message: You don't have UNKOWN_PERMISSION
+    permission-message: You don't have UNKNOWN_PERMISSION
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

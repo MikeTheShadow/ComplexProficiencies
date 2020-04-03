@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 
 import java.util.List;
 
-public class ModifyStats {
+public class ModifyItemStats {
     public static NBTCompound modifyWeapons(NBTCompound container, float modifier) {
         NBTCompound compound, loreCompound;
         List<String> loreContainer;

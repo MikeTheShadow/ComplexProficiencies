@@ -89,33 +89,25 @@ public class GenericGUI {
         path = path.toLowerCase();
         if(path.charAt(0) != '/') path = "/" + path;
         List<Category> categories = CategoryDBHandler.getSubCategories(path);
-        for (Category category: categories)
-        {
-            try
-            {
+        for (Category category: categories) {
+            try {
                 NBTContainer container = new NBTContainer(category.getIcon());
                 container.getCompound("tag").getCompound("display").setString("type","category");
                 inventory.addItem(NBTItem.convertNBTtoItem(container));
             }catch (Exception ignored){}
-
         }
-
         return addRecipes(inventory,path);
     }
-    public static Inventory addRecipes(Inventory inventory,String path)
-    {
+    public static Inventory addRecipes(Inventory inventory,String path) {
         path = path.toLowerCase();
         if(path.charAt(0) != '/') path = "/" + path;
         List<CustomRecipe> recipes = RecipeDBHandler.getRecipesByParent(path);
-        for (CustomRecipe recipe: recipes)
-        {
-            try
-            {
+        for (CustomRecipe recipe: recipes) {
+            try {
                 NBTCompound item = recipe.getItemToBeCrafted();
                 item.getCompound("tag").getCompound("display").setString("type","recipe");
                 inventory.addItem(NBTItem.convertNBTtoItem(item));
             }catch (Exception ignored){}
-
         }
         return inventory;
     }

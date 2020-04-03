@@ -4,6 +4,7 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
@@ -12,10 +13,11 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelM
 public class ExperienceUtil
 {
 
-    public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute) {
+    public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {
 
         float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
-        if(bonus < 2) bonus = 1;
+        if(isVanilla) bonus = 1;
+        else if(bonus < 2) bonus = 1;
         addition = Math.round(bonus * addition);
         int[] playerArray = user.getLevelXP();
         int currentLevel = playerArray[0];

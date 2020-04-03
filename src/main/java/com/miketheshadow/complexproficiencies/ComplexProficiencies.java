@@ -94,25 +94,29 @@ public class ComplexProficiencies extends JavaPlugin {
                 int labor = user.getLabor();
                 if(!(labor > 1990)){
                     Player player = Bukkit.getPlayer(user.getName());
-                    if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained "
-                            + ChatColor.GOLD
-                            +"10"
-                            + ChatColor.YELLOW
-                            + " labor!"
-                            + ChatColor.GRAY + "[" + ChatColor.GOLD + (labor + 10) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
-                    user.setLabor(labor + 10);
-                    UserDBHandler.updatePlayer(user);
+                    if(player != null && player.isOnline()) {
+                        player.sendMessage(ChatColor.YELLOW + "You gained "
+                                + ChatColor.GOLD
+                                + "10"
+                                + ChatColor.YELLOW
+                                + " labor!"
+                                + ChatColor.GRAY + "[" + ChatColor.GOLD + (labor + 10) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                        user.setLabor(labor + 10);
+                        UserDBHandler.updatePlayer(user);
+                    }
                 }
                 else if(labor < 2000) {
                     Player player = Bukkit.getPlayer(user.getName());
-                    if(player != null && player.isOnline())player.sendMessage(ChatColor.YELLOW + "You gained "
-                            + ChatColor.GOLD
-                            +"10"
-                            + ChatColor.YELLOW
-                            + " labor! "
-                            + ChatColor.GRAY + "[" + ChatColor.GOLD + (2000 - labor) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
-                    user.setLabor(2000);
-                    UserDBHandler.updatePlayer(user);
+                    if(player != null && player.isOnline()) {
+                        player.sendMessage(ChatColor.YELLOW + "You gained "
+                                + ChatColor.GOLD
+                                + "10"
+                                + ChatColor.YELLOW
+                                + " labor! "
+                                + ChatColor.GRAY + "[" + ChatColor.GOLD + (2000 - labor) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                        user.setLabor(2000);
+                        UserDBHandler.updatePlayer(user);
+                    }
                 }
             }
         }, 0L, 6000L);
@@ -142,8 +146,7 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        for (CustomUser user: UserDBHandler.getAllPlayers())
-        {
+        for (CustomUser user: UserDBHandler.getAllPlayers()) {
             if(Objects.requireNonNull(Bukkit.getPlayer(user.getName())).isOnline()) {
                 double health = Bukkit.getPlayer(user.getName()).getHealth();
                 user.setLastHP(health);
@@ -153,8 +156,7 @@ public class ComplexProficiencies extends JavaPlugin {
     }
 
 
-    public void loadLevelConfig()
-    {
+    public void loadLevelConfig() {
         levelConfig = new Json("config", this.getDataFolder().getPath());
 
         //basic level stuff
