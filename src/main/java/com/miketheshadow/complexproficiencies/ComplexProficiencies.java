@@ -38,7 +38,6 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
         //for adding stuff without breaking everything
         for(Document document : UserDBHandler.getAllDocuments()) {
             if(document.get("lastHP") == null) {
@@ -70,6 +69,7 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new ModifyPlayerDamageListener(),this);
         pluginManager.registerEvents(new PlayerAttacksListener(),this);
         pluginManager.registerEvents(new PlayerXPListener(),this);
+        pluginManager.registerEvents(new EntityDeathListener(),this);
         //register prof commands
         this.getCommand("opengui").setExecutor(new CustomCommandListener(this));
         this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
@@ -79,6 +79,8 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
         this.getCommand("resetdb").setExecutor(new CustomCommandListener(this));
         this.getCommand("labor").setExecutor(new CustomCommandListener(this));
+        this.getCommand("prof").setExecutor(new CustomCommandListener(this));
+        this.getCommand("proftop").setExecutor(new CustomCommandListener(this));
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));

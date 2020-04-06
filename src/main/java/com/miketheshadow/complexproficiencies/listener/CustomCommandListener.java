@@ -6,6 +6,7 @@ import com.miketheshadow.complexproficiencies.gui.GenericGUI;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,6 +14,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomCommandListener implements CommandExecutor {
@@ -126,6 +128,52 @@ public class CustomCommandListener implements CommandExecutor {
             CustomUser user = UserDBHandler.getPlayer((Player) sender);
             player.sendMessage(ChatColor.YELLOW + "You currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
 
+            return true;
+        } else if(cmd.getName().equalsIgnoreCase("prof")) {
+            if(args.length == 1) {
+                if(!(sender instanceof Player)) return false;
+                Player player = (Player) sender;
+                CustomUser user = UserDBHandler.getPlayer(player);
+                if(user.getProfessions().get(args[0]) == null) {
+                    sender.sendMessage(ChatColor.RED + "That prof doesn't exist!");
+                    return true;
+                }
+                int level = user.getLevelFromTotal(user.getProfessions().get(args[0].toLowerCase()));
+                player.sendMessage(ChatColor.GOLD + "You are level: " + ChatColor.GREEN + level + ChatColor.GOLD +" in " + ChatColor.DARK_PURPLE + args[0]);
+                return true;
+            } else if(args.length == 2) {
+                Player player = Bukkit.getPlayer(args[1]);
+                CustomUser user = UserDBHandler.getPlayer(player);
+                if(user.getProfessions().get(args[0]) == null) {
+                    sender.sendMessage(ChatColor.RED + "That prof doesn't exist!");
+                    return true;
+                }
+                int level = user.getLevelFromTotal(user.getProfessions().get(args[0].toLowerCase()));
+                sender.sendMessage(ChatColor.GOLD + "They are level: " + ChatColor.GREEN + level + ChatColor.GOLD +" in " + ChatColor.DARK_PURPLE + args[0]);
+                return true;
+            } return false;
+        } else if(cmd.getName().equalsIgnoreCase("proftop")) {
+            if(args.length != 1) return false;
+            List<CustomUser> userList = UserDBHandler.getAllPlayers();
+            if(userList.get(0).getProfessions().get(args[0]) == null) {
+                sender.sendMessage(ChatColor.RED + "That prof doesn't exist!");
+                return true;
+            }
+            List<CustomUser> topUsers = new ArrayList<>();
+            for (CustomUser user: userList) {
+                if(topUsers.size() < 5)topUsers.add(user);
+                for (CustomUser u: topUsers) {
+                    if(user.getProfessions().get(args[0]) > u.getProfessions().get(args[0]) && !topUsers.contains(user)) {
+                        topUsers.set(topUsers.indexOf(u),user);
+                        break;
+                    }
+                }
+            }
+            sender.sendMessage("§5" + StringUtils.repeat("~",20));
+            sender.sendMessage(ChatColor.DARK_PURPLE + args[0].substring(0, 1).toUpperCase() + args[0].substring(1));
+            for (CustomUser user: topUsers) {
+                sender.sendMessage(ChatColor.GOLD + user.getName() + ChatColor.GRAY +" : " + ChatColor.GREEN + user.getLevelFromTotal(user.getProfessions().get(args[0])));
+            }
             return true;
         }
         return false;

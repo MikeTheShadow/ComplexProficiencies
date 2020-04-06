@@ -38,12 +38,23 @@ commands:
     permission-message: You don't have ComplexProficiencies.admin permission
   labor:
     description: Displays current user labor
+    usage: /<labor>
     permission: ComplexProficiencies.basic
     permission-message: You don't have ComplexProficiencies.basic permission
   resetdb:
     description: wipe the database for Complex Proficiencies
     permission: ComplexProficiencies.danger
     permission-message: You don't have UNKNOWN_PERMISSION
+  prof:
+    description: Gets a users level in a prof
+    usage: /<prof> [profname] [player]
+    permission: ComplexProficiencies.basic
+    permission-message: You don't have ComplexProficiencies.basic permission
+  proftop:
+    description: Gets the top users in a prof
+    usage: /<proftop> [profname]
+    permission: ComplexProficiencies.experimental
+    permission-message: You don't have ComplexProficiencies.experimental permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

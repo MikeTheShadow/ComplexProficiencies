@@ -11,11 +11,15 @@ import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import me.realized.duels.api.arena.Arena;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
@@ -25,7 +29,6 @@ public class PlayerAttacksListener implements Listener
     public void onEntityAttacksEntity(EntityDamageByEntityEvent event)
     {
         if (!(event.getDamager() instanceof Player && event.getEntity() instanceof Player)) return;
-
         int levelDif = levelConfig.getInt("settings.levelDifference");
         //WORLDGUARD BS
         Location loc = event.getEntity().getLocation();
@@ -49,6 +52,19 @@ public class PlayerAttacksListener implements Listener
             event.setCancelled(true);
         }
     }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void entityDamageEvent(EntityDamageEvent event) {
+        if(event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            Entity vehicle = player.getVehicle();
+            if(vehicle != null) {
+                vehicle.removePassenger(player);
+            }
+        }
+        if(event.getEntity().getType() == EntityType.DONKEY) event.setCancelled(true);
+    }
+
     public boolean playersInDuel(Player attacker, Player defender)
     {
         Arena arena = ComplexProficiencies.duelsApi.getArenaManager().get(attacker);
@@ -56,4 +72,5 @@ public class PlayerAttacksListener implements Listener
         if(arena.has(attacker) && arena.has(defender))return true;
         return false;
     }
+
 }

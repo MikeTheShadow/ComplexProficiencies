@@ -12,13 +12,17 @@ import de.tr7zw.nbtapi.NBTContainer;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.omg.CORBA.TRANSACTION_MODE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void inventorySlotClickedEvent(InventoryClickEvent event) {
+
         //Check that the user is using my inventory
         Player player = (Player)event.getWhoClicked();
         Inventory topInventory = player.getOpenInventory().getTopInventory();
@@ -133,6 +138,11 @@ public class InventoryListener implements Listener {
             return "";
         }
 
+    }
+
+    @EventHandler
+    public void openInventory(InventoryOpenEvent event) {
+        if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.DONKEY) event.setCancelled(true);
     }
 
     private static boolean isNotAButton(ItemStack itemClicked, Inventory topInventory) {
