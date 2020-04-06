@@ -36,6 +36,10 @@ commands:
     usage: /<addsubcategory> [Base Category]
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
+  labor:
+    description: Displays current user labor
+    permission: ComplexProficiencies.basic
+    permission-message: You don't have ComplexProficiencies.basic permission
   resetdb:
     description: wipe the database for Complex Proficiencies
     permission: ComplexProficiencies.danger

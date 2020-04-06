@@ -102,11 +102,13 @@ public class CustomUser {
         int before = getLevelFromTotal(this.professions.get(profName));
         this.professions.replace(profName, experience + amount);
         int after = getLevelFromTotal(this.professions.get(profName));
-        player.sendMessage(ChatColor.GRAY + "You gained " + ChatColor.GREEN + amount + ChatColor.GRAY + "experience in " + ChatColor.GOLD + profName.toLowerCase());
-
         int nextlevel = getRequiredExperience(after + 1) - getRequiredExperience(after);
         int exp = nextlevel - (getRequiredExperience(after + 1) - (experience + amount));
-        player.sendMessage(ChatColor.GREEN + String.valueOf(exp) + ChatColor.GRAY + "/" + ChatColor.GREEN + nextlevel);
+
+        String gainMessage = ChatColor.GRAY + "You gained " + ChatColor.GREEN + amount + ChatColor.GRAY + " experience in " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.RESET;
+        gainMessage += (ChatColor.GRAY + "[" + ChatColor.GREEN + exp + ChatColor.GRAY + "/" + ChatColor.GREEN + nextlevel + ChatColor.GRAY + "]");
+
+        player.sendMessage(gainMessage);
         if (before != after)
             player.sendMessage(ChatColor.GRAY + "Your " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.GRAY + " has reached level " + ChatColor.GREEN + after);
     }

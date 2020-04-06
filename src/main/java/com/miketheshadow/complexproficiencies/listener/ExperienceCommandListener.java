@@ -34,17 +34,14 @@ public class ExperienceCommandListener implements CommandExecutor {
             if(args.length > 1)return false;
             CustomUser user;
             Player player = (Player) sender;
-            if(args.length == 0)
-            {
+            if(args.length == 0) {
                 user = UserDBHandler.getPlayer(player);
             }
-            else
-            {
+            else {
                 Player otherPlayer = Bukkit.getServer().getPlayer(args[0]);
                 user = UserDBHandler.getPlayer(otherPlayer);
             }
-            if(user.getPurses() == null)
-            {
+            if(user.getPurses() == null) {
                 sender.sendMessage("User " + args[0] + " does not exist!");
                 return true;
             }
@@ -58,13 +55,11 @@ public class ExperienceCommandListener implements CommandExecutor {
             int level = user.getLevelXP()[0];
 
             //experience information if user is max level do not display information
-            if(levelConfig.getInt("levels." + (level + 1))  != 0 )
-            {
+            if(levelConfig.getInt("levels." + (level + 1))  != 0 ) {
                 builder.append("§3Level: ").append(level).append("\n \n");
                 builder.append("§2Current Experience: §a").append(ExperienceUtil.getPlayerCurrentXP(user)).append("§e/§a").append(levelConfig.getInt("levels." + level)).append("\n \n");
             }
-            else
-            {
+            else {
                 builder.append("§3Level: ").append(level).append("§5 (MAX)").append("\n \n");
             }
             //finally add total Experience
@@ -74,10 +69,8 @@ public class ExperienceCommandListener implements CommandExecutor {
             player.sendMessage(builder.toString());
             return true;
         }
-        else if(cmd.getName().equalsIgnoreCase("mystats"))
-        {
-            if (!(sender instanceof Player))
-            {
+        else if(cmd.getName().equalsIgnoreCase("mystats")) {
+            if (!(sender instanceof Player)) {
                 sender.sendMessage("This command can only be run by a player.");
             }
             if(args.length > 0)return false;
@@ -93,13 +86,11 @@ public class ExperienceCommandListener implements CommandExecutor {
             int level = user.getLevelXP()[0];
 
             //experience information if user is max level do not display information
-            if(levelConfig.getInt("levels." + (level + 1))  != 0 )
-            {
+            if(levelConfig.getInt("levels." + (level + 1))  != 0 ) {
                 builder.append("§3Level: ").append(level).append("\n \n");
                 builder.append("§2Current Experience: §a").append(ExperienceUtil.getPlayerCurrentXP(user)).append("§e/§a").append(levelConfig.getInt("levels." + level)).append("\n \n");
             }
-            else
-            {
+            else {
                 builder.append("§3Level: ").append(level).append("§5 (MAX)").append("\n \n");
             }
             //finally add total Experience
@@ -109,8 +100,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             player.sendMessage(builder.toString());
             return true;
         }
-        else if (cmd.getName().equalsIgnoreCase("fixexperience"))
-        {
+        else if (cmd.getName().equalsIgnoreCase("fixexperience")) {
             List<CustomUser> customUsers = UserDBHandler.getAllPlayers();
             levelConfig.forceReload();
             ComplexProficiencies.rebuildLevelMap();
@@ -120,8 +110,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             return true;
         }
-        else if (cmd.getName().equalsIgnoreCase("setexperience"))
-        {
+        else if (cmd.getName().equalsIgnoreCase("setexperience")) {
             if(warnUser(args,sender)) return false;
             Player target = (Bukkit.getServer().getPlayer(args[0]));
             if (target != null)
@@ -135,8 +124,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             else return false;
         }
-        else if (cmd.getName().equalsIgnoreCase("setlevel"))
-        {
+        else if (cmd.getName().equalsIgnoreCase("setlevel")) {
             if(warnUser(args,sender)) return false;
             Json config = levelConfig;
             int levelXP = config.getInt("levels." + args[1]);

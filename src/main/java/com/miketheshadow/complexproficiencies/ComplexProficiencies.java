@@ -4,6 +4,7 @@ package com.miketheshadow.complexproficiencies;
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.LaborThread;
 import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
@@ -21,7 +22,7 @@ import java.util.Objects;
 //TODO make it so that the person who has eaten the most carrots gets night-vision
 
 public class ComplexProficiencies extends JavaPlugin {
-    public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing"};
+    public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing","larceny"};
 
     //Create a singleton here.
     public static ComplexProficiencies complexProficiencies;
@@ -30,8 +31,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static Json levelConfig;
     public static HashMap<Integer,Integer> levelMap;
 
-    public ComplexProficiencies getInstance()
-    {
+    public ComplexProficiencies getInstance() {
         if(complexProficiencies == null) { complexProficiencies = this; }
         return complexProficiencies;
     }
@@ -78,7 +78,7 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("removecategory").setExecutor(new CustomCommandListener(this));
         this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
         this.getCommand("resetdb").setExecutor(new CustomCommandListener(this));
-
+        this.getCommand("labor").setExecutor(new CustomCommandListener(this));
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
@@ -86,39 +86,10 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("setexperience").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
-
+        LaborThread thread = new LaborThread();
+        thread.start("Labor Thread");
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Doing labor tick");
-            List<CustomUser> players = UserDBHandler.getAllPlayers();
-            for (CustomUser user : players) {
-                int labor = user.getLabor();
-                if(!(labor > 1990)){
-                    Player player = Bukkit.getPlayer(user.getName());
-                    if(player != null && player.isOnline()) {
-                        player.sendMessage(ChatColor.YELLOW + "You gained "
-                                + ChatColor.GOLD
-                                + "10"
-                                + ChatColor.YELLOW
-                                + " labor!"
-                                + ChatColor.GRAY + "[" + ChatColor.GOLD + (labor + 10) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
-                        user.setLabor(labor + 10);
-                        UserDBHandler.updatePlayer(user);
-                    }
-                }
-                else if(labor < 2000) {
-                    Player player = Bukkit.getPlayer(user.getName());
-                    if(player != null && player.isOnline()) {
-                        player.sendMessage(ChatColor.YELLOW + "You gained "
-                                + ChatColor.GOLD
-                                + "10"
-                                + ChatColor.YELLOW
-                                + " labor! "
-                                + ChatColor.GRAY + "[" + ChatColor.GOLD + (2000 - labor) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
-                        user.setLabor(2000);
-                        UserDBHandler.updatePlayer(user);
-                    }
-                }
-            }
+
         }, 0L, 6000L);
     }
 

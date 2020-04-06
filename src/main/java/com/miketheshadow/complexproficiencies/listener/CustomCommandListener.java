@@ -3,16 +3,17 @@ package com.miketheshadow.complexproficiencies.listener;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoDatabase;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 public class CustomCommandListener implements CommandExecutor {
     private final ComplexProficiencies complexProficiencies;
@@ -105,9 +106,10 @@ public class CustomCommandListener implements CommandExecutor {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(ComplexProficiencies.complexProficiencies, () -> {
                     if(active) {
                         Bukkit.broadcastMessage(ChatColor.RED + "REMOVING PLAYER DATA...");
-                        MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-                        MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
-                        database.drop();
+                        List<CustomUser> userList = UserDBHandler.getAllPlayers();
+                        for (CustomUser user: userList) {
+                            UserDBHandler.removePlayer(user);
+                        }
                         Bukkit.broadcastMessage(ChatColor.RED + "COMPLETE!");
                     }
                 }, 600);
@@ -117,6 +119,13 @@ public class CustomCommandListener implements CommandExecutor {
             } else {
                 sender.sendMessage(ChatColor.RED + "Reset is disabled!");
             }
+            return true;
+        } else if(cmd.getName().equalsIgnoreCase("labor")) {
+            if(!(sender instanceof Player)) return false;
+            Player player = (Player) sender;
+            CustomUser user = UserDBHandler.getPlayer((Player) sender);
+            player.sendMessage(ChatColor.YELLOW + "You currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+
             return true;
         }
         return false;

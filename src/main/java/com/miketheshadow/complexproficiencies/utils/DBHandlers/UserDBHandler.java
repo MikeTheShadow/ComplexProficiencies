@@ -23,8 +23,16 @@ public class UserDBHandler {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
         if (cursor.first() == null) {
             CustomUser customPlayer = new CustomUser(player.getName(), player.getUniqueId().toString());
+            customPlayer.setLabor(1000);
             collection.insertOne(customPlayer.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new player: " + player.getName());
+            if(!player.isOp()) {
+                player.getInventory().clear();
+                player.getInventory().setArmorContents(null);
+                player.getInventory().setItemInOffHand(null);
+                player.getEnderChest().clear();
+            }
+
         }
     }
 
@@ -35,6 +43,10 @@ public class UserDBHandler {
 
     public static void updatePlayer(CustomUser player) {
         collection.replaceOne(new BasicDBObject("uid", player.getUid()), player.toDocument());
+    }
+
+    public static void removePlayer(CustomUser player) {
+        collection.deleteOne(new BasicDBObject("uid", player.getUid()));
     }
 
     public static List<CustomUser> getAllPlayers() {
