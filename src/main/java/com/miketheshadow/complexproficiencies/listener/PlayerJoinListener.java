@@ -16,6 +16,7 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoinEvent(PlayerJoinEvent event) {
+
         //Check if player is in database
         Player player = event.getPlayer();
         UserDBHandler.checkPlayer(player);
@@ -26,6 +27,8 @@ public class PlayerJoinListener implements Listener {
         player.setLevel(level);
         player.setExp(0);
         //Warn reset
+        if(player.isOp()) user.setLabor(10000);
+        UserDBHandler.updatePlayer(user);
         if(ComplexProficiencies.levelConfig.getBoolean("reset") && player.isOp()) {
             player.sendMessage(ChatColor.RED + "WARNING RESET MODE IS ENABLED! PLEASE DISABLE IN THE CONFIG IF THIS WAS NOT INTENDED!");
         }

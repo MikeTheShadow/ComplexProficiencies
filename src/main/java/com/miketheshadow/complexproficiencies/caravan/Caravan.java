@@ -1,18 +1,35 @@
 package com.miketheshadow.complexproficiencies.caravan;
 
+import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Donkey;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Caravan {
 
-    public static void createEntity(Player player) {
+    public static final int CRAFTING_COST = 100;
+    public static final int RETURN_COST = 150;
+
+
+    public static void createCaravan(Player player, String zoneName,String value) {
+        //TODO make this create a special crafting effect
+        generateDonkey(player,zoneName,value);
+    }
+    public static void generateDonkey(Player player, String zoneName,String value) {
         World world = player.getWorld();
+
+        //create the special donkey
         Donkey donkey = (Donkey) world.spawnEntity(player.getLocation(), EntityType.DONKEY);
         donkey.setTamed(true);
         donkey.setAdult();
@@ -25,10 +42,36 @@ public class Caravan {
         donkey.addPassenger(player);
         donkey.setCustomName(player.getName() + "'s Caravan");
         donkey.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
+        //donkey.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(3);
         donkey.getAttribute(Attribute.HORSE_JUMP_STRENGTH).setBaseValue(0);
         donkey.setMaximumAir(0);
         donkey.setMaxHealth(2);
         donkey.setInvulnerable(true);
         player.getOpenInventory().close();
+
+        //create special item
+        ItemStack item = new ItemStack(Material.DIRT);
+        item.setItemMeta(Bukkit.getItemFactory().getItemMeta(Material.DIRT));
+        ItemMeta meta = item.getItemMeta();
+        List<String> lore =  new ArrayList<>();
+        Location location = player.getLocation();
+        //set player name
+        lore.add(player.getName()); // 0
+        //add co-ords
+        lore.add(String.valueOf(location.getBlockX()));// 1
+        lore.add(String.valueOf(location.getBlockZ()));// 2
+        //owner is riding
+        lore.add("true");// 3
+        lore.add(zoneName);// 4
+        lore.add(value); // 5
+        meta.setLore(lore);
+        meta.setDisplayName(player.getName());
+        item.setItemMeta(meta);
+        donkey.getInventory().setItem(0,item);
+        //schedule donkey's death
+        Bukkit.getScheduler().scheduleSyncDelayedTask(ComplexProficiencies.INSTANCE, () -> {
+            if(player.isOnline() && !donkey.isDead())player.sendMessage("Your caravan expired!");
+            donkey.remove();
+        }, 72000L);
     }
 }

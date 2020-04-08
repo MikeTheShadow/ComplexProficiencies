@@ -36,6 +36,11 @@ public class UserDBHandler {
         }
     }
 
+    public static CustomUser getPlayer(String name) {
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("name",name));
+        return new CustomUser(Objects.requireNonNull(cursor.first()));
+    }
+
     public static CustomUser getPlayer(Player player) {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
         return new CustomUser(Objects.requireNonNull(cursor.first()));

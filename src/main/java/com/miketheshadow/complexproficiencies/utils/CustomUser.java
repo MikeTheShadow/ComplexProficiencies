@@ -1,6 +1,7 @@
 package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.mongodb.BasicDBObject;
 import org.bson.Document;
 import org.bukkit.ChatColor;
@@ -98,6 +99,10 @@ public class CustomUser {
     }
 
     public void addExperience(String profName, int amount, Player player) {
+        if(this.professions.get(profName) == null) {
+            this.professions.put(profName,0);
+            UserDBHandler.updatePlayer(this);
+        }
         int experience = this.professions.get(profName);
         int before = getLevelFromTotal(this.professions.get(profName));
         this.professions.replace(profName, experience + amount);
@@ -106,7 +111,7 @@ public class CustomUser {
         int exp = nextlevel - (getRequiredExperience(after + 1) - (experience + amount));
 
         String gainMessage = ChatColor.GRAY + "You gained " + ChatColor.GREEN + amount + ChatColor.GRAY + " experience in " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.RESET;
-        gainMessage += (ChatColor.GRAY + "[" + ChatColor.GREEN + exp + ChatColor.GRAY + "/" + ChatColor.GREEN + nextlevel + ChatColor.GRAY + "]");
+        gainMessage += (ChatColor.GRAY + " [" + ChatColor.GREEN + exp + ChatColor.GRAY + "/" + ChatColor.GREEN + nextlevel + ChatColor.GRAY + "]");
 
         player.sendMessage(gainMessage);
         if (before != after)

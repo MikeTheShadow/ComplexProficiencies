@@ -143,6 +143,11 @@ public class InventoryListener implements Listener {
     @EventHandler
     public void openInventory(InventoryOpenEvent event) {
         if(event.getPlayer().isInsideVehicle() && event.getPlayer().getVehicle().getType() == EntityType.DONKEY) event.setCancelled(true);
+        try {
+            if(event.getInventory().getItem(0).getItemMeta().getLore().get(3).equals("true"))event.setCancelled(true);
+            else if(event.getInventory().getItem(0).getItemMeta().getLore().get(3).equals("false"))event.setCancelled(true);
+        }catch (Exception ignored){}
+
     }
 
     private static boolean isNotAButton(ItemStack itemClicked, Inventory topInventory) {

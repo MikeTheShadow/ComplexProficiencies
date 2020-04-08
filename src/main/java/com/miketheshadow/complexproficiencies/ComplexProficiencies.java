@@ -8,15 +8,14 @@ import com.miketheshadow.complexproficiencies.utils.LaborThread;
 import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
-import org.bson.Document;
+import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
 
 //TODO make it so that the person who has eaten the most carrots gets night-vision
@@ -25,28 +24,27 @@ public class ComplexProficiencies extends JavaPlugin {
     public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing","larceny"};
 
     //Create a singleton here.
-    public static ComplexProficiencies complexProficiencies;
+    public static ComplexProficiencies INSTANCE;
     public static Duels duelsApi;
     public static XPBoostExpansion expansion;
     public static Json levelConfig;
     public static HashMap<Integer,Integer> levelMap;
+    //economy
+    public static Economy econ;
 
     public ComplexProficiencies getInstance() {
-        if(complexProficiencies == null) { complexProficiencies = this; }
-        return complexProficiencies;
+        if(INSTANCE == null) { INSTANCE = this; }
+        return INSTANCE;
     }
 
     @Override
     public void onEnable() {
-        //for adding stuff without breaking everything
-        for(Document document : UserDBHandler.getAllDocuments()) {
-            if(document.get("lastHP") == null) {
-                document.append("lastHP",50D);
-                UserDBHandler.updateDocument(document);
-            }
+
+        if (!setupEconomy()) {
+            this.getLogger().severe("Disabled due to no Vault dependency found!");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
         }
-
-
 
         loadLevelConfig();
         levelMap  = buildLevelMap();
@@ -70,6 +68,7 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new PlayerAttacksListener(),this);
         pluginManager.registerEvents(new PlayerXPListener(),this);
         pluginManager.registerEvents(new EntityDeathListener(),this);
+        pluginManager.registerEvents(new PlayerVehicleListener(),this);
         //register prof commands
         this.getCommand("opengui").setExecutor(new CustomCommandListener(this));
         this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
@@ -81,6 +80,9 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("labor").setExecutor(new CustomCommandListener(this));
         this.getCommand("prof").setExecutor(new CustomCommandListener(this));
         this.getCommand("proftop").setExecutor(new CustomCommandListener(this));
+        //caravan commands
+        this.getCommand("caravancreate").setExecutor(new CustomCommandListener(this));
+        this.getCommand("caravanreturn").setExecutor(new CustomCommandListener(this));
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
@@ -94,6 +96,21 @@ public class ComplexProficiencies extends JavaPlugin {
 
         }, 0L, 6000L);
     }
+
+    private boolean setupEconomy() {
+        if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
+            return false;
+        }
+
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+        if (rsp == null) {
+            return false;
+        }
+        econ = rsp.getProvider();
+        return econ != null;
+    }
+
+
 
     public static HashMap<Integer,Integer> buildLevelMap() {
         if(levelMap != null) return levelMap;

@@ -55,6 +55,16 @@ commands:
     usage: /<proftop> [profname]
     permission: ComplexProficiencies.experimental
     permission-message: You don't have ComplexProficiencies.experimental permission
+  caravancreate:
+    description: Creates a caravan with a specific loadout
+    usage: /<caravancreate> [moneyCost] [location] [playerName]
+    permission: ComplexProficiencies.experimental
+    permission-message: You don't have ComplexProficiencies.experimental permission
+  caravanreturn:
+    description: Turns in a caravan for a specific value
+    usage: /<caravanreturn> [location] [playerName]
+    permission: ComplexProficiencies.experimental
+    permission-message: You don't have ComplexProficiencies.experimental permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

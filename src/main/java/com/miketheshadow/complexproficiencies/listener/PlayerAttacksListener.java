@@ -10,6 +10,7 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import me.realized.duels.api.arena.Arena;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -45,8 +46,7 @@ public class PlayerAttacksListener implements Listener
         CustomUser defender = UserDBHandler.getPlayer(def);
         //make sure they're not dueling. If they are we don't care
         if(playersInDuel(att,def)) return;
-        if(Math.abs(attacker.getLevelXP()[0] - defender.getLevelXP()[0]) >= levelDif)
-        {
+        if(Math.abs(attacker.getLevelXP()[0] - defender.getLevelXP()[0]) >= levelDif) {
             att.sendMessage(levelConfig.getString("settings.attackMessage"));
             event.setDamage(0);
             event.setCancelled(true);
