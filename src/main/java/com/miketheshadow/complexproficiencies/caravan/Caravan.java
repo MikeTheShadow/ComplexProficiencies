@@ -28,7 +28,6 @@ public class Caravan {
     }
     public static void generateDonkey(Player player, String zoneName,String value) {
         World world = player.getWorld();
-
         //create the special donkey
         Donkey donkey = (Donkey) world.spawnEntity(player.getLocation(), EntityType.DONKEY);
         donkey.setTamed(true);
@@ -36,7 +35,7 @@ public class Caravan {
         donkey.setAI(false);
         donkey.setCarryingChest(true);
         donkey.setCollidable(true);
-        donkey.setGlowing(true);
+        //donkey.setGlowing(true);
         donkey.setInvulnerable(true);
         donkey.getInventory().setSaddle(new ItemStack(Material.SADDLE));
         donkey.addPassenger(player);
@@ -44,8 +43,8 @@ public class Caravan {
         donkey.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.1);
         //donkey.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(3);
         donkey.getAttribute(Attribute.HORSE_JUMP_STRENGTH).setBaseValue(0);
+        donkey.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(2);
         donkey.setMaximumAir(0);
-        donkey.setMaxHealth(2);
         donkey.setInvulnerable(true);
         player.getOpenInventory().close();
 

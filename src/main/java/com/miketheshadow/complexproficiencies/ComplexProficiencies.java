@@ -1,6 +1,7 @@
 package com.miketheshadow.complexproficiencies;
 
 
+import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
@@ -32,7 +33,7 @@ public class ComplexProficiencies extends JavaPlugin {
     //economy
     public static Economy econ;
 
-    public ComplexProficiencies getInstance() {
+    public ComplexProficiencies setInstance() {
         if(INSTANCE == null) { INSTANCE = this; }
         return INSTANCE;
     }
@@ -40,15 +41,15 @@ public class ComplexProficiencies extends JavaPlugin {
     @Override
     public void onEnable() {
 
+
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
-
         loadLevelConfig();
         levelMap  = buildLevelMap();
-        getInstance();
+        setInstance();
         if (!this.getDataFolder().exists()) {
             this.getDataFolder().mkdir();
         }
@@ -70,19 +71,17 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new EntityDeathListener(),this);
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
         //register prof commands
-        this.getCommand("opengui").setExecutor(new CustomCommandListener(this));
-        this.getCommand("getitemtags").setExecutor(new CustomCommandListener(this));
-        this.getCommand("addrecipe").setExecutor(new CustomCommandListener(this));
-        this.getCommand("addcategory").setExecutor(new CustomCommandListener(this));
-        this.getCommand("removecategory").setExecutor(new CustomCommandListener(this));
-        this.getCommand("addsubcategory").setExecutor(new CustomCommandListener(this));
-        this.getCommand("resetdb").setExecutor(new CustomCommandListener(this));
-        this.getCommand("labor").setExecutor(new CustomCommandListener(this));
-        this.getCommand("prof").setExecutor(new CustomCommandListener(this));
-        this.getCommand("proftop").setExecutor(new CustomCommandListener(this));
-        //caravan commands
-        this.getCommand("caravancreate").setExecutor(new CustomCommandListener(this));
-        this.getCommand("caravanreturn").setExecutor(new CustomCommandListener(this));
+        new OpenGuiCommand();
+        new AddRecipeCommand();
+        new AddCategoryCommand();
+        new RemoveCategoryCommand();
+        new AddSubCategoryCommand();
+        new ResetDBCommand();
+        new LaborCommand();
+        new ProfCommand();
+        new ProfTopCommand();
+        new CaravanCreateCommand();
+        new CaravanReturnCommand();
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));

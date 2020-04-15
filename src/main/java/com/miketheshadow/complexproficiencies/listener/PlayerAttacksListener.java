@@ -10,12 +10,10 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.ApplicableRegionSet;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import me.realized.duels.api.arena.Arena;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Vehicle;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -58,7 +56,7 @@ public class PlayerAttacksListener implements Listener
         if(event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             Entity vehicle = player.getVehicle();
-            if(vehicle != null) {
+            if(vehicle != null && !event.isCancelled() && event.getDamage() > 0) {
                 vehicle.removePassenger(player);
             }
         }
