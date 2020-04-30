@@ -5,7 +5,9 @@ import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.entity.Player;
 import java.util.HashMap;
 
+@Deprecated
 public class ProficiencyAPI {
+
     public static int getProfLevel(Player player,String profname) {
         CustomUser user = UserDBHandler.getPlayer(player);
         if(user.getProfessions() == null) return -1;
