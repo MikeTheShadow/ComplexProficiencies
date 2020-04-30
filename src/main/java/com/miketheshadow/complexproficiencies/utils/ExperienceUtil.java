@@ -4,7 +4,6 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
@@ -84,7 +83,7 @@ public class ExperienceUtil
         return -1;
     }
 
-    public static void runLevelUpCommands(CustomUser user,int level)
+    private static void runLevelUpCommands(CustomUser user,int level)
     {
         int id = 1;
         String command =replaceTagsWithInformation(user,level,id);
@@ -97,7 +96,7 @@ public class ExperienceUtil
         }
     }
 
-    public static String replaceTagsWithInformation(CustomUser user,int level,int id)
+    private static String replaceTagsWithInformation(CustomUser user,int level,int id)
     {
         Json levelConf = levelConfig;
         String command = levelConf.getString(level + "." + id);

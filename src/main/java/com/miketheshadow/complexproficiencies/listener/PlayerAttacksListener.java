@@ -25,8 +25,7 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelC
 public class PlayerAttacksListener implements Listener
 {
     @EventHandler(priority =  EventPriority.LOWEST)
-    public void onEntityAttacksEntity(EntityDamageByEntityEvent event)
-    {
+    public void onEntityAttacksEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player && event.getEntity() instanceof Player)) return;
         int levelDif = levelConfig.getInt("settings.levelDifference");
         //WORLDGUARD BS

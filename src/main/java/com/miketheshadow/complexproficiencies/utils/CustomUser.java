@@ -99,6 +99,8 @@ public class CustomUser {
     }
 
     public void addExperience(String profName, int amount, Player player) {
+
+        labor -= amount;
         if(this.professions.get(profName) == null) {
             this.professions.put(profName,0);
             UserDBHandler.updatePlayer(this);
@@ -114,8 +116,9 @@ public class CustomUser {
         gainMessage += (ChatColor.GRAY + " [" + ChatColor.GREEN + exp + ChatColor.GRAY + "/" + ChatColor.GREEN + nextlevel + ChatColor.GRAY + "]");
 
         player.sendMessage(gainMessage);
-        if (before != after)
-            player.sendMessage(ChatColor.GRAY + "Your " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.GRAY + " has reached level " + ChatColor.GREEN + after);
+        if (before != after) player.sendMessage(ChatColor.GRAY + "Your " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.GRAY + " has reached level " + ChatColor.GREEN + after);
+        player.sendMessage(ChatColor.YELLOW + "You currently have [" + ChatColor.GOLD + (getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+        UserDBHandler.updatePlayer(this);
     }
 
     public int getLevelFromTotal(int totalExperience) {

@@ -15,7 +15,7 @@ public class EntityDeathListener implements Listener {
     public void onEntityDeath(EntityDeathEvent event) {
         if(event.getEntity().getType() == EntityType.DONKEY) {
             List<ItemStack> drops = event.getDrops();
-            drops = new ArrayList<>();;
+            drops = new ArrayList<>();
             event.setDroppedExp(0);
         }
     }

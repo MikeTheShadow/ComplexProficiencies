@@ -41,7 +41,6 @@ public class ComplexProficiencies extends JavaPlugin {
     @Override
     public void onEnable() {
 
-
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -91,9 +90,7 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-
-        }, 0L, 6000L);
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> { }, 0L, 6000L);
     }
 
     private boolean setupEconomy() {
@@ -143,8 +140,7 @@ public class ComplexProficiencies extends JavaPlugin {
             }
         }
     }
-
-
+    
     public void loadLevelConfig() {
         levelConfig = new Json("config", this.getDataFolder().getPath());
 
