@@ -16,7 +16,7 @@ public class UserAPI {
         return UserDBHandler.getPlayer(player).getLabor() > amount;
     }
 
-    public static void updateExperience(Player player,String prof,int amount) {
+    public static void updateUserProf(Player player, String prof, int amount) {
         UserDBHandler.getPlayer(player).addExperience(prof,amount,player);
     }
 
