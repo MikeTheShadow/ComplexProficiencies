@@ -18,7 +18,6 @@ public class AddSubCategoryCommand extends ComplexCommand {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args)
     {
-        if(cmd.getName().equalsIgnoreCase("addsubcategory")) {
             if (!(sender instanceof Player)) return false;
             if (args.length != 1) { return false; }
             Category category = CategoryDBHandler.getCategory("/" + args[0].toLowerCase());
@@ -28,7 +27,5 @@ public class AddSubCategoryCommand extends ComplexCommand {
             }
             GenericGUI.addCategory((Player)sender,category.getTitle());
             return true;
-        }
-        return false;
     }
 }

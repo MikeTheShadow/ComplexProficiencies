@@ -20,6 +20,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.awt.*;
+
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
 public class PlayerAttacksListener implements Listener
@@ -41,6 +43,7 @@ public class PlayerAttacksListener implements Listener
         Player def = (Player) event.getEntity();
         CustomUser attacker = UserDBHandler.getPlayer(att);
         CustomUser defender = UserDBHandler.getPlayer(def);
+
         //make sure they're not dueling. If they are we don't care
         if(playersInDuel(att,def)) return;
         if(Math.abs(attacker.getLevelXP()[0] - defender.getLevelXP()[0]) >= levelDif) {

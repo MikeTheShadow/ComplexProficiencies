@@ -19,7 +19,6 @@ public class CaravanCreateCommand extends ComplexCommand {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args)
     {
-        if(cmd.getName().equalsIgnoreCase("caravancreate")) {
             if(args.length != 3) return false;
             Player player = Bukkit.getPlayer(args[2]);
             if(player == null) return false;
@@ -42,7 +41,5 @@ public class CaravanCreateCommand extends ComplexCommand {
             UserDBHandler.updatePlayer(user);
             Caravan.createCaravan(player,zoneName,String.valueOf(moneyCost));
             return true;
-        }
-        return false;
     }
 }

@@ -17,8 +17,6 @@ public class AddCategoryCommand extends ComplexCommand {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, String[] args)
     {
-        if (cmd.getName().equalsIgnoreCase("addcategory"))
-        {
             if (!(sender instanceof Player)) return false;
             if (args.length != 1)
             {
@@ -32,8 +30,6 @@ public class AddCategoryCommand extends ComplexCommand {
             }
             sender.sendMessage(ChatColor.GREEN + "Created new category: " + ChatColor.GOLD + args[0]);
             return true;
-        }
-        return false;
     }
 
 }

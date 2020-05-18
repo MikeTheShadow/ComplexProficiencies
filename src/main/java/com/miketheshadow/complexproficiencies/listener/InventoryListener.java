@@ -1,11 +1,12 @@
 package com.miketheshadow.complexproficiencies.listener;
 
+import com.miketheshadow.complexproficiencies.api.UserAPI;
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.crafting.CustomRecipe;
-import com.miketheshadow.complexproficiencies.gui.TagRegister;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
-import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
+import com.miketheshadow.complexproficiencies.gui.TagRegister;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.RecipeDBHandler;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.tr7zw.nbtapi.NBTContainer;
@@ -18,11 +19,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.omg.CORBA.TRANSACTION_MODE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void inventorySlotClickedEvent(InventoryClickEvent event) {
-
+        String newColoredString = ChatColor.RED + "Warning!";
         //Check that the user is using my inventory
         Player player = (Player)event.getWhoClicked();
         Inventory topInventory = player.getOpenInventory().getTopInventory();
@@ -59,7 +58,8 @@ public class InventoryListener implements Listener {
             PlayerInventory playerInventory = player.getInventory();
             CustomUser user = UserDBHandler.getPlayer(player);
             CustomRecipe recipe = RecipeDBHandler.getRecipeByItem(topInventory.getItem(0).getItemMeta().getDisplayName());
-            if(user.getProfessions().get(recipe.getProfession()) < recipe.getLevelReq()) {
+            if(recipe.getItemToBeCrafted() == null) return;
+            if(user.getProfessionLevelByName(recipe.getProfession().toLowerCase()) < recipe.getLevelReq()) {
                 player.sendMessage(ChatColor.RED + "Your require level " + recipe.getLevelReq() + " in " + recipe.getProfession());
                 return;
             }
@@ -71,13 +71,18 @@ public class InventoryListener implements Listener {
                     return;
                 }
             }
+            if(user.getLabor() < recipe.getXpGain()) {
+                player.sendMessage(ChatColor.RED + "You don't have enough labor to craft this!");
+                return;
+            }
+            UserAPI.addExperienceToProf(player,recipe.getProfession(),recipe.getXpGain());
             for (ItemStack item: recipe.getRequiredItems()) playerInventory.removeItem(item);
             playerInventory.addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
+            player.sendMessage(ChatColor.GOLD + "You crafted a " + ChatColor.GREEN + NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()).getItemMeta().getDisplayName());
         } else if(clickedType.equals("subBuilder")) {
             for (ItemStack item: topInventory.getContents())
             {
-                if(item == null);
-                else if(isNotAButton(item,topInventory) && item.getType() != Material.AIR)
+                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR)
                 {
                     NBTContainer currentItem = NBTItem.convertItemtoNBT(item);
                     String title = currentItem.getCompound("tag").getCompound("display").getString("Name");

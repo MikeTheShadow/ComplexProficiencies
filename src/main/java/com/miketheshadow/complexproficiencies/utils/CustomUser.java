@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 
 public class CustomUser {
-    private String name;
-    private String uid;
+    private final String name;
+    private final String uid;
     private HashMap<String, Integer> professions = new HashMap<>();
     private HashMap<String, Integer> purses = new HashMap<>();
 
@@ -72,6 +72,14 @@ public class CustomUser {
 
     public HashMap<String, Integer> getProfessions() {
         return professions;
+    }
+
+    public int getProfessionLevelByName(String name) {
+        if(professions.containsKey(name)) return professions.get(name);
+        else {
+            professions.put(name,0);
+            return 0;
+        }
     }
 
     public void setProfessions(HashMap<String, Integer> professions) {
