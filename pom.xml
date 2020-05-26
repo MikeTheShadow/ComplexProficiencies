@@ -152,11 +152,10 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Fulger party plugin-->
         <dependency>
-            <groupId>com.github.MikeTheShadow</groupId>
-            <artifactId>Fulger-Party</artifactId>
-            <version>master-SNAPSHOT</version>
+            <groupId>com.miketheshadow</groupId>
+            <artifactId>complexproficiencies</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 </project>

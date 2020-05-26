@@ -88,6 +88,7 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("setexperience").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
+        this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
         //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> { }, 0L, 6000L);

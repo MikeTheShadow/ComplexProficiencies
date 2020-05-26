@@ -1,5 +1,8 @@
 package com.miketheshadow.complexproficiencies.utils;
 
+import br.com.kickpost.party.PartyPlugin;
+import br.com.kickpost.party.model.Party;
+import br.com.kickpost.party.model.PartyPlayer;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
@@ -12,8 +15,21 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelM
 public class ExperienceUtil
 {
 
-    public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {
+    public static void addPartyExperience(CustomUser user, Player player, int addition, boolean mute, boolean isVanilla) {
 
+        Party party = PartyPlugin.getPartyManager().getParty(player);
+        if(party == null) {
+            addPlayerExperience(user,player,addition,mute,isVanilla);
+        } else {
+            for(PartyPlayer p : party.getPlayers()) {
+                addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/party.getPlayers().size()), mute, isVanilla);
+            }
+        }
+
+    }
+
+
+    public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {
         float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
         if(isVanilla) bonus = 1;
         else if(bonus < 2) bonus = 1;

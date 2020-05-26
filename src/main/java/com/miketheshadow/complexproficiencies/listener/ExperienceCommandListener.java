@@ -159,6 +159,27 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             return true;
         }
+        //ADD PARTY EXPERIENCE
+        else if(cmd.getName().equalsIgnoreCase("addpartyexperience")) {
+            if(warnUser(args,sender)) return false;
+
+            Player target = (Bukkit.getServer().getPlayer(args[0]));
+            if(target == null) {
+                sender.sendMessage("Player does not exist!");
+                return true;
+            }
+            CustomUser user = UserDBHandler.getPlayer(target);
+            try {
+                int xpToAdd = Integer.parseInt(args[1]);
+                ExperienceUtil.addPartyExperience(user,target,xpToAdd,false,false);
+            }
+            catch (Exception e) {
+                Bukkit.getServer().getConsoleSender().sendMessage("Error adding experience check that values are correct!");
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
         return false;
     }
     public boolean warnUser(String[] args,CommandSender sender) {

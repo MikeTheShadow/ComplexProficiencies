@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 public class UserDBHandler {
 
     private static  MongoCollection<Document> collection = init();
