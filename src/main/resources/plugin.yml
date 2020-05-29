@@ -65,6 +65,11 @@ commands:
     usage: /<caravanreturn> [location] [playerName]
     permission: ComplexProficiencies.experimental
     permission-message: You don't have ComplexProficiencies.experimental permission
+  cver:
+    description: Check the current version of the plugin
+    usage: /<cver>
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

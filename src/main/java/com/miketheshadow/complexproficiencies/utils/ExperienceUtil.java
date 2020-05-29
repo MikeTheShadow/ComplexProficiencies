@@ -15,7 +15,10 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelM
 public class ExperienceUtil
 {
 
-    public static void addPartyExperience(CustomUser user, Player player, int addition, boolean mute, boolean isVanilla) {
+    public static void addPartyExperience(CustomUser user, Player player, int level, boolean mute, boolean isVanilla) {
+
+        //TODO convert addition into an xp value
+        int addition = level * 5;
 
         Party party = PartyPlugin.getPartyManager().getParty(player);
         if(party == null) {
@@ -25,9 +28,7 @@ public class ExperienceUtil
                 addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/party.getPlayers().size()), mute, isVanilla);
             }
         }
-
     }
-
 
     public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {
         float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));

@@ -11,6 +11,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
@@ -22,7 +24,7 @@ public class ExperienceCommandListener implements CommandExecutor {
         this.complexProficiencies = complexProficiencies;
     }
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String s, String[] args) {
         if (cmd.getName().equalsIgnoreCase("userstats"))
         {
             if (!(sender instanceof Player)) {
@@ -159,7 +161,7 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             return true;
         }
-        //ADD PARTY EXPERIENCE
+        //ADD PARTY EXPERIENCE COMMAND SHOULD LOOK LIKE THIS: /addpartyexperience miketheshadow1 level 5; level text is ignored 5 is the level and should be multiplied or whatever
         else if(cmd.getName().equalsIgnoreCase("addpartyexperience")) {
             if(warnUser(args,sender)) return false;
 
@@ -170,7 +172,10 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             CustomUser user = UserDBHandler.getPlayer(target);
             try {
-                int xpToAdd = Integer.parseInt(args[1]);
+                int xpToAdd = Integer.parseInt(args[2]);
+                /*
+                WORK ON THIS
+                 */
                 ExperienceUtil.addPartyExperience(user,target,xpToAdd,false,false);
             }
             catch (Exception e) {

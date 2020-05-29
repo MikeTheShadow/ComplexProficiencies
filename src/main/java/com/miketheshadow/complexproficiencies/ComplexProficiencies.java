@@ -30,6 +30,10 @@ public class ComplexProficiencies extends JavaPlugin {
     public static XPBoostExpansion expansion;
     public static Json levelConfig;
     public static HashMap<Integer,Integer> levelMap;
+
+    //version
+    public static String VERSION = "2.2.1";
+
     //economy
     public static Economy econ;
 
@@ -81,6 +85,7 @@ public class ComplexProficiencies extends JavaPlugin {
         new ProfTopCommand();
         new CaravanCreateCommand();
         new CaravanReturnCommand();
+        new ComplexVersionCommand();
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));

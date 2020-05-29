@@ -21,8 +21,7 @@ public class AddRecipeCommand extends ComplexCommand {
         if (!(sender instanceof Player)) return false;
         if (args.length == 4) {
             Category category = CategoryDBHandler.getCategory("/" + args[3].toLowerCase());
-            if(category == null)
-            {
+            if(category == null) {
                 sender.sendMessage(ChatColor.RED + "Error! No category exists with the name: " + args[2]);
                 return true;
             }

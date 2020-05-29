@@ -30,7 +30,6 @@ public class InventoryListener implements Listener {
 
     @EventHandler
     public void inventorySlotClickedEvent(InventoryClickEvent event) {
-        String newColoredString = ChatColor.RED + "Warning!";
         //Check that the user is using my inventory
         Player player = (Player)event.getWhoClicked();
         Inventory topInventory = player.getOpenInventory().getTopInventory();
@@ -80,17 +79,14 @@ public class InventoryListener implements Listener {
             playerInventory.addItem(NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()));
             player.sendMessage(ChatColor.GOLD + "You crafted a " + ChatColor.GREEN + NBTItem.convertNBTtoItem(recipe.getItemToBeCrafted()).getItemMeta().getDisplayName());
         } else if(clickedType.equals("subBuilder")) {
-            for (ItemStack item: topInventory.getContents())
-            {
-                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR)
-                {
+            for (ItemStack item: topInventory.getContents()) {
+                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR) {
                     NBTContainer currentItem = NBTItem.convertItemtoNBT(item);
                     String title = currentItem.getCompound("tag").getCompound("display").getString("Name");
                     String icon = currentItem.toString();
                     String path = nbtContainer.getCompound("tag").getCompound("display").getString("path");
                     Category category = new Category(title,icon,path);
-                    if(!CategoryDBHandler.checkCategory(category))
-                    {
+                    if(!CategoryDBHandler.checkCategory(category)) {
                         player.sendMessage(ChatColor.RED + "Error! Item appears to already be in the database!");
                         player.sendMessage("DEBUG PATH: " + path);
                     }
@@ -100,18 +96,15 @@ public class InventoryListener implements Listener {
             }
             player.getOpenInventory().close();
         } else if(clickedType.equals("recipeBuilder")) {
-            ItemStack buildItem = topInventory.getContents()[0];
+            ItemStack buildItem = topInventory.getItem(0);
             List<ItemStack> recipeList = new ArrayList<>();
-            if(buildItem == null) {
+            if(buildItem == null || buildItem.getType() == Material.AIR) {
                 player.sendMessage(ChatColor.RED + "You need to add an item to the recipe!");
                 return;
             }
             for (ItemStack item: topInventory.getContents()) {
-                if(item == null) continue;
                 if(buildItem == item) continue;
-                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR) {
-                    recipeList.add(item);
-                }
+                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR) recipeList.add(item);
             }
             if(recipeList.size() < 1) {
                 player.sendMessage(ChatColor.RED + "You need to add ingredients to the recipe!");
@@ -136,6 +129,7 @@ public class InventoryListener implements Listener {
 
 
     }
+
     private String getType(NBTContainer nbtItem) {
         try {
             return nbtItem.getCompound("tag").getCompound("display").getString("type");
