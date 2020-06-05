@@ -7,7 +7,11 @@ import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelMap;
@@ -21,11 +25,20 @@ public class ExperienceUtil
         int addition = level * 5;
 
         Party party = PartyPlugin.getPartyManager().getParty(player);
+        List<PartyPlayer> acceptableMembers = new ArrayList<>();
+        for(PartyPlayer p : party.getPlayers()) {
+            if(Math.abs(UserDBHandler.getPlayer(Bukkit.getPlayer(p.getPlayer())).getLevelXP()[0]) - level > 5) {
+                player.sendMessage(ChatColor.GRAY + "You cannot get XP from this mob!");
+            } else {
+                acceptableMembers.add(p);
+            }
+        }
+
         if(party == null) {
             addPlayerExperience(user,player,addition,mute,isVanilla);
         } else {
-            for(PartyPlayer p : party.getPlayers()) {
-                addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/party.getPlayers().size()), mute, isVanilla);
+            for(PartyPlayer p : acceptableMembers) {
+                addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/acceptableMembers.size()), mute, isVanilla);
             }
         }
     }

@@ -103,6 +103,6 @@ commands:
     permission-message: You don't have ComplexProficiencies.levelAdmin permission
   addpartyexperience:
     description: Adds experience to the party.
-    usage: /<addexperience> [player] [Amount]
+    usage: /<addpartyexperience> [player] level [levelNumber]
     permission: ComplexProficiencies.levelAdmin
     permission-message: You don't have ComplexProficiencies.levelAdmin permission

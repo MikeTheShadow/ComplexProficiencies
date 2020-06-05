@@ -163,7 +163,7 @@ public class ExperienceCommandListener implements CommandExecutor {
         }
         //ADD PARTY EXPERIENCE COMMAND SHOULD LOOK LIKE THIS: /addpartyexperience miketheshadow1 level 5; level text is ignored 5 is the level and should be multiplied or whatever
         else if(cmd.getName().equalsIgnoreCase("addpartyexperience")) {
-            if(warnUser(args,sender)) return false;
+            if(args.length != 3) return false;
 
             Player target = (Bukkit.getServer().getPlayer(args[0]));
             if(target == null) {
@@ -172,11 +172,11 @@ public class ExperienceCommandListener implements CommandExecutor {
             }
             CustomUser user = UserDBHandler.getPlayer(target);
             try {
-                int xpToAdd = Integer.parseInt(args[2]);
+                int level = Integer.parseInt(args[2]);
                 /*
                 WORK ON THIS
                  */
-                ExperienceUtil.addPartyExperience(user,target,xpToAdd,false,false);
+                ExperienceUtil.addPartyExperience(user,target,level,false,false);
             }
             catch (Exception e) {
                 Bukkit.getServer().getConsoleSender().sendMessage("Error adding experience check that values are correct!");

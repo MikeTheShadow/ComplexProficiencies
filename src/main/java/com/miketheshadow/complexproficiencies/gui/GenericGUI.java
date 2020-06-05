@@ -42,7 +42,7 @@ public class GenericGUI {
     }
     public static void baseGUI(Player player, String guiName) {
         Inventory inventory = Bukkit.createInventory(player, 54, guiName);
-        inventory.setItem(45, TagRegister.previousPage);
+            inventory.setItem(45, TagRegister.previousPage);
         inventory.setItem(49, TagRegister.registerCrafting(Material.RED_SHULKER_BOX.toString(),"PAGE 1",guiName.toLowerCase()));
         inventory.setItem(53, TagRegister.nextPage);
         player.openInventory(addCategories(inventory, guiName));

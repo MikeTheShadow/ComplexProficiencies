@@ -104,7 +104,10 @@ public class InventoryListener implements Listener {
             }
             for (ItemStack item: topInventory.getContents()) {
                 if(buildItem == item) continue;
-                if(isNotAButton(item,topInventory) && item.getType() != Material.AIR) recipeList.add(item);
+                if(!item.hasItemMeta())continue;
+                if(item.getType() == Material.AIR)continue;
+                if(isNotAButton(item,topInventory)) recipeList.add(item);
+
             }
             if(recipeList.size() < 1) {
                 player.sendMessage(ChatColor.RED + "You need to add ingredients to the recipe!");
@@ -152,6 +155,7 @@ public class InventoryListener implements Listener {
     private static boolean isNotAButton(ItemStack itemClicked, Inventory topInventory) {
         try {
             if(itemClicked.getItemMeta() == null) return true;
+            if(!itemClicked.getItemMeta().hasDisplayName())return true;
             String item = itemClicked.getItemMeta().getDisplayName();
             String item1 = topInventory.getItem(45).getItemMeta().getDisplayName();
             String item2 = topInventory.getItem(49).getItemMeta().getDisplayName();
