@@ -32,7 +32,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.2.1";
+    public static String VERSION = "2.2.3";
 
     //economy
     public static Economy econ;
@@ -86,6 +86,8 @@ public class ComplexProficiencies extends JavaPlugin {
         new CaravanCreateCommand();
         new CaravanReturnCommand();
         new ComplexVersionCommand();
+        new RemovePlayerCommand();
+        new AddLaborCommand();
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));

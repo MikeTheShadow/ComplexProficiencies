@@ -70,6 +70,16 @@ commands:
     usage: /<cver>
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
+  complexremoveplayer:
+    description: Remove player from complex profs
+    usage: /<complexremoveplayer> [name]
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
+  complexaddlabor:
+    description: Adds labor to a user
+    usage: /<complexaddlabor> [name] [amount]
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

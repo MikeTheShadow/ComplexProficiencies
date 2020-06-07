@@ -20,27 +20,24 @@ public class ExperienceUtil
 {
 
     public static void addPartyExperience(CustomUser user, Player player, int level, boolean mute, boolean isVanilla) {
-
-        //TODO convert addition into an xp value
         int addition = level * 5;
 
         Party party = PartyPlugin.getPartyManager().getParty(player);
+        if(party == null) {
+            addPlayerExperience(user,player,addition,mute,isVanilla);
+            return;
+        }
         List<PartyPlayer> acceptableMembers = new ArrayList<>();
         for(PartyPlayer p : party.getPlayers()) {
             if(Math.abs(UserDBHandler.getPlayer(Bukkit.getPlayer(p.getPlayer())).getLevelXP()[0]) - level > 5) {
-                player.sendMessage(ChatColor.GRAY + "You cannot get XP from this mob!");
+                Bukkit.getPlayer(p.getPlayer()).sendMessage(ChatColor.GRAY + "You cannot get XP from this mob!");
             } else {
                 acceptableMembers.add(p);
             }
         }
-
-        if(party == null) {
-            addPlayerExperience(user,player,addition,mute,isVanilla);
-        } else {
             for(PartyPlayer p : acceptableMembers) {
                 addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/acceptableMembers.size()), mute, isVanilla);
             }
-        }
     }
 
     public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {

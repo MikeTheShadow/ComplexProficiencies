@@ -12,7 +12,8 @@ public class LaborThread implements Runnable
 
     Thread thread;
     String threadName;
-
+    public static int regenAmount = 30;
+    public static int cap = 2000;
     @Override
     public void run() {
         while (true) {
@@ -20,30 +21,30 @@ public class LaborThread implements Runnable
             List<CustomUser> players = UserDBHandler.getAllPlayers();
             for (CustomUser user : players) {
                 int labor = user.getLabor();
-                if(!(labor > 1990)){
+                if(!(labor > cap - regenAmount)){
                     Player player = Bukkit.getPlayer(user.getName());
                     if(player != null && player.isOnline()) {
                         player.sendMessage(ChatColor.YELLOW + "You gained "
                                 + ChatColor.GOLD
-                                + "10"
+                                + regenAmount
                                 + ChatColor.YELLOW
                                 + " labor!"
-                                + ChatColor.GRAY + " [" + ChatColor.GOLD + (labor + 10) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                                + ChatColor.GRAY + " [" + ChatColor.GOLD + (labor + regenAmount) + ChatColor.GRAY + "/" + ChatColor.GOLD + cap + ChatColor.GRAY + "]");
                     }
-                    user.setLabor(labor + 10);
+                    user.setLabor(labor + regenAmount);
                     UserDBHandler.updatePlayer(user);
                 }
-                else if(labor < 2000) {
+                else if(labor < cap) {
                     Player player = Bukkit.getPlayer(user.getName());
                     if(player != null && player.isOnline()) {
                         player.sendMessage(ChatColor.YELLOW + "You gained "
                                 + ChatColor.GOLD
-                                + "10"
+                                + regenAmount
                                 + ChatColor.YELLOW
                                 + " labor! "
-                                + ChatColor.GRAY + "[" + ChatColor.GOLD + (2000 - labor) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]");
+                                + ChatColor.GRAY + "[" + ChatColor.GOLD + cap + ChatColor.GRAY + "/" + ChatColor.GOLD + cap + ChatColor.GRAY + "]");
                     }
-                    user.setLabor(2000);
+                    user.setLabor(cap);
                     UserDBHandler.updatePlayer(user);
                 }
             }
