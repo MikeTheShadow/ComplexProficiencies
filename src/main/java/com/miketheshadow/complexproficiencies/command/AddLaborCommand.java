@@ -14,7 +14,7 @@ public class AddLaborCommand extends ComplexCommand {
 
 
     public AddLaborCommand() {
-        super("complexaddlabor");
+        super("caddlabor");
     }
 
     @Override

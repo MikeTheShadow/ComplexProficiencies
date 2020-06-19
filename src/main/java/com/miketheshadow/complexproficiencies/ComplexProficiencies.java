@@ -7,6 +7,7 @@ import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;
 import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
+import cz.dubcat.xpboost.commands.OpenGuiCommand;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
@@ -66,7 +67,6 @@ public class ComplexProficiencies extends JavaPlugin {
 
         //register events
         PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-        pluginManager.registerEvents(new InventoryListener(), this);
         pluginManager.registerEvents(new PlayerJoinListener(), this);
         pluginManager.registerEvents(new ModifyPlayerDamageListener(),this);
         pluginManager.registerEvents(new PlayerAttacksListener(),this);
@@ -75,11 +75,6 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
         pluginManager.registerEvents(new PlayerCraftListener(),this);
         //register prof commands
-        new OpenGuiCommand();
-        new AddRecipeCommand();
-        new AddCategoryCommand();
-        new RemoveCategoryCommand();
-        new AddSubCategoryCommand();
         new ResetDBCommand();
         new LaborCommand();
         new ProfCommand();

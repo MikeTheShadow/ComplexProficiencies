@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class RemovePlayerCommand extends ComplexCommand {
 
     public RemovePlayerCommand() {
-        super("complexremoveplayer");
+        super("cremoveplayer");
     }
 
     @Override
