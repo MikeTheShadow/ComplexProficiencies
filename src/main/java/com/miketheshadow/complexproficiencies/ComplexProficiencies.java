@@ -7,7 +7,6 @@ import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;
 import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
-import cz.dubcat.xpboost.commands.OpenGuiCommand;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
@@ -33,7 +32,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.2.3";
+    public static String VERSION = "2.3.0";
 
     //economy
     public static Economy econ;
