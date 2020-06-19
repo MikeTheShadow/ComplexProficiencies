@@ -44,7 +44,7 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
+        
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -73,6 +73,7 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new PlayerXPListener(),this);
         pluginManager.registerEvents(new EntityDeathListener(),this);
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
+        pluginManager.registerEvents(new PlayerCraftListener(),this);
         //register prof commands
         new OpenGuiCommand();
         new AddRecipeCommand();
@@ -98,7 +99,6 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
-        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> { }, 0L, 6000L);
     }
 
     private boolean setupEconomy() {

@@ -3,6 +3,7 @@ package com.miketheshadow.complexproficiencies.command;
 import com.miketheshadow.complexproficiencies.crafting.Category;
 import com.miketheshadow.complexproficiencies.gui.GenericGUI;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.CategoryDBHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -23,12 +24,18 @@ public class OpenGuiCommand extends ComplexCommand {
                 return false;
             }
             Category category = CategoryDBHandler.getCategory("/" + args[0].toLowerCase());
-            if(category == null)
-            {
+            Player player;
+            if(args.length == 1)player = (Player)sender;
+            else player = Bukkit.getPlayer(args[1]);
+            if(player == null) {
+                sender.sendMessage(ChatColor.RED + "Player doesn't exist with name: " + args[1]);
+                return true;
+            }
+            if(category == null) {
                 sender.sendMessage(ChatColor.RED + "Error! No category exists with the name: " + args[0]);
                 return true;
             }
-            GenericGUI.baseGUI((Player)sender,category.getTitle());
+            GenericGUI.baseGUI(player,category.getTitle());
             return true;
         }
         return false;

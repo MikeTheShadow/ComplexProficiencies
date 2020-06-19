@@ -7,9 +7,11 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
 import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -44,15 +46,18 @@ public class UserDBHandler {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
         return new CustomUser(Objects.requireNonNull(cursor.first()));
     }
-
+    public static CustomUser getPlayer(OfflinePlayer player) {
+        FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
+        return new CustomUser(Objects.requireNonNull(cursor.first()));
+    }
     public static void updatePlayer(CustomUser player) {
         collection.replaceOne(new BasicDBObject("uid", player.getUid()), player.toDocument());
     }
 
-    public static void removePlayer(CustomUser player) {
-        collection.deleteOne(new BasicDBObject("uid", player.getUid()));
+    public static long removePlayer(CustomUser player) {
+        DeleteResult result = collection.deleteOne(new BasicDBObject("uid", player.getUid()));
+        return result.getDeletedCount();
     }
-
     public static List<CustomUser> getAllPlayers() {
         List<CustomUser> users = new ArrayList<>();
         for (Document document: collection.find()) {
