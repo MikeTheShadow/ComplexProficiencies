@@ -3,6 +3,10 @@ package com.miketheshadow.complexproficiencies;
 
 import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.listener.*;
+import com.miketheshadow.complexproficiencies.regrading.Grade;
+import com.miketheshadow.complexproficiencies.regrading.command.RegradeCommand;
+import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
+import com.miketheshadow.complexproficiencies.regrading.listener.RightClickListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;
@@ -16,6 +20,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -32,7 +38,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.3.0";
+    public static String VERSION = "2.4.0";
 
     //economy
     public static Economy econ;
@@ -44,7 +50,11 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        
+
+        for(String grade : Grade.gradeList) {
+            Bukkit.getConsoleSender().sendMessage("DEBUG: " + grade);
+        }
+
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -73,6 +83,9 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new EntityDeathListener(),this);
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
         pluginManager.registerEvents(new PlayerCraftListener(),this);
+        //regrade listener
+        pluginManager.registerEvents(new RightClickListener(),this);
+        pluginManager.registerEvents(new RegradeInventoryListener(),this);
         //register prof commands
         new ResetDBCommand();
         new LaborCommand();
@@ -83,6 +96,8 @@ public class ComplexProficiencies extends JavaPlugin {
         new ComplexVersionCommand();
         new RemovePlayerCommand();
         new AddLaborCommand();
+        //register regrading commands
+        //new RegradeCommand(); //TODO decide if we need this or not
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
@@ -91,8 +106,10 @@ public class ComplexProficiencies extends JavaPlugin {
         this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
         this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
+        //start labor thread
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
+
     }
 
     private boolean setupEconomy() {

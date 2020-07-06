@@ -6,7 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-class ComplexCommand implements CommandExecutor
+public class ComplexCommand implements CommandExecutor
 {
     private ComplexProficiencies complexProficiencies;
     public ComplexCommand(String name) {

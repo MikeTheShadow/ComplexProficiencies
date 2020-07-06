@@ -19,6 +19,7 @@ public class UserAPI {
     }
 
     public static void updateUserProf(Player player, String prof, int amount) {
+        prof = prof.toLowerCase();
         UserDBHandler.getPlayer(player).addExperience(prof,amount,player);
     }
 
@@ -27,6 +28,7 @@ public class UserAPI {
     }
 
     public static int getProfLevel(Player player,String profname) {
+        profname = profname.toLowerCase();
         CustomUser user = UserDBHandler.getPlayer(player);
         if(user.getProfessions() == null) return -1;
         return user.getLevelFromProf(profname);
@@ -39,6 +41,7 @@ public class UserAPI {
     }
 
     public static void addExperienceToProf(Player player,String profname,int experienceAmount) {
+        profname = profname.toLowerCase();
         CustomUser user = UserDBHandler.getPlayer(player);
         user.addExperience(profname,experienceAmount,player);
         UserDBHandler.updatePlayer(user);
