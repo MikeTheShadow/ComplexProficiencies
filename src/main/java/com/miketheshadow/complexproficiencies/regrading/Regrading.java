@@ -79,6 +79,7 @@ public class Regrading {
             String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
             id = id.replace(currentGrade.toUpperCase(),nextGrade.toUpperCase());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1); //mmoitems (weapon type) (ID) (playername) (amount)
+            player.getInventory().removeItem(stack);
             Bukkit.broadcastMessage(id);
         } else {
             //player failed regrade oof
@@ -89,6 +90,7 @@ public class Regrading {
                 String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
                 id = id.replace(currentGrade.toUpperCase(),ChatColor.stripColor(Grade.ARCANE.toUpperCase()));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1);
+                player.getInventory().removeItem(stack);
             }
         }
         //remove regrade scroll from inventory
