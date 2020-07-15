@@ -129,8 +129,12 @@ public class CustomUser {
         UserDBHandler.updatePlayer(this);
     }
 
-    public int getLevelFromTotal(int totalExperience) return (int) ((-50 + (Math.sqrt(2500 + (200 * totalExperience)))) / (100));
-    public int getRequiredExperience(int level) return (int) ((50 * level) + (50 * (Math.power(level, 2))));
+    public int getLevelFromTotal(int totalExperience) {
+        return (int) ((-50 + (Math.sqrt(2500 + (200 * totalExperience)))) / (100));
+    }
+    public int getRequiredExperience(int level) {
+        return (int) ((50 * level) + (50 * (Math.pow(level, 2))));
+    }
 
     public int getLevelFromProf(String prof) {
         prof = prof.toLowerCase();
@@ -141,6 +145,5 @@ public class CustomUser {
         }
         return getLevelFromTotal(professions.get(prof));
     }
-
 }
 
