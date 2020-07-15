@@ -20,9 +20,9 @@ public class Grade {
     public static final String UNIQUE = register(ChatColor.DARK_AQUA , "Unique",20);
     public static final String CELESTIAL = register(ChatColor.RED , "Celestial",20);
     public static final String DIVINE = register(ChatColor.DARK_PURPLE , "Divine",10);
-    public static final String EPIC = register(ChatColor.AQUA, "EPIC",7.5f);
-    public static final String LEGENDARY = register(ChatColor.GOLD , "LEGENDARY",5);
-    public static final String MYTHIC = register(ChatColor.DARK_RED, "MYTHIC",2.5f);
+    public static final String EPIC = register(ChatColor.AQUA, "Epic",7.5f);
+    public static final String LEGENDARY = register(ChatColor.GOLD , "Legendary",5);
+    public static final String MYTHIC = register(ChatColor.DARK_RED, "Mythic",2.5f);
 
 
     public static String register(ChatColor color,String grade,float regradeChance) {
