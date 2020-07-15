@@ -43,6 +43,7 @@ public class RightClickListener implements Listener {
         }
         Inventory inventory = Bukkit.createInventory(player,54,title);
         inventory.setItem(24,regradeScroll);
+        inventory.getItem(24).setAmount(1);
         inventory.setItem(20,stack);
         player.openInventory(inventory);
     }

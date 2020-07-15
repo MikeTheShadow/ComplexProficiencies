@@ -1,0 +1,34 @@
+}                                                >{
+  id: "metallurgy:copper_sword",
+  Count: 1b,
+  tag: {
+    HideFlags: 2,
+    MMOITEMS_LORE: "[\"----==[ Stats ]==----\",\"\",\"Damage: 40.0\",\"Durability: 125/125\",\"Requires level 1 to use.\",\"\",\"--- ==[ Details ]== ---\",\"\",\"A copper sword. Basic in\",\"design, but still useful in\",\"combat.\",\"\",\"\",\"Crude Weapon\",\"Regradeable\"]",
+    display: {
+      Lore: [
+        "Sword",
+        "",
+        "----==[ Stats ]==----",
+        "",
+        "Damage: 40.0",
+        "Durability: 125/125",
+        "Regrade Available",
+        "Requires level 1 to use.",
+        "",
+        "--- ==[ Details ]== ---",
+        "",
+        "A copper sword. Basic in",
+        "design, but still useful in",
+        "combat.",
+        "",
+        "",
+        "Crude Weapon"
+      ],
+      Name: "Copper Sword"
+    },
+    MMOITEMS_ITEM_ID: "CRUDE_COPPER_SWORD",
+    MMOITEMS_ITEM_TYPE: "SWORD",
+    AttributeModifiers: []
+  },
+  Damage: 0s
+}

@@ -1,6 +1,8 @@
 package com.miketheshadow.complexproficiencies.regrading.listener;
 
+import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.regrading.Regrading;
+import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -34,10 +36,9 @@ public class RegradeInventoryListener extends Regrading implements Listener {
             if(isWeapon(stack)) {
                 if(topInventory.getItem(24).getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
                     topInventory.setItem(20,stack);
-                    ItemStack stack1 = startRegrade(stack);
-                    Bukkit.broadcastMessage("name: " + stack1.getItemMeta().getDisplayName());
-                    topInventory.setItem(5,stack1);
+                    regradeItem(player,stack,topInventory.getItem(24));
                 } else {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"");
                     player.sendMessage(ChatColor.RED + "You need to use a Weapon Regrade Scroll!");
                 }
             } else if(isArmor(stack)) {

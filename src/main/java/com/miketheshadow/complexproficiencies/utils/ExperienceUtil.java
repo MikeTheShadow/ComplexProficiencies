@@ -33,7 +33,8 @@ public class ExperienceUtil
         }
         List<PartyPlayer> acceptableMembers = new ArrayList<>();
         for(PartyPlayer p : party.getPlayers()) {
-            if(Math.abs(UserDBHandler.getPlayer(Bukkit.getPlayer(p.getPlayer())).getLevelXP()[0] - level) > 5) {
+            if(!player.getNearbyEntities(10d,10d,10d).contains(Bukkit.getPlayer(p.getPlayer())))continue;
+            if(Math.abs(UserDBHandler.getPlayer(Bukkit.getPlayer(p.getPlayer())).getLevelXP()[0] - level) > 5 && p.getDamagePerSecond() > 0) {
                 Bukkit.getPlayer(p.getPlayer()).sendMessage(ChatColor.GRAY + "You cannot get XP from this mob!");
             } else {
                 acceptableMembers.add(p);

@@ -5,6 +5,7 @@ import de.tr7zw.nbtapi.NBTItem;
 import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class Regrading {
 
-    public static final String IS_REGRADABLE = ChatColor.GOLD + "Regrade Available";
+    public static final String IS_REGRADABLE = ChatColor.GOLD + "Regradable";
     public static final String INVENTORY_TITLE = ChatColor.YELLOW + "Regrade Item";
 
     public static final String WEAPON_REGRADE_SCROLL = "Weapon Regrade Scroll";
@@ -66,56 +67,31 @@ public class Regrading {
         }
         return "null";
     }
-    public static ItemStack startRegrade(ItemStack stack) {
-        NBTContainer container = NBTItem.convertItemtoNBT(stack);
-        if(!container.getKeys().contains("tag")) {
-            return null;
-        }
-        if(!container.getCompound("tag").hasKey("MMOITEMS_LORE")) return null;
-        String loreString = container.getCompound("tag").getString("MMOITEMS_LORE");
-        float damage = 0f;
-        int totalDurability = 0;
-        int currentDurability = 0;
-        //ew regex
-        for(String s : loreString.split("\",\"")) {
-            if(s.contains("Damage")) {
-                s = ChatColor.stripColor(s);
-                s = s.replace("Damage:","").replaceAll("[ ]","");
-                damage = Float.parseFloat(s);
-            } else if(s.contains("Durability")) {
-                String[] split = ChatColor.stripColor(s).split("[^0-9]");
-                List<String> stringList = new ArrayList<>();
-                for(String str : split) if(!str.equals(" ") && !str.equals(""))stringList.add(str);
-                for(String str : stringList) Bukkit.broadcastMessage(str);
-                totalDurability = Integer.parseInt(stringList.get(0));
-                currentDurability = Integer.parseInt(stringList.get(1));
-            } else if(s.contains(getCurrentGrade(stack))) {
+    public static void regradeItem(Player player, ItemStack stack, ItemStack scroll) {
+        String grade = getCurrentGrade(stack);
+        float chance = Grade.regradeChance.get(grade);
+        float r = (float) (Math.random() * (100));
+        String currentGrade = ChatColor.stripColor(grade);
+        if(r <= chance) {
+            Bukkit.broadcastMessage("You regraded the item woot!");
+            String nextGrade = ChatColor.stripColor(getNextGrade(stack));
+            String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
+            String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
+            id = id.replace(currentGrade.toUpperCase(),nextGrade.toUpperCase());
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1); //mmoitems (weapon type) (ID) (playername) (amount)
+            Bukkit.broadcastMessage(id);
+        } else {
+            //player failed regrade oof
+            Bukkit.broadcastMessage("You failed the regrade )=");
+            if(Grade.gradeList.indexOf(grade) > Grade.gradeList.indexOf(Grade.ARCANE)) {
+                //give player Arcane version of item
+                String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
+                String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
+                id = id.replace(currentGrade.toUpperCase(),ChatColor.stripColor(Grade.ARCANE.toUpperCase()));
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1);
             }
         }
-        //Bukkit.getConsoleSender().sendMessage("Original: " + Arrays.toString(x.split("\",\"")));
-        Bukkit.broadcastMessage("Damage: " + damage + "\nDurability: " + totalDurability + "\\" + currentDurability);
-        String rebuiltString = loreString;
-        List<String> lore = stack.getItemMeta().getLore();
-        rebuiltString = rebuiltString.replace(String.valueOf(damage),"50000.0");
-        replaceItemInLore(lore,String.valueOf(damage),"50000.0");
-        rebuiltString = rebuiltString.replace(String.valueOf(totalDurability),"1000");
-        replaceItemInLore(lore,String.valueOf(totalDurability),"1000");
-        rebuiltString = rebuiltString.replace(String.valueOf(currentDurability),"9000");
-        replaceItemInLore(lore,String.valueOf(currentDurability),"9000");
-        container.getCompound("tag").setString("MMOITEMS_LORE",rebuiltString);
-        return NBTItem.convertNBTtoItem(container);
-    }
-
-    public static List<String> replaceItemInLore(List<String> lore,String replace,String replacement) {
-
-        for(String list : lore) {
-            if(list.contains(replace)) {
-                list = list.replace(replace,replacement);
-                if(!lore.contains(list))continue;
-                lore.set(lore.indexOf(list),list);
-            }
-        }
-
-        return lore;
+        //remove regrade scroll from inventory
+        player.getInventory().removeItem(scroll);
     }
 }
