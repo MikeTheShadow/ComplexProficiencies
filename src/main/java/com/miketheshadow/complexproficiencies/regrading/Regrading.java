@@ -73,18 +73,22 @@ public class Regrading {
         float r = (float) (Math.random() * (100));
         String currentGrade = ChatColor.stripColor(grade);
         if(r <= chance) {
+            Bukkit.broadcastMessage("You regraded the item woot!");
             String nextGrade = ChatColor.stripColor(getNextGrade(stack));
             String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
             String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
             id = id.replace(currentGrade.toUpperCase(),nextGrade.toUpperCase());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1); //mmoitems (weapon type) (ID) (playername) (amount)
-            Bukkit.broadcastMessage(id);
             player.getInventory().removeItem(stack);
             player.sendMessage(ChatColor.YELLOW + "You have successfully regraded your item.");
 
         } else {
             //player failed regrade oof
             player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item.");
+            Bukkit.broadcastMessage(id);
+        } else {
+            //player failed regrade oof
+            Bukkit.broadcastMessage("You failed the regrade )=");
             if(Grade.gradeList.indexOf(grade) > Grade.gradeList.indexOf(Grade.ARCANE)) {
                 //give player Arcane version of item
                 String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
