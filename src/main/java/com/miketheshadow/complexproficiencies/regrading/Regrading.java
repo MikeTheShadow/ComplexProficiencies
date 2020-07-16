@@ -80,6 +80,11 @@ public class Regrading {
             id = id.replace(currentGrade.toUpperCase(),nextGrade.toUpperCase());
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1); //mmoitems (weapon type) (ID) (playername) (amount)
             player.getInventory().removeItem(stack);
+            player.sendMessage(ChatColor.YELLOW + "You have successfully regraded your item.");
+
+        } else {
+            //player failed regrade oof
+            player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item.");
             Bukkit.broadcastMessage(id);
         } else {
             //player failed regrade oof

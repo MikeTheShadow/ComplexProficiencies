@@ -145,5 +145,4 @@ public class CustomUser {
         }
         return getLevelFromTotal(professions.get(prof));
     }
-
 }
