@@ -69,8 +69,7 @@ public class PlayerAttacksListener implements Listener
     {
         Arena arena = ComplexProficiencies.duelsApi.getArenaManager().get(attacker);
         if(arena == null) return false;
-        if(arena.has(attacker) && arena.has(defender))return true;
-        return false;
+        return arena.has(attacker) && arena.has(defender);
     }
 
 }

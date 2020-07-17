@@ -46,8 +46,7 @@ public class Regrading {
 
     public static boolean checkData(ItemStack stack) {
         if(!stack.hasItemMeta())return false;
-        if(!stack.getItemMeta().hasLore())return false;
-        return true;
+        return stack.getItemMeta().hasLore();
     }
 
     public static String getNextGrade(ItemStack stack) {
@@ -73,7 +72,6 @@ public class Regrading {
         float r = (float) (Math.random() * (100));
         String currentGrade = ChatColor.stripColor(grade);
         if(r <= chance) {
-            Bukkit.broadcastMessage("You regraded the item woot!");
             String nextGrade = ChatColor.stripColor(getNextGrade(stack));
             String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
             String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
@@ -83,7 +81,6 @@ public class Regrading {
             player.sendMessage(ChatColor.YELLOW + "You have successfully regraded your item.");
         } else {
             //player failed regrade oof
-            player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item.");
             if(Grade.gradeList.indexOf(grade) > Grade.gradeList.indexOf(Grade.ARCANE)) {
                 //give player Arcane version of item
                 String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
@@ -91,6 +88,9 @@ public class Regrading {
                 id = id.replace(currentGrade.toUpperCase(),ChatColor.stripColor(Grade.ARCANE.toUpperCase()));
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"mmoitems " + type + " " + id + " " + player.getName() + " " + 1);
                 player.getInventory().removeItem(stack);
+                player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item and it has been downgraded to arcane.");
+            } else {
+                player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item.");
             }
         }
         //remove regrade scroll from inventory

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ComplexCommand implements CommandExecutor
 {
-    private ComplexProficiencies complexProficiencies;
+    private final ComplexProficiencies complexProficiencies;
     public ComplexCommand(String name) {
         this.complexProficiencies = ComplexProficiencies.INSTANCE;
         this.complexProficiencies.getCommand(name).setExecutor(this);

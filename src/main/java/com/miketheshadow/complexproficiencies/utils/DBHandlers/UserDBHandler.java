@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Objects;
 public class UserDBHandler {
 
-    private static  MongoCollection<Document> collection = init();
+    private static final MongoCollection<Document> collection = init();
     public static void checkPlayer(Player player) {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
         if (cursor.first() == null) {
