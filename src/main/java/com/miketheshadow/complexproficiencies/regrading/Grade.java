@@ -48,11 +48,10 @@ public class Grade {
     public static ItemStack getRegradeButton() {
         ItemStack stack = new ItemStack(Material.GREEN_SHULKER_BOX);
         ItemMeta meta = stack.getItemMeta();
-        meta.setDisplayName("Regrade");
+        meta.setDisplayName(ChatColor.GREEN + "Regrade");
         List<String> lore = new ArrayList<>();
-        lore.add("Regrade Item");
-        lore.add("Labor Cost: 10");
-        lore.add("Cost: 0");
+        lore.add(ChatColor.WHITE + "Labor Cost:" + ChatColor.YELLOW + " 10");
+        lore.add(ChatColor.WHITE + "Cost: "+ ChatColor.GREEN + "0");
         meta.setLore(lore);
         stack.setItemMeta(meta);
         return stack;

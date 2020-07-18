@@ -20,6 +20,7 @@ package com.miketheshadow.complexproficiencies.regrading.listener;
 
 import com.miketheshadow.complexproficiencies.regrading.Grade;
 import com.miketheshadow.complexproficiencies.regrading.Regrading;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -40,47 +41,51 @@ public class RegradeInventoryListener extends Regrading implements Listener {
         //check if player is in the regrading inventory
         if(!event.getView().getTitle().equals(INVENTORY_TITLE)) return;
         event.setCancelled(true);
-        if(player.getInventory() != event.getClickedInventory() || event.getCurrentItem() == null)return;
+        if(event.getCurrentItem() == null)return;
         if(event.getClick() != ClickType.RIGHT)return;
         ItemStack stack = event.getCurrentItem();
         Inventory topInventory = player.getOpenInventory().getTopInventory();
-        if(isRegradable(stack)) {
-            if(isWeapon(stack) || isArmor(stack)) {
-                if(topInventory.getItem(24) == null) {
-                    topInventory.setItem(20,stack);
-                    return;
+        if(player.getInventory() == event.getClickedInventory()) {
+            if(isRegradable(stack)) {
+                if(isWeapon(stack) || isArmor(stack)) {
+                    if(topInventory.getItem(24) == null) {
+                        topInventory.setItem(20,stack);
+                        return;
+                    }
+                }
+                if(isWeapon(stack)) {
+                    if(topInventory.getItem(24).getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
+                        topInventory.setItem(20,stack);
+                        topInventory.setItem(40,setRegradeNumbers(Grade.getRegradeButton(),stack));
+                    } else {
+                        player.sendMessage(ChatColor.RED + "You need to use a Weapon Regrade Scroll!");
+                    }
+                } else if(isArmor(stack)) {
+                    if(topInventory.getItem(24).getItemMeta().getDisplayName().contains(ARMOR_REGRADE_SCROLL)) {
+                        topInventory.setItem(20,stack);
+                        topInventory.setItem(40,setRegradeNumbers(Grade.getRegradeButton(),stack));
+                    } else {
+                        player.sendMessage(ChatColor.RED + "You need to use an Armor Regrade Scroll!");
+                    }
                 }
             }
-            if(isWeapon(stack)) {
-                if(topInventory.getItem(24).getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
-                    topInventory.setItem(20,stack);
-                    topInventory.setItem(48,setRegradeNumbers(Grade.getRegradeButton(),stack));
-                } else {
-                    player.sendMessage(ChatColor.RED + "You need to use a Weapon Regrade Scroll!");
-                }
-            } else if(isArmor(stack)) {
-                if(topInventory.getItem(24).getItemMeta().getDisplayName().contains(ARMOR_REGRADE_SCROLL)) {
-                    topInventory.setItem(20,stack);
-                    topInventory.setItem(48,setRegradeNumbers(Grade.getRegradeButton(),stack));
-                } else {
-                    player.sendMessage(ChatColor.RED + "You need to use an Armor Regrade Scroll!");
-                }
-            }
-        } else if(isRegradeButton(stack)) { //commence regrade here
-            ItemStack itemToRegrade = topInventory.getItem(24);
+        }
+        else if(isRegradeButton(stack)) { //commence regrade here
+            ItemStack itemToRegrade = topInventory.getItem(20);
             if(isWeapon(itemToRegrade) || isArmor(itemToRegrade)) {
-                regradeItem(player,stack,topInventory.getItem(24),Grade.getValueOfGrade(getCurrentGrade(itemToRegrade)));
+                regradeItem(player,itemToRegrade,topInventory.getItem(24),Grade.getValueOfGrade(getCurrentGrade(itemToRegrade)));
             } else {
                 player.sendMessage(ChatColor.RED + "You need to select an item to regrade!");
             }
-
         }
     }
 
     public ItemStack setRegradeNumbers(ItemStack stack,ItemStack regradable) {
         ItemMeta meta = stack.getItemMeta();
         List<String> lore = meta.getLore();
-        lore.set(2,"Cost: " + Grade.getValueOfGrade(getCurrentGrade(regradable)));
+        lore.set(1,ChatColor.WHITE + "Cost: " + ChatColor.GREEN + Grade.getValueOfGrade(getCurrentGrade(regradable)));
+        meta.setLore(lore);
+        stack.setItemMeta(meta);
         return stack;
     }
 

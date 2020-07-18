@@ -63,7 +63,6 @@ public class OpenRegradeWindowListener implements Listener {
         inventory.setItem(24,regradeScroll);
         inventory.getItem(24).setAmount(1);
         inventory.setItem(20,stack);
-
         player.openInventory(inventory);
     }
 }
