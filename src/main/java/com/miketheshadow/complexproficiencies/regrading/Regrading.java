@@ -18,6 +18,8 @@
 
 package com.miketheshadow.complexproficiencies.regrading;
 
+import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.api.UserAPI;
 import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,6 +58,12 @@ public class Regrading {
         return true;
     }
 
+    public static boolean isRegradeButton(ItemStack stack) {
+        if(!stack.hasItemMeta())return false;
+        if(!stack.getItemMeta().hasDisplayName())return false;
+        return stack.getItemMeta().getDisplayName().equals(Grade.getRegradeButton().getItemMeta().getDisplayName());
+    }
+
     public static boolean checkData(ItemStack stack) {
         if(!stack.hasItemMeta())return false;
         return stack.getItemMeta().hasLore();
@@ -78,7 +86,15 @@ public class Regrading {
         }
         return "null";
     }
-    public static void regradeItem(Player player, ItemStack stack, ItemStack scroll) {
+
+    public static void regradeItem(Player player, ItemStack stack, ItemStack scroll,int moneyCost) {
+        if(ComplexProficiencies.econ.getBalance(player) < moneyCost) {
+            player.sendMessage(ChatColor.RED + "You don't have enough money!");
+            return;
+        } else if(!UserAPI.userHasLabor(player,10)) {
+            player.sendMessage(ChatColor.RED + "You don't have enough Labor!");
+            return;
+        }
         String grade = getCurrentGrade(stack);
         float chance = Grade.regradeChance.get(grade);
         float r = (float) (Math.random() * (100));
@@ -106,6 +122,8 @@ public class Regrading {
             }
         }
         //remove regrade scroll from inventory
+        ComplexProficiencies.econ.withdrawPlayer(player,moneyCost);
+        UserAPI.addExperienceToProf(player,"alchemy",10);
         player.getInventory().removeItem(scroll);
     }
 }

@@ -22,9 +22,8 @@ package com.miketheshadow.complexproficiencies;
 import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.regrading.Grade;
-import com.miketheshadow.complexproficiencies.regrading.command.RegradeCommand;
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
-import com.miketheshadow.complexproficiencies.regrading.listener.RightClickListener;
+import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;
@@ -38,8 +37,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -102,7 +99,7 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
         pluginManager.registerEvents(new PlayerCraftListener(),this);
         //regrade listener
-        pluginManager.registerEvents(new RightClickListener(),this);
+        pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
         //register prof commands
         new ResetDBCommand();

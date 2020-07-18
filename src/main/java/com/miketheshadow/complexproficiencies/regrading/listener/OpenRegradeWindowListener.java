@@ -30,7 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class RightClickListener implements Listener {
+public class OpenRegradeWindowListener implements Listener {
 
     @EventHandler
     public void rightClickEvent(PlayerInteractEvent event) {
@@ -63,6 +63,7 @@ public class RightClickListener implements Listener {
         inventory.setItem(24,regradeScroll);
         inventory.getItem(24).setAmount(1);
         inventory.setItem(20,stack);
+
         player.openInventory(inventory);
     }
 }
