@@ -109,7 +109,7 @@ public class Regrading {
             player.sendMessage(ChatColor.YELLOW + "You have successfully regraded your item.");
         } else {
             //player failed regrade oof
-            if(Grade.gradeList.indexOf(grade) > Grade.gradeList.indexOf(Grade.ARCANE)) {
+            if(Grade.gradeList.indexOf(grade) > Grade.gradeList.indexOf(Grade.HEROIC)) {
                 //give player Arcane version of item
                 String id = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_ID");
                 String type = NBTItem.convertItemtoNBT(stack).getCompound("tag").getString("MMOITEMS_ITEM_TYPE");
@@ -121,9 +121,11 @@ public class Regrading {
                 player.sendMessage(ChatColor.YELLOW + "You have failed to regrade your item.");
             }
         }
+        if(Grade.gradeList.indexOf(grade) > 6)
         //remove regrade scroll from inventory
         ComplexProficiencies.econ.withdrawPlayer(player,moneyCost);
         UserAPI.addExperienceToProf(player,"alchemy",10);
         player.getInventory().removeItem(scroll);
+        player.getOpenInventory().getTopInventory().setItem(20,null);
     }
 }

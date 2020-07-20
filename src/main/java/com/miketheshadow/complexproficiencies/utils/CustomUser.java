@@ -148,7 +148,7 @@ public class CustomUser {
     }
 
     public int getLevelFromTotal(int totalExperience) {
-        return (int) ((-50 + (Math.sqrt(2500 + (200 * totalExperience)))) / (100));
+        return (int) ((-50 + (Math.sqrt(2500 + (200 * totalExperience)))) / (100)) + 1;
     }
     public int getRequiredExperience(int level) {
         return (int) ((50 * level) + (50 * (Math.pow(level, 2))));
