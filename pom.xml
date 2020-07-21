@@ -170,10 +170,5 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.miketheshadow</groupId>
-            <artifactId>complexproficiencies</artifactId>
-            <version>1.0.0</version>
-        </dependency>
     </dependencies>
 </project>
