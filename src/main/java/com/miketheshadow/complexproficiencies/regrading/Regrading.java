@@ -94,8 +94,18 @@ public class Regrading {
         } else if(!UserAPI.userHasLabor(player,10)) {
             player.sendMessage(ChatColor.RED + "You don't have enough Labor!");
             return;
+        } else if(!player.getInventory().contains(scroll)) {
+            player.sendMessage(ChatColor.RED + "you don't have enough " + scroll.getItemMeta().getDisplayName());
+            return;
         }
         String grade = getCurrentGrade(stack);
+        if(isWeapon(stack) && !scroll.getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
+            player.sendMessage(ChatColor.RED + "You need to use a " + ARMOR_REGRADE_SCROLL);
+            return;
+        } else if(isArmor(stack) && !scroll.getItemMeta().getDisplayName().contains(ARMOR_REGRADE_SCROLL)) {
+            player.sendMessage(ChatColor.RED + "You need to use a " + ARMOR_REGRADE_SCROLL);
+            return;
+        }
         float chance = Grade.regradeChance.get(grade);
         float r = (float) (Math.random() * (100));
         String currentGrade = ChatColor.stripColor(grade);
