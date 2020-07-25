@@ -18,15 +18,15 @@
 
 package com.miketheshadow.complexproficiencies.utils;
 
-import br.com.kickpost.party.PartyPlugin;
-import br.com.kickpost.party.model.Party;
-import br.com.kickpost.party.model.PartyPlayer;
+
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelM
 
 public class ExperienceUtil
 {
-
+    /*
     public static void addPartyExperience(CustomUser user, Player player, int level, boolean mute, boolean isVanilla) {
         int addition = level * 5;
 
@@ -62,8 +62,18 @@ public class ExperienceUtil
                 addPlayerExperience(user, Bukkit.getPlayer(p.getPlayer()), (addition/acceptableMembers.size()), mute, isVanilla);
             }
     }
-
+    */
     public static void addPlayerExperience(CustomUser user, Player player, int addition, boolean mute,boolean isVanilla) {
+
+
+        List<Entity> playersNearby = player.getNearbyEntities(5,5,5);
+
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            if(p.getNearbyEntities(5,5,5).contains(player)) {
+
+            }
+        }
+
         float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
         if(isVanilla) bonus = 1;
         else if(bonus < 2) bonus = 1;

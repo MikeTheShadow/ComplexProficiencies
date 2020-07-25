@@ -189,12 +189,13 @@ public class ExperienceCommandListener implements CommandExecutor {
                 return true;
             }
             CustomUser user = UserDBHandler.getPlayer(target);
+            Bukkit.broadcastMessage("DON'T USE ADD PARTY EXPERIENCE IT'S BROKEN! USE: /addexperience!");
             try {
                 int level = Integer.parseInt(args[2]);
                 /*
                 WORK ON THIS
                  */
-                ExperienceUtil.addPartyExperience(user,target,level,false,false);
+                //ExperienceUtil.addPartyExperience(user,target,level,false,false);
             }
             catch (Exception e) {
                 Bukkit.getServer().getConsoleSender().sendMessage("Error adding experience check that values are correct!");
