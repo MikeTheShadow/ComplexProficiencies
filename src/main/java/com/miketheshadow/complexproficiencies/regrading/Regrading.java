@@ -100,7 +100,7 @@ public class Regrading {
         }
         String grade = getCurrentGrade(stack);
         if(isWeapon(stack) && !scroll.getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
-            player.sendMessage(ChatColor.RED + "You need to use a " + ARMOR_REGRADE_SCROLL);
+            player.sendMessage(ChatColor.RED + "You need to use a " + WEAPON_REGRADE_SCROLL);
             return;
         } else if(isArmor(stack) && !scroll.getItemMeta().getDisplayName().contains(ARMOR_REGRADE_SCROLL)) {
             player.sendMessage(ChatColor.RED + "You need to use a " + ARMOR_REGRADE_SCROLL);
