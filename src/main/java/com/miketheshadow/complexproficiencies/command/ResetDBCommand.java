@@ -29,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@ICommand
 public class ResetDBCommand extends ComplexCommand
 {
 

@@ -27,6 +27,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@ICommand
 public class RemovePlayerCommand extends ComplexCommand {
 
     public RemovePlayerCommand() {

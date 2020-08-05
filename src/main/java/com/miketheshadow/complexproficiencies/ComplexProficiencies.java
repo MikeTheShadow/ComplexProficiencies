@@ -36,9 +36,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.reflections.Reflections;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 //TODO make it so that the person who has eaten the most carrots gets night-vision
 
@@ -53,7 +55,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.4.4";
+    public static String VERSION = "2.4.5";
 
     //economy
     public static Economy econ;
@@ -101,17 +103,9 @@ public class ComplexProficiencies extends JavaPlugin {
         //regrade listener
         pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
-        //register prof commands
-        new ResetDBCommand();
-        new LaborCommand();
-        new ProfCommand();
-        new ProfTopCommand();
-        new CaravanCreateCommand();
-        new CaravanReturnCommand();
-        new ComplexVersionCommand();
-        new RemovePlayerCommand();
-        new AddLaborCommand();
         //register regrading commands
+        try { registerCommands(); } 
+        catch (Exception e) { System.out.println("Failed to register commands with error: " + e.getMessage()); }
         //new RegradeCommand(); //TODO decide if we need this or not
         //register xp commmands
         this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
@@ -125,6 +119,14 @@ public class ComplexProficiencies extends JavaPlugin {
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
 
+    }
+
+    private static void registerCommands() throws IllegalAccessException, InstantiationException {
+        Reflections reflections = new Reflections("com.miketheshadow.complexproficiencies");
+        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(ICommand.class);
+        for (Class<?> c : classSet) {
+            c.newInstance();
+        }
     }
 
     private boolean setupEconomy() {

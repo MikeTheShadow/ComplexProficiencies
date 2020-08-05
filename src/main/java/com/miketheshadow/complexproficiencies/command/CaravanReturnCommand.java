@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+@ICommand
 public class CaravanReturnCommand extends ComplexCommand
 {
     public CaravanReturnCommand() {
