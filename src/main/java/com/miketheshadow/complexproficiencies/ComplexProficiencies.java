@@ -55,7 +55,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.4.5";
+    public static String VERSION = "2.4.6";
 
     //economy
     public static Economy econ;
@@ -67,11 +67,7 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
-
-        for(String grade : Grade.gradeList) {
-            Bukkit.getConsoleSender().sendMessage("DEBUG: " + grade);
-        }
-
+        
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -124,8 +120,9 @@ public class ComplexProficiencies extends JavaPlugin {
     private static void registerCommands() throws IllegalAccessException, InstantiationException {
         Reflections reflections = new Reflections("com.miketheshadow.complexproficiencies");
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(ICommand.class);
+        Bukkit.getConsoleSender().sendMessage("Starting reflection");
         for (Class<?> c : classSet) {
-            c.newInstance();
+            Bukkit.getConsoleSender().sendMessage("DEBUG REG COMMAND: " + c.newInstance().toString());
         }
     }
 

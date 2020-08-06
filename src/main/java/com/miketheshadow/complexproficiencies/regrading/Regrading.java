@@ -45,7 +45,7 @@ public class Regrading {
     public static boolean isWeapon(ItemStack stack) {
         if(!checkData(stack))return false;
         for(String lore : stack.getItemMeta().getLore()) {
-            if(lore.contains("Weapon")) return true;
+            if(lore.toLowerCase().contains("weapon")) return true;
         }
         return true;
     }
@@ -53,7 +53,7 @@ public class Regrading {
     public static boolean isArmor(ItemStack stack) {
         if(!checkData(stack))return false;
         for(String lore : stack.getItemMeta().getLore()) {
-            if(lore.contains("Armor")) return true;
+            if(lore.toLowerCase().contains("armor")) return true;
         }
         return true;
     }
@@ -99,10 +99,26 @@ public class Regrading {
             return;
         }
         String grade = getCurrentGrade(stack);
-        if(isWeapon(stack) && !scroll.getItemMeta().getDisplayName().contains(WEAPON_REGRADE_SCROLL)) {
+        String displayName = scroll.getItemMeta().getDisplayName();
+        if(isWeapon(stack)) {
+            player.sendMessage("regrading a weapon");
+        }
+         else if(isArmor(stack)) {
+            player.sendMessage("regrading an armor piece");
+        } else {
+             player.sendMessage("not a regradable item?");
+        }
+         if(displayName.contains(WEAPON_REGRADE_SCROLL)) {
+             player.sendMessage("using weapon regrade scroll!");
+         }
+         if(displayName.contains(ARMOR_REGRADE_SCROLL)) {
+             player.sendMessage("using an armor regrade scroll!");
+         }
+
+        if(isWeapon(stack) && !displayName.contains(WEAPON_REGRADE_SCROLL)) {
             player.sendMessage(ChatColor.RED + "You need to use a " + WEAPON_REGRADE_SCROLL);
             return;
-        } else if(isArmor(stack) && !scroll.getItemMeta().getDisplayName().contains(ARMOR_REGRADE_SCROLL)) {
+        } else if(isArmor(stack) && !displayName.contains(ARMOR_REGRADE_SCROLL)) {
             player.sendMessage(ChatColor.RED + "You need to use a " + ARMOR_REGRADE_SCROLL);
             return;
         }
