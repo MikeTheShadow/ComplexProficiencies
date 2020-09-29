@@ -52,13 +52,18 @@ commands:
     permission-message: You don't have ComplexProficiencies.admin permission
   caddlabor:
     description: Adds labor to a user
-    usage: /<complexaddlabor> [name] [amount]
+    usage: /<caddlabor> [name] [amount]
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
+  claborreset:
+    description: Resets labor of the entire server
+    usage: /<claborreset>
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.
-    usage: /<checkstats> [player]
+    usage: /<userstats> [player]
     permission: ComplexProficiencies.misc
     permission-message: You don't have ComplexProficiencies.misc permission
   mystats:

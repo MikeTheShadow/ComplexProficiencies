@@ -16,32 +16,44 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.experience;
 
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-@ICommand
-public class RemovePlayerCommand extends ComplexCommand {
+public class AddExperienceCommand extends ComplexCommand {
 
-    public RemovePlayerCommand() {
-        super("cremoveplayer");
+    public AddExperienceCommand() {
+        super("addexperience");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if(!(sender instanceof Player)) return false;
-        if(args.length != 1) return false;
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-        long code = UserDBHandler.removePlayer(UserDBHandler.getPlayer(player));
-        sender.sendMessage(ChatColor.GREEN + "Removed player '" + player.getName() + "' level data with code: " + code);
+        if(warnUser(args,sender)) return false;
+
+        Player target = (Bukkit.getServer().getPlayer(args[0]));
+        if(target == null) {
+            sender.sendMessage(ChatColor.RED + "Player does not exist!");
+            return true;
+        }
+        CustomUser user = UserDBHandler.getPlayer(target);
+        try {
+            int xpToAdd = Integer.parseInt(args[1]);
+            ExperienceUtil.addPlayerExperience(user,target,xpToAdd,false,false);
+        }
+        catch (Exception e) {
+            Bukkit.getServer().getConsoleSender().sendMessage("Error adding experience check that values are correct!");
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
-
 }

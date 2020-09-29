@@ -20,10 +20,11 @@ package com.miketheshadow.complexproficiencies;
 
 
 import com.miketheshadow.complexproficiencies.command.*;
+import com.miketheshadow.complexproficiencies.command.base.*;
+import com.miketheshadow.complexproficiencies.command.experience.*;
 import com.miketheshadow.complexproficiencies.listener.*;
-import com.miketheshadow.complexproficiencies.regrading.Grade;
-import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
 import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
+import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;
@@ -55,7 +56,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.4.6";
+    public static String VERSION = "2.4.7";
 
     //economy
     public static Economy econ;
@@ -100,17 +101,37 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
         //register regrading commands
-        try { registerCommands(); } 
-        catch (Exception e) { System.out.println("Failed to register commands with error: " + e.getMessage()); }
+        //register prof commands
+        new ResetDBCommand();
+        new LaborCommand();
+        new ProfCommand();
+        new ProfTopCommand();
+        new CaravanCreateCommand();
+        new CaravanReturnCommand();
+        new ComplexVersionCommand();
+        new RemovePlayerCommand();
+        new AddLaborCommand();
+        new ResetLaborCommand();
+        //Disabled due to bugs
+        //try { registerCommands(); }
+        //catch (Exception e) { System.out.println("Failed to register commands with error: " + e.getMessage()); }
         //new RegradeCommand(); //TODO decide if we need this or not
-        //register xp commmands
-        this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("fixexperience").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("setexperience").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
-        this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
+        //register xp commmands TODO remove these after confirming the updated one's work
+        //this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("fixexperience").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("setexperience").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
+        //this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
+
+        new MyStatsCommand();
+        new UserStatsCommand();
+        new FixExperienceCommand();
+        new SetExperienceCommand();
+        new SetLevelCommand();
+        new AddExperienceCommand();
+        new AddPartyExperienceCommand();
         //start labor thread
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
@@ -122,7 +143,7 @@ public class ComplexProficiencies extends JavaPlugin {
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(ICommand.class);
         Bukkit.getConsoleSender().sendMessage("Starting reflection");
         for (Class<?> c : classSet) {
-            Bukkit.getConsoleSender().sendMessage("DEBUG REG COMMAND: " + c.newInstance().toString());
+            c.newInstance();
         }
     }
 

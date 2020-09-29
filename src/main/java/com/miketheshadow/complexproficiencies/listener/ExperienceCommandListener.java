@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
+@Deprecated
 public class ExperienceCommandListener implements CommandExecutor {
 
     private final ComplexProficiencies complexProficiencies;
@@ -43,8 +44,7 @@ public class ExperienceCommandListener implements CommandExecutor {
     }
     @Override
     public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String s, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("userstats"))
-        {
+        if (cmd.getName().equalsIgnoreCase("userstats")) {
             if (!(sender instanceof Player)) {
                 sender.sendMessage("This command can only be run by a player.");
                 return true;

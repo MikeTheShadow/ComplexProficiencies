@@ -16,10 +16,13 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.base;
 
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.command.ICommand;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -35,6 +38,16 @@ public class LaborCommand extends ComplexCommand {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        if(args.length == 1 && sender.isOp() || !(sender instanceof Player) && args.length == 1) {
+            Player player = Bukkit.getPlayer(args[0]);
+            if(player == null) {
+                sender.sendMessage(ChatColor.RED + "Player " + args[0] + " does not exist!");
+            } else {
+                CustomUser user = UserDBHandler.getPlayer(player);
+                sender.sendMessage(ChatColor.YELLOW + "They currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+            }
+            return true;
+        }
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
         CustomUser user = UserDBHandler.getPlayer((Player) sender);

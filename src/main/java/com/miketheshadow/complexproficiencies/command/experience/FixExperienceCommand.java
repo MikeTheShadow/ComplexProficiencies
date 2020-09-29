@@ -16,22 +16,37 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
+import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-@ICommand
-public class ComplexVersionCommand extends ComplexCommand {
-    public ComplexVersionCommand() {
-        super("cver");
+import java.util.List;
+
+import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
+
+public class FixExperienceCommand extends ComplexCommand {
+
+    public FixExperienceCommand() {
+        super("fixexperience");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        sender.sendMessage("Currently running ComplexProficiencies Version: " + ComplexProficiencies.VERSION);
+        List<CustomUser> customUsers = UserDBHandler.getAllPlayers();
+        levelConfig.forceReload();
+        ComplexProficiencies.rebuildLevelMap();
+        for (CustomUser user: customUsers)
+        {
+            ExperienceUtil.addPlayerExperience(user, Bukkit.getPlayer(user.getName()),0,true,false);
+        }
         return true;
     }
 }

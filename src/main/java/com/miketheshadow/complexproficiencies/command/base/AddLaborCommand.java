@@ -16,8 +16,10 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.base;
 
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.command.ICommand;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.LaborThread;

@@ -41,6 +41,7 @@ public class OpenRegradeWindowListener implements Listener {
         if(!itemStack.getItemMeta().hasLore())return;
         if(event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         String title = itemStack.getItemMeta().getDisplayName();
+        if(title == null)return;
         if(title.contains(Regrading.WEAPON_REGRADE_SCROLL) || title.contains(Regrading.ARMOR_REGRADE_SCROLL)) {
             openRegradeInventory(player,Regrading.INVENTORY_TITLE,itemStack,title);
         }

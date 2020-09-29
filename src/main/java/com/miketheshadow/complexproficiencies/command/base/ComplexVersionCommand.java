@@ -16,38 +16,24 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.base;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
-import org.bukkit.Bukkit;
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.command.ICommand;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ComplexCommand implements CommandExecutor
-{
-    private final ComplexProficiencies complexProficiencies;
-    public ComplexCommand(String name) {
-        Bukkit.getConsoleSender().sendMessage("Registering command: " + name);
-        this.complexProficiencies = ComplexProficiencies.INSTANCE;
-        this.complexProficiencies.getCommand(name).setExecutor(this);
+@ICommand
+public class ComplexVersionCommand extends ComplexCommand {
+    public ComplexVersionCommand() {
+        super("cver");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        return false;
-    }
-
-    public boolean warnUser(String[] args,CommandSender sender) {
-        if(args.length != 2) {
-            if(sender instanceof Player) {
-                ((Player) sender).getPlayer().sendMessage("Please use correct parameters!");
-            }
-            else{Bukkit.getConsoleSender().sendMessage("Please Use correct parameters!");}
-            return true;
-        }
-        return false;
+        sender.sendMessage("Currently running ComplexProficiencies Version: " + ComplexProficiencies.VERSION);
+        return true;
     }
 }
