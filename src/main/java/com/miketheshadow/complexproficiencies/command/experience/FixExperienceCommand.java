@@ -20,6 +20,7 @@ package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.command.ICommand;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
+@ICommand
 public class FixExperienceCommand extends ComplexCommand {
 
     public FixExperienceCommand() {

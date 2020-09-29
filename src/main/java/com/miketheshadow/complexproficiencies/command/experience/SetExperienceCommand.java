@@ -19,6 +19,7 @@
 package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import com.miketheshadow.complexproficiencies.command.ICommand;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
@@ -28,6 +29,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@ICommand
 public class SetExperienceCommand extends ComplexCommand {
 
     public SetExperienceCommand() {

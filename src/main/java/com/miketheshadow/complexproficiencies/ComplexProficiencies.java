@@ -23,6 +23,7 @@ import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.command.base.*;
 import com.miketheshadow.complexproficiencies.command.experience.*;
 import com.miketheshadow.complexproficiencies.listener.*;
+import com.miketheshadow.complexproficiencies.regrading.command.RegradeCommand;
 import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
@@ -115,16 +116,6 @@ public class ComplexProficiencies extends JavaPlugin {
         //Disabled due to bugs
         //try { registerCommands(); }
         //catch (Exception e) { System.out.println("Failed to register commands with error: " + e.getMessage()); }
-        //new RegradeCommand(); //TODO decide if we need this or not
-        //register xp commmands TODO remove these after confirming the updated one's work
-        //this.getCommand("mystats").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("userstats").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("fixexperience").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("setexperience").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("setlevel").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("addexperience").setExecutor(new ExperienceCommandListener(this));
-        //this.getCommand("addpartyexperience").setExecutor(new ExperienceCommandListener(this));
-
         new MyStatsCommand();
         new UserStatsCommand();
         new FixExperienceCommand();
