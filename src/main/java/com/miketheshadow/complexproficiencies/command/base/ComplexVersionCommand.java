@@ -20,19 +20,18 @@ package com.miketheshadow.complexproficiencies.command.base;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
-import org.bukkit.command.Command;
+import com.miketheshadow.complexproficiencies.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
-@ICommand
+@Command
 public class ComplexVersionCommand extends ComplexCommand {
     public ComplexVersionCommand() {
         super("cver");
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         sender.sendMessage("Currently running ComplexProficiencies Version: " + ComplexProficiencies.VERSION);
         return true;
     }

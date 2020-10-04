@@ -16,14 +16,14 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.command;
+package com.miketheshadow.complexproficiencies.command.regrading;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import com.miketheshadow.complexproficiencies.command.ComplexCommand;
 
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface ICommand {
+public class RegradeCommand extends ComplexCommand {
+    public RegradeCommand() {
+        super("regrade");
+    }
+
+
 }

@@ -19,22 +19,20 @@
 package com.miketheshadow.complexproficiencies.command.base;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@ICommand
+@Command
 public class ResetLaborCommand extends ComplexCommand {
 
     private final List<String> names = new ArrayList<>();
@@ -44,7 +42,7 @@ public class ResetLaborCommand extends ComplexCommand {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         if(names.contains(sender.getName())) {
             names.remove(sender.getName());
             for(CustomUser user : UserDBHandler.getAllPlayers()) {

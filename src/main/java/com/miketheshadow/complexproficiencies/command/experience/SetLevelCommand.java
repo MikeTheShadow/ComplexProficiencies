@@ -19,20 +19,19 @@
 package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
 import de.leonhard.storage.Json;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
-@ICommand
+@Command
 public class SetLevelCommand extends ComplexCommand {
 
     public SetLevelCommand() {
@@ -40,7 +39,7 @@ public class SetLevelCommand extends ComplexCommand {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         if(warnUser(args,sender)) return false;
         Json config = levelConfig;
         int levelXP = config.getInt("levels." + args[1]);

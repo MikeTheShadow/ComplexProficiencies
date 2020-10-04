@@ -19,20 +19,19 @@
 package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
-@ICommand
+@Command
 public class UserStatsCommand extends ComplexCommand {
 
     public UserStatsCommand() {
@@ -40,7 +39,7 @@ public class UserStatsCommand extends ComplexCommand {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("This command can only be run by a player.");
             return true;

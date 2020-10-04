@@ -60,6 +60,21 @@ commands:
     usage: /<claborreset>
     permission: ComplexProficiencies.admin
     permission-message: You don't have ComplexProficiencies.admin permission
+  capi:
+    description: interact with the complex API
+    usage: /<capi> [command]
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
+  cdata:
+    description: interact with the complex API
+    usage: /<cdata> [command]
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
+  cdebug:
+    description: A debug command to display internal info
+    usage: /<cdebug>
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
 #USER STAT STUFF
   userstats:
     description: Gets yours/a users current stats.

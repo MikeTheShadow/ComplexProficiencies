@@ -20,29 +20,42 @@ package com.miketheshadow.complexproficiencies.command.base;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
 import com.miketheshadow.complexproficiencies.command.Command;
+import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
+import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONObject;
+
+import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
 @Command
-public class RemovePlayerCommand extends ComplexCommand {
+public class ComplexDataCommand extends ComplexCommand {
 
-    public RemovePlayerCommand() {
-        super("cremoveplayer");
+    public ComplexDataCommand() {
+        super("cdata");
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
-        if(!(sender instanceof Player)) return false;
-        if(args.length != 1) return false;
-        OfflinePlayer player = Bukkit.getOfflinePlayer(args[0]);
-        long code = UserDBHandler.removePlayer(UserDBHandler.getPlayer(player));
-        sender.sendMessage(ChatColor.GREEN + "Removed player '" + player.getName() + "' level data with code: " + code);
-        return true;
-    }
 
+        if(args[0].equals("pjson")) {
+            if(args.length != 2) {
+                sender.sendMessage(ChatColor.RED + "/cdata pjson [player]");
+                return true;
+            }
+            CustomUser user = UserDBHandler.getPlayer(Bukkit.getPlayer(args[1]));
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.append("labor",user.getLabor());
+            jsonObject.append("level",user.getLevelXP()[0]);
+            jsonObject.append("xpstart",ExperienceUtil.getPlayerCurrentXP(user));
+            jsonObject.append("xpend",levelConfig.getInt("levels." + user.getLevelXP()[0]));
+            sender.sendMessage(jsonObject.toString());
+            return true;
+        }
+
+        return false;
+    }
 }

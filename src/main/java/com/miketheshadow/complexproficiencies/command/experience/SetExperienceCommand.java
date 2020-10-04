@@ -19,17 +19,16 @@
 package com.miketheshadow.complexproficiencies.command.experience;
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import com.miketheshadow.complexproficiencies.utils.ExperienceUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-@ICommand
+@Command
 public class SetExperienceCommand extends ComplexCommand {
 
     public SetExperienceCommand() {
@@ -37,7 +36,7 @@ public class SetExperienceCommand extends ComplexCommand {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         if(warnUser(args,sender)) return true;
         Player target = (Bukkit.getServer().getPlayer(args[0]));
         if (target != null)

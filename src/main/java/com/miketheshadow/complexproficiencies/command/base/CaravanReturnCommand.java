@@ -21,12 +21,11 @@ package com.miketheshadow.complexproficiencies.command.base;
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.miketheshadow.complexproficiencies.caravan.Caravan;
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
-import com.miketheshadow.complexproficiencies.command.ICommand;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Donkey;
 import org.bukkit.entity.EntityType;
@@ -37,7 +36,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-@ICommand
+@Command
 public class CaravanReturnCommand extends ComplexCommand
 {
     public CaravanReturnCommand() {
@@ -45,7 +44,7 @@ public class CaravanReturnCommand extends ComplexCommand
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
         if(cmd.getName().equalsIgnoreCase("caravanreturn")) {
             if(args.length != 2) return false;
             Player player = Bukkit.getPlayer(args[1]);

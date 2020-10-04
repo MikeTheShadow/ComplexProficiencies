@@ -16,14 +16,27 @@
  *
  */
 
-package com.miketheshadow.complexproficiencies.regrading.command;
+package com.miketheshadow.complexproficiencies.command.base;
+
 
 import com.miketheshadow.complexproficiencies.command.ComplexCommand;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-public class RegradeCommand extends ComplexCommand {
-    public RegradeCommand() {
-        super("regrade");
+//Note this class will not be annotated with @Command because we want to store any potential bad output with it
+public class ComplexDebugCommand extends ComplexCommand {
+
+    public static String error = "nothing.";
+
+
+    public ComplexDebugCommand() {
+        super("cdebug");
     }
 
-
+    @Override
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+        sender.sendMessage("Message: " + error);
+        return true;
+    }
 }

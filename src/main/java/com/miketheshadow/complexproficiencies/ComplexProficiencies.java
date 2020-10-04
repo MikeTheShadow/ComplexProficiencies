@@ -23,7 +23,6 @@ import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.command.base.*;
 import com.miketheshadow.complexproficiencies.command.experience.*;
 import com.miketheshadow.complexproficiencies.listener.*;
-import com.miketheshadow.complexproficiencies.regrading.command.RegradeCommand;
 import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
@@ -57,7 +56,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.4.7";
+    public static String VERSION = "2.4.8";
 
     //economy
     public static Economy econ;
@@ -101,7 +100,7 @@ public class ComplexProficiencies extends JavaPlugin {
         //regrade listener
         pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
-        //register regrading commands
+
         //register prof commands
         new ResetDBCommand();
         new LaborCommand();
@@ -113,9 +112,9 @@ public class ComplexProficiencies extends JavaPlugin {
         new RemovePlayerCommand();
         new AddLaborCommand();
         new ResetLaborCommand();
-        //Disabled due to bugs
-        //try { registerCommands(); }
-        //catch (Exception e) { System.out.println("Failed to register commands with error: " + e.getMessage()); }
+        new ComplexAPICommand();
+        new ComplexDataCommand();
+        //xp plugin commands
         new MyStatsCommand();
         new UserStatsCommand();
         new FixExperienceCommand();
@@ -123,6 +122,18 @@ public class ComplexProficiencies extends JavaPlugin {
         new SetLevelCommand();
         new AddExperienceCommand();
         new AddPartyExperienceCommand();
+        //Only command that needs to be registered goes here
+        new ComplexDebugCommand();
+        //Disabled due to bugs
+
+        /*
+        try { registerCommands(); }
+        catch (Exception e) {
+            ComplexDebugCommand.error = "Error " + e.getMessage();
+        }
+         */
+
+
         //start labor thread
         LaborThread thread = new LaborThread();
         thread.start("Labor Thread");
@@ -131,11 +142,15 @@ public class ComplexProficiencies extends JavaPlugin {
 
     private static void registerCommands() throws IllegalAccessException, InstantiationException {
         Reflections reflections = new Reflections("com.miketheshadow.complexproficiencies");
-        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(ICommand.class);
+        Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Command.class);
         Bukkit.getConsoleSender().sendMessage("Starting reflection");
+        StringBuilder builder = new StringBuilder();
+        builder.append("C: ");
         for (Class<?> c : classSet) {
+            builder.append(c.getName()).append(" ");
             c.newInstance();
         }
+        ComplexDebugCommand.error = builder.toString();
     }
 
     private boolean setupEconomy() {
