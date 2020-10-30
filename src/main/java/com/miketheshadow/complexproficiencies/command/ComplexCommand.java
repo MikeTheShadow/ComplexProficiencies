@@ -30,7 +30,7 @@ public class ComplexCommand implements CommandExecutor
 {
     private final ComplexProficiencies complexProficiencies;
     public ComplexCommand(String name) {
-        Bukkit.getConsoleSender().sendMessage("Registering command: " + name);
+        //Bukkit.getConsoleSender().sendMessage("Registering command: " + name);
         this.complexProficiencies = ComplexProficiencies.INSTANCE;
         this.complexProficiencies.getCommand(name).setExecutor(this);
     }

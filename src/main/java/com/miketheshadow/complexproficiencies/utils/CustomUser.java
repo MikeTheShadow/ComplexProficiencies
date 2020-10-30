@@ -143,7 +143,7 @@ public class CustomUser {
 
         player.sendMessage(gainMessage);
         if (before != after) player.sendMessage(ChatColor.GRAY + "Your " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.GRAY + " has reached level " + ChatColor.GREEN + after);
-        player.sendMessage(ChatColor.YELLOW + "You currently have [" + ChatColor.GOLD + (getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+        player.sendMessage(ChatColor.YELLOW + "You currently have [" + ChatColor.GOLD + (getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + String.valueOf(LaborThread.MAX_LABOR) + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
         UserDBHandler.updatePlayer(this);
     }
 

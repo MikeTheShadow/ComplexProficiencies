@@ -88,6 +88,7 @@ public class Regrading {
     }
 
     public static void regradeItem(Player player, ItemStack stack, ItemStack scroll,int moneyCost) {
+        
         if(ComplexProficiencies.econ.getBalance(player) < moneyCost) {
             player.sendMessage(ChatColor.RED + "You don't have enough money!");
             return;

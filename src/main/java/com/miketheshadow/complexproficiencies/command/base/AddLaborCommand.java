@@ -48,7 +48,7 @@ public class AddLaborCommand extends ComplexCommand {
             return true;
         } else {
            CustomUser user = UserDBHandler.getPlayer(player);
-           if(user.getLabor() + amount > LaborThread.cap) {
+           if(user.getLabor() + amount > LaborThread.MAX_LABOR) {
                player.sendMessage(ChatColor.RED + "You cannot go over your labor cap!");
            } else {
                user.setLabor(user.getLabor() + amount);
@@ -58,7 +58,7 @@ public class AddLaborCommand extends ComplexCommand {
                        + amount
                        + ChatColor.YELLOW
                        + " labor! "
-                       + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()+amount) + ChatColor.GRAY + "/" + ChatColor.GOLD + LaborThread.cap + ChatColor.GRAY + "]");
+                       + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()+amount) + ChatColor.GRAY + "/" + ChatColor.GOLD + LaborThread.MAX_LABOR_STRING + ChatColor.GRAY + "]");
                UserDBHandler.updatePlayer(user);
            }
         }

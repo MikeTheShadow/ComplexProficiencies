@@ -22,6 +22,10 @@ package com.miketheshadow.complexproficiencies;
 import com.miketheshadow.complexproficiencies.command.*;
 import com.miketheshadow.complexproficiencies.command.base.*;
 import com.miketheshadow.complexproficiencies.command.experience.*;
+import com.miketheshadow.complexproficiencies.gui.RecipeDatabase;
+import com.miketheshadow.complexproficiencies.gui.recipe.ComplexRecipeCommand;
+import com.miketheshadow.complexproficiencies.gui.recipe.InventorySetupListener;
+import com.miketheshadow.complexproficiencies.gui.recipe.Recipe;
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
@@ -34,6 +38,9 @@ import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -42,11 +49,16 @@ import org.reflections.Reflections;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 //TODO make it so that the person who has eaten the most carrots gets night-vision
 
 public class ComplexProficiencies extends JavaPlugin {
     public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing","larceny"};
+
+    private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 
     //Create a singleton here.
     public static ComplexProficiencies INSTANCE;
@@ -56,7 +68,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "2.4.8";
+    public static String VERSION = "3.0.0";
 
     //economy
     public static Economy econ;
@@ -68,7 +80,7 @@ public class ComplexProficiencies extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        
+
         if (!setupEconomy()) {
             this.getLogger().severe("Disabled due to no Vault dependency found!");
             Bukkit.getPluginManager().disablePlugin(this);
@@ -100,7 +112,7 @@ public class ComplexProficiencies extends JavaPlugin {
         //regrade listener
         pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
-
+        pluginManager.registerEvents(new InventorySetupListener(),this);
         //register prof commands
         new ResetDBCommand();
         new LaborCommand();
@@ -124,6 +136,7 @@ public class ComplexProficiencies extends JavaPlugin {
         new AddPartyExperienceCommand();
         //Only command that needs to be registered goes here
         new ComplexDebugCommand();
+        new ComplexRecipeCommand();
         //Disabled due to bugs
 
         /*
@@ -135,13 +148,12 @@ public class ComplexProficiencies extends JavaPlugin {
 
 
         //start labor thread
-        LaborThread thread = new LaborThread();
-        thread.start("Labor Thread");
+        service.schedule(new LaborThread(),5, TimeUnit.MINUTES);
 
     }
 
     private static void registerCommands() throws IllegalAccessException, InstantiationException {
-        Reflections reflections = new Reflections("com.miketheshadow.complexproficiencies");
+        Reflections reflections = new Reflections("com.miketheshadow.complexproficiencies.command");
         Set<Class<?>> classSet = reflections.getTypesAnnotatedWith(Command.class);
         Bukkit.getConsoleSender().sendMessage("Starting reflection");
         StringBuilder builder = new StringBuilder();

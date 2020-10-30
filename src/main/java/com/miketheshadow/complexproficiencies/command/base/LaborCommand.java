@@ -28,6 +28,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import static com.miketheshadow.complexproficiencies.utils.LaborThread.MAX_LABOR_STRING;
+
 @Command
 public class LaborCommand extends ComplexCommand {
 
@@ -43,14 +45,14 @@ public class LaborCommand extends ComplexCommand {
                 sender.sendMessage(ChatColor.RED + "Player " + args[0] + " does not exist!");
             } else {
                 CustomUser user = UserDBHandler.getPlayer(player);
-                sender.sendMessage(ChatColor.YELLOW + "They currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+                sender.sendMessage(ChatColor.YELLOW + "They currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + MAX_LABOR_STRING + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
             }
             return true;
         }
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
         CustomUser user = UserDBHandler.getPlayer((Player) sender);
-        player.sendMessage(ChatColor.YELLOW + "You currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + "2000" + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
+        player.sendMessage(ChatColor.YELLOW + "You currently have " + ChatColor.GRAY + "[" + ChatColor.GOLD + (user.getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + MAX_LABOR_STRING + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
         return true;
     }
 }

@@ -6,6 +6,11 @@ authors: [MikeTheShadow]
 description: Creates complex proficiencies For MC.
 depend: [NBTAPI,WorldGuard,XPBoost,Vault,Duels]
 commands:
+  crecipe:
+    description: Recipe modification command
+    usage: /<crecipe>
+    permission: ComplexProficiencies.admin
+    permission-message: You don't have ComplexProficiencies.admin permission
   getitemtags:
     description: Gets the type as a string of an item
     usage: /<getitemtype>

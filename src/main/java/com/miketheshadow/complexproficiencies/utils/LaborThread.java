@@ -30,16 +30,17 @@ public class LaborThread implements Runnable
 
     Thread thread;
     String threadName;
-    public static int regenAmount = 30;
-    public static int cap = 2000;
+    public static int regenAmount = 40;
+    public static int MAX_LABOR = 5000;
+    public static String MAX_LABOR_STRING = "5000";
+
     @Override
     public void run() {
-        while (true) {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Doing labor tick");
             List<CustomUser> players = UserDBHandler.getAllPlayers();
             for (CustomUser user : players) {
                 int labor = user.getLabor();
-                if(!(labor > cap - regenAmount)){
+                if(!(labor > MAX_LABOR - regenAmount)){
                     Player player = Bukkit.getPlayer(user.getName());
                     if(player != null && player.isOnline()) {
                         player.sendMessage(ChatColor.YELLOW + "You gained "
@@ -47,12 +48,12 @@ public class LaborThread implements Runnable
                                 + regenAmount
                                 + ChatColor.YELLOW
                                 + " labor!"
-                                + ChatColor.GRAY + " [" + ChatColor.GOLD + (labor + regenAmount) + ChatColor.GRAY + "/" + ChatColor.GOLD + cap + ChatColor.GRAY + "]");
+                                + ChatColor.GRAY + " [" + ChatColor.GOLD + (labor + regenAmount) + ChatColor.GRAY + "/" + ChatColor.GOLD + MAX_LABOR_STRING + ChatColor.GRAY + "]");
                     }
                     user.setLabor(labor + regenAmount);
                     UserDBHandler.updatePlayer(user);
                 }
-                else if(labor < cap) {
+                else if(labor < MAX_LABOR) {
                     Player player = Bukkit.getPlayer(user.getName());
                     if(player != null && player.isOnline()) {
                         player.sendMessage(ChatColor.YELLOW + "You gained "
@@ -60,18 +61,12 @@ public class LaborThread implements Runnable
                                 + regenAmount
                                 + ChatColor.YELLOW
                                 + " labor! "
-                                + ChatColor.GRAY + "[" + ChatColor.GOLD + cap + ChatColor.GRAY + "/" + ChatColor.GOLD + cap + ChatColor.GRAY + "]");
+                                + ChatColor.GRAY + "[" + ChatColor.GOLD + MAX_LABOR + ChatColor.GRAY + "/" + ChatColor.GOLD + MAX_LABOR_STRING + ChatColor.GRAY + "]");
                     }
-                    user.setLabor(cap);
+                    user.setLabor(MAX_LABOR);
                     UserDBHandler.updatePlayer(user);
                 }
             }
-            try {
-                Thread.sleep(300000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
