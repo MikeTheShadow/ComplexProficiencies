@@ -18,6 +18,7 @@
 
 package com.miketheshadow.complexproficiencies.gui;
 
+import com.miketheshadow.complexproficiencies.api.DatabaseAPI;
 import com.miketheshadow.complexproficiencies.gui.recipe.Recipe;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
@@ -57,16 +58,15 @@ public class RecipeDatabase {
     /**
      *
      * @param recipe the recipe to be updated
-     * @return the recipe to confirm proper update
      */
-    public static Recipe updateRecipe(Recipe recipe) {
+    public static void updateRecipe(Recipe recipe) {
         FindOneAndReplaceOptions returnDocAfterReplace = new FindOneAndReplaceOptions().returnDocument(ReturnDocument.AFTER);
-        return collection.findOneAndReplace(new Document("_id", recipe.getId()), recipe, returnDocAfterReplace);
+        collection.findOneAndReplace(new Document("_id", recipe.getId()), recipe, returnDocAfterReplace);
     }
 
     public static MongoCollection<Recipe> init() {
         if(collection == null) {
-            ConnectionString connectionString = new ConnectionString("mongodb://localhost:27017");
+            ConnectionString connectionString = DatabaseAPI.getDatabaseConnection();
             CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder()
                     .register(Recipe.class)
                     .automatic(true)

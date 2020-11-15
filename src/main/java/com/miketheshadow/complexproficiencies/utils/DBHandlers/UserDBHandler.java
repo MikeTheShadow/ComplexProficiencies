@@ -18,6 +18,7 @@
 
 package com.miketheshadow.complexproficiencies.utils.DBHandlers;
 
+import com.miketheshadow.complexproficiencies.api.DatabaseAPI;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -99,7 +100,7 @@ public class UserDBHandler {
 
     public static MongoCollection<Document> init() {
         if(collection == null) {
-            MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+            MongoClient mongoClient = new MongoClient(new MongoClientURI(DatabaseAPI.getDatabaseConnection().getConnectionString()));
             MongoDatabase database = mongoClient.getDatabase("ComplexProficiencies");
             return database.getCollection("Players");
         }
