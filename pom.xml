@@ -75,6 +75,7 @@
         </resources>
     </build>
     <repositories>
+
         <repository>
             <id>maven-central</id>
             <url>https://repo1.maven.org/maven2/</url>
@@ -109,6 +110,13 @@
         </repository>
     </repositories>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.herocraftonline.heroes/Heroes -->
+        <dependency>
+            <groupId>com.herocraftonline.heroes</groupId>
+            <artifactId>Heroes</artifactId>
+            <version>1.5.5</version>
+        </dependency>
+
         <!--Reflection google lib -->
         <dependency>
             <groupId>org.reflections</groupId>
