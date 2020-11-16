@@ -63,7 +63,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "3.1.0";
+    public static String VERSION = "3.1.1";
 
     //economy
     public static Economy econ;

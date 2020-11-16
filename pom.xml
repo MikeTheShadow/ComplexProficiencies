@@ -24,7 +24,7 @@
 
     <groupId>com.miketheshadow</groupId>
     <artifactId>complexproficiencies</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <name>ComplexProficiencies</name>
 
     <description>Complex Proficiencies for minecraft.</description>
@@ -184,7 +184,6 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
-
         </dependency>
 
     </dependencies>
