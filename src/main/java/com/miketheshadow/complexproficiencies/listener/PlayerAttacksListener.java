@@ -38,8 +38,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.awt.*;
-
 import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelConfig;
 
 public class PlayerAttacksListener implements Listener

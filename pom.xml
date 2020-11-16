@@ -24,7 +24,7 @@
 
     <groupId>com.miketheshadow</groupId>
     <artifactId>complexproficiencies</artifactId>
-    <version>3.1.0</version>
+    <version>3.0.0</version>
     <name>ComplexProficiencies</name>
 
     <description>Complex Proficiencies for minecraft.</description>
@@ -75,10 +75,10 @@
         </resources>
     </build>
     <repositories>
-
+        <!-- WORLDGUARD -->
         <repository>
-            <id>maven-central</id>
-            <url>https://repo1.maven.org/maven2/</url>
+            <id>maven.sk89q.com</id>
+            <url>https://maven.enginehub.org/repo/</url>
         </repository>
         <repository>
             <id>jitpack.io</id>
@@ -110,18 +110,18 @@
         </repository>
     </repositories>
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/com.herocraftonline.heroes/Heroes -->
-        <dependency>
-            <groupId>com.herocraftonline.heroes</groupId>
-            <artifactId>Heroes</artifactId>
-            <version>1.5.5</version>
-        </dependency>
-
         <!--Reflection google lib -->
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
+        </dependency>
+        <!-- WORLDGUARD -->
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-legacy</artifactId>
+            <version>6.2</version>
+            <scope>provided</scope>
         </dependency>
         <!-- JSON storage-->
         <dependency>
@@ -180,5 +180,6 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 </project>
