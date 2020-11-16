@@ -210,7 +210,6 @@ public class ComplexProficiencies extends JavaPlugin {
     
     public void loadLevelConfig() {
         levelConfig = new Json("config", this.getDataFolder().getPath());
-
         //basic level stuff
         levelConfig.setDefault("levels.1", 100);
         levelConfig.setDefault("levels.2", 200);

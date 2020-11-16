@@ -141,7 +141,6 @@
             <groupId>com.destroystokyo.paper</groupId>
             <artifactId>paper-api</artifactId>
             <version>1.12.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <!-- NBT DATA -->
         <dependency>
@@ -160,8 +159,15 @@
             <groupId>cz.dubcat.plugins</groupId>
             <artifactId>xpboost</artifactId>
             <version>3.3.0</version>
-            <scope>provided</scope>
+            <exclusions>
+                <exclusion>  <!-- declare the exclusion here -->
+                    <groupId>com.herocraftonline.heroes</groupId>
+                    <artifactId>Heroes</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
@@ -178,7 +184,7 @@
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
-            <scope>provided</scope>
+
         </dependency>
 
     </dependencies>
