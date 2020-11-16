@@ -75,11 +75,6 @@
         </resources>
     </build>
     <repositories>
-        <!-- WORLDGUARD -->
-        <repository>
-            <id>maven.sk89q.com</id>
-            <url>https://maven.enginehub.org/repo/</url>
-        </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
@@ -115,13 +110,6 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
-        </dependency>
-        <!-- WORLDGUARD -->
-        <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-legacy</artifactId>
-            <version>6.2</version>
-            <scope>provided</scope>
         </dependency>
         <!-- JSON storage-->
         <dependency>
@@ -180,12 +168,5 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.reflections/reflections -->
-        <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
-        </dependency>
-
     </dependencies>
 </project>
