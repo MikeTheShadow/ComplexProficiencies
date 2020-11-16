@@ -27,7 +27,7 @@ public class DatabaseSingleton {
 
     private static ConnectionString init() {
         if(DB_STRING != null) return DB_STRING;
-        return new ConnectionString(ComplexProficiencies.levelConfig.getString("DATABASE_URL"));
+        return new ConnectionString(ComplexProficiencies.levelConfig.getString("settings.DATABASE_URL"));
     }
 
     public static ConnectionString getMongoConnection() {

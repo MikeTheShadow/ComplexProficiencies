@@ -19,13 +19,11 @@
 package com.miketheshadow.complexproficiencies;
 
 
-import com.miketheshadow.complexproficiencies.command.*;
+import com.miketheshadow.complexproficiencies.command.Command;
 import com.miketheshadow.complexproficiencies.command.base.*;
 import com.miketheshadow.complexproficiencies.command.experience.*;
-import com.miketheshadow.complexproficiencies.gui.RecipeDatabase;
 import com.miketheshadow.complexproficiencies.gui.recipe.ComplexRecipeCommand;
 import com.miketheshadow.complexproficiencies.gui.recipe.InventorySetupListener;
-import com.miketheshadow.complexproficiencies.gui.recipe.Recipe;
 import com.miketheshadow.complexproficiencies.listener.*;
 import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWindowListener;
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
@@ -38,9 +36,6 @@ import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -58,7 +53,7 @@ import java.util.concurrent.TimeUnit;
 public class ComplexProficiencies extends JavaPlugin {
     public static final String[] profList = new String[]{"armorsmithing", "cooking", "farming", "fishing", "handicrafts", "leatherworking", "metalworking", "mining", "weaponsmithing","larceny"};
 
-    private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+    private final ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 
     //Create a singleton here.
     public static ComplexProficiencies INSTANCE;
@@ -68,7 +63,7 @@ public class ComplexProficiencies extends JavaPlugin {
     public static HashMap<Integer,Integer> levelMap;
 
     //version
-    public static String VERSION = "3.0.0";
+    public static String VERSION = "3.1.0";
 
     //economy
     public static Economy econ;
@@ -234,6 +229,7 @@ public class ComplexProficiencies extends JavaPlugin {
         levelConfig.setDefault("settings.levelup","§6You leveled up to level %!");
         levelConfig.setDefault("settings.attackMessage", "§6The level difference is too high!");
         levelConfig.setDefault("settings.levelDifference", 5);
+        levelConfig.setDefault("settings.DATABASE_URL","mongodb://localhost:27017");
         levelConfig.setDefault("reset",false);
     }
 
