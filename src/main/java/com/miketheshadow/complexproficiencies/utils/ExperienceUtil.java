@@ -73,14 +73,17 @@ public class ExperienceUtil
 
             }
         }
-
-        float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
-        if(isVanilla) bonus = 1;
-        else if(bonus < 2) bonus = 1;
-        addition = Math.round(bonus * addition);
+        /* **Removed for new XPBoost Implementation
+         * float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
+         * if(isVanilla) bonus = 1;
+         * else if(bonus < 2) bonus = 1;
+         * addition = Math.round(bonus * addition);
+         */
+        double multiplier = ComplexProficiencies.xpMultiplier;
+        int finalAddition = (int) (addition * multiplier);
         int[] playerArray = user.getLevelXP();
         int currentLevel = playerArray[0];
-        int totalExperience = playerArray[1] + addition;
+        int totalExperience = playerArray[1] + finalAddition;
         if(levelMap.get(currentLevel + 1) == null) {
             user.setLevelXP(new int[] {currentLevel,totalExperience});
             UserDBHandler.updatePlayer(user);
@@ -94,18 +97,18 @@ public class ExperienceUtil
                         if(!mute)player.sendMessage(levelConfig.get("settings.levelup").toString().replace("%","" + currentLevel));
                         runLevelUpCommands(user,player.getLevel());
                     }
-                    if(!mute)player.sendMessage(levelConfig.get("settings.experience").toString().replace("%","" + addition));
+                    if(!mute)player.sendMessage(levelConfig.get("settings.experience").toString().replace("%","" + finalAddition));
 
                     //update player data
-                    user.setLevelXP(new int[] {currentLevel,playerArray[1] + addition});
+                    user.setLevelXP(new int[] {currentLevel,playerArray[1] + finalAddition});
                     UserDBHandler.updatePlayer(user);
                     return;
                 } else if(i == levelMap.size() - 1) {
                     if(!mute)player.sendMessage(levelConfig.get("settings.levelup").toString().replace("%","" + (currentLevel + 1)));
                     player.setLevel(currentLevel + 1);
                     runLevelUpCommands(user,player.getLevel());
-                    if(!mute)player.sendMessage(levelConfig.get("settings.experience").toString().replace("%","" + addition));
-                    user.setLevelXP(new int[] {currentLevel + 1,playerArray[1] + addition});
+                    if(!mute)player.sendMessage(levelConfig.get("settings.experience").toString().replace("%","" + finalAddition));
+                    user.setLevelXP(new int[] {currentLevel + 1,playerArray[1] + finalAddition});
                     UserDBHandler.updatePlayer(user);
                 }
                 totalExperience -= levelMap.get(i);

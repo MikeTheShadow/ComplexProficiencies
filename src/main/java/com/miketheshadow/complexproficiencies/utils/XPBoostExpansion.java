@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+@Deprecated
 public class XPBoostExpansion extends PlaceholderExpansion {
     private XPBoostMain plugin;
 
