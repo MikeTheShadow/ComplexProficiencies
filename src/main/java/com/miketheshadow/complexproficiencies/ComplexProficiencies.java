@@ -137,6 +137,7 @@ public class ComplexProficiencies extends JavaPlugin {
         new AddExperienceCommand();
         new AddPartyExperienceCommand();
         new CreateBoosterCommand();
+        new CheckBoostCommand();
         //Only command that needs to be registered goes here
         new ComplexDebugCommand();
         new ComplexRecipeCommand();

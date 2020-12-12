@@ -15,7 +15,7 @@ public class CheckBoostCommand extends ComplexCommand {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command cmd, @NotNull String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("createbooster")) {
+        if (cmd.getName().equalsIgnoreCase("checkboost")) {
             double multiplier = ComplexProficiencies.xpMultiplier;
             sender.sendMessage(ChatColor.GREEN + "Current Boost: " + ChatColor.WHITE +  multiplier + "x");
             return true;
