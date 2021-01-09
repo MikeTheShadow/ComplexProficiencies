@@ -34,11 +34,15 @@ import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.reflections.Reflections;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Set;
@@ -63,6 +67,8 @@ public class ComplexProficiencies extends JavaPlugin {
 
     //economy
     public static Economy econ;
+
+    public static FileConfiguration authenticationConfig = loadAuthentication();
 
     public ComplexProficiencies setInstance() {
         if(INSTANCE == null) { INSTANCE = this; }
@@ -134,6 +140,22 @@ public class ComplexProficiencies extends JavaPlugin {
         }
          */
 
+    }
+
+    private static FileConfiguration loadAuthentication() {
+        if(!INSTANCE.getDataFolder().exists()) INSTANCE.getDataFolder().mkdir();
+        File file = new File(INSTANCE.getDataFolder(),"auth.yml");
+        if(!file.exists()) {
+            try { file.createNewFile(); } catch (IOException e) { e.printStackTrace(); }
+
+            FileConfiguration auth = YamlConfiguration.loadConfiguration(file);
+            auth.set("username","USERNAME");
+            auth.set("password","PASSWORD");
+            auth.set("database_name","DBNAME");
+            auth.set("server_address","localhost");
+            return auth;
+        }
+        return YamlConfiguration.loadConfiguration(file);
     }
 
     private static void registerCommands() throws IllegalAccessException, InstantiationException {

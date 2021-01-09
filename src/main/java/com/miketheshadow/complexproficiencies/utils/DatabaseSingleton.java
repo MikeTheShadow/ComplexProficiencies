@@ -20,6 +20,9 @@ package com.miketheshadow.complexproficiencies.utils;
 
 import com.miketheshadow.complexproficiencies.ComplexProficiencies;
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class DatabaseSingleton {
 
@@ -27,7 +30,12 @@ public class DatabaseSingleton {
 
     private static ConnectionString init() {
         if(DB_STRING != null) return DB_STRING;
-        return new ConnectionString(ComplexProficiencies.levelConfig.getString("settings.DATABASE_URL"));
+        FileConfiguration config = ComplexProficiencies.authenticationConfig;
+        String username = config.getString("username");
+        String password = config.getString("password");
+        String serverAddress = config.getString("server_address");
+        int serverPort = config.getInt("server_port");
+        return new ConnectionString("mongodb://" + username + ":" + password +"@" + serverAddress +":" + serverPort +"/?authSource=admin");
     }
 
     public static ConnectionString getMongoConnection() {
