@@ -48,7 +48,6 @@ public class ComplexDataCommand extends ComplexCommand {
             }
             CustomUser user = UserDBHandler.getPlayer(Bukkit.getPlayer(args[1]));
             JSONObject jsonObject = new JSONObject();
-            jsonObject.append("labor",user.getLabor());
             jsonObject.append("level",user.getLevelXP()[0]);
             jsonObject.append("xpstart",ExperienceUtil.getPlayerCurrentXP(user));
             jsonObject.append("xpend",levelConfig.getInt("levels." + user.getLevelXP()[0]));

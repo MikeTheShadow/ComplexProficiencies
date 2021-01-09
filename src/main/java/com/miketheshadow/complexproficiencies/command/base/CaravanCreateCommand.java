@@ -45,10 +45,7 @@ public class CaravanCreateCommand extends ComplexCommand {
             CustomUser user = UserDBHandler.getPlayer(player);
             int moneyCost = Integer.parseInt(args[0]);
             String zoneName = args[1];
-            if(user.getLabor() < Caravan.CRAFTING_COST) {
-                player.sendMessage(ChatColor.RED + "You don't have enough labor to do this!");
-                return true;
-            } else if(!ComplexProficiencies.econ.hasAccount(player)) {
+            if(!ComplexProficiencies.econ.hasAccount(player)) {
                 player.sendMessage(ChatColor.RED + "You don't have enough money!");
                 return true;
             } else if(ComplexProficiencies.econ.getBalance(player) < moneyCost) {
@@ -56,7 +53,6 @@ public class CaravanCreateCommand extends ComplexCommand {
                 return true;
             }
             ComplexProficiencies.econ.withdrawPlayer(player,moneyCost);
-            user.setLabor(user.getLabor() - Caravan.CRAFTING_COST);
             user.addExperience("commerce",Caravan.CRAFTING_COST,player);
             UserDBHandler.updatePlayer(user);
             Caravan.createCaravan(player,zoneName,String.valueOf(moneyCost));

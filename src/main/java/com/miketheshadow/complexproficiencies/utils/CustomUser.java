@@ -39,7 +39,6 @@ public class CustomUser {
     private int[] levelXP;
 
     private int balance = 0;
-    private int labor = 0;
 
     public CustomUser(String name, String uid) {
         this.name = name;
@@ -53,7 +52,6 @@ public class CustomUser {
         this.name = document.getString("name");
         this.uid = document.getString("uid");
         this.balance = document.getInteger("balance");
-        this.labor = document.getInteger("labor");
         BasicDBObject prof = new BasicDBObject((Document)document.get("professions"));
         this.professions = (HashMap<String, Integer>) prof.toMap();
         BasicDBObject purse = new BasicDBObject((Document)document.get("purses"));
@@ -81,9 +79,6 @@ public class CustomUser {
     public int getBalance() { return balance; }
 
     public void setBalance(int balance) { this.balance = balance; }
-
-    public int getLabor() { return labor; }
-    public void setLabor(int labor) { this.labor = labor; }
 
     public HashMap<String, Integer> getPurses() { return purses; }
     public void setPurses(HashMap<String, Integer> purses) { this.purses = purses; }
@@ -115,7 +110,6 @@ public class CustomUser {
         document.append("name", name);
         document.append("uid", uid);
         document.append("balance",balance);
-        document.append("labor",labor);
         document.append("professions",professions);
         document.append("purses",purses);
         document.append("level",levelXP[0]);
@@ -126,7 +120,6 @@ public class CustomUser {
 
     public void addExperience(String profName, int amount, Player player) {
 
-        labor -= amount;
         if(this.professions.get(profName) == null) {
             this.professions.put(profName,0);
             UserDBHandler.updatePlayer(this);
@@ -143,7 +136,6 @@ public class CustomUser {
 
         player.sendMessage(gainMessage);
         if (before != after) player.sendMessage(ChatColor.GRAY + "Your " + ChatColor.GOLD + profName.toLowerCase() + ChatColor.GRAY + " has reached level " + ChatColor.GREEN + after);
-        player.sendMessage(ChatColor.YELLOW + "You currently have [" + ChatColor.GOLD + (getLabor()) + ChatColor.GRAY + "/" + ChatColor.GOLD + LaborThread.MAX_LABOR_STRING + ChatColor.GRAY + "]" + ChatColor.YELLOW + " labor!");
         UserDBHandler.updatePlayer(this);
     }
 

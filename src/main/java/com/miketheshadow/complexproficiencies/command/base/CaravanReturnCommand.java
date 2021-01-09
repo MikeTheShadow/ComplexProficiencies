@@ -72,14 +72,9 @@ public class CaravanReturnCommand extends ComplexCommand
                 double multiplier = Math.sqrt(Math.pow(x1 - x2,2)+Math.pow(z1-z2,2))/1000;
                 int laborValue = (int)((Caravan.CRAFTING_COST + Caravan.RETURN_COST) * (multiplier/2));
                 value += laborValue;
-                if(user.getLabor() < Caravan.RETURN_COST) {
-                    player.sendMessage(ChatColor.RED + "You don't have enough labor to turn this in!");
-                    return true;
-                }
                 if(lore.get(0).equals(player.getName())) {
                     player.sendMessage(ChatColor.GOLD + "You turned in a caravan worth " +  ChatColor.GREEN  +"$" + value + ChatColor.GOLD + "!");
                     user.addExperience("commerce",Caravan.RETURN_COST,player);
-                    user.setLabor(user.getLabor() - Caravan.RETURN_COST);
                     UserDBHandler.updatePlayer(user);
                     ComplexProficiencies.econ.depositPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()),value);
                 } else {
@@ -87,12 +82,7 @@ public class CaravanReturnCommand extends ComplexCommand
                     int valueStolen = (int)(value * .8);
                     CustomUser crafter = UserDBHandler.getPlayer(lore.get(0));
                     CustomUser thief = UserDBHandler.getPlayer(player);
-                    if(thief.getLabor() < Caravan.RETURN_COST) {
-                        player.sendMessage(ChatColor.RED + "You don't have enough labor to turn this in!");
-                        return true;
-                    }
                     thief.addExperience("commerce",Caravan.RETURN_COST,player);
-                    thief.setLabor(user.getLabor() - Caravan.RETURN_COST);
                     UserDBHandler.updatePlayer(thief);
                     if(Objects.requireNonNull(Bukkit.getPlayer(crafter.getName())).isOnline()) {
                         Objects.requireNonNull(Bukkit.getPlayer(crafter.getName())).sendMessage(ChatColor.GOLD + "Someone turned in your caravan for " + ChatColor.GREEN + "$" + valueCrafter + ChatColor.GOLD + "!");

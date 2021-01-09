@@ -74,10 +74,10 @@ public class ExperienceUtil
             }
         }
 
-        float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
-        if(isVanilla) bonus = 1;
-        else if(bonus < 2) bonus = 1;
-        addition = Math.round(bonus * addition);
+        //float bonus = Float.parseFloat(ComplexProficiencies.expansion.onPlaceholderRequest(player,"boost_zero"));
+        //if(isVanilla) bonus = 1;
+        //else if(bonus < 2) bonus = 1;
+        //addition = Math.round(bonus * addition);
         int[] playerArray = user.getLevelXP();
         int currentLevel = playerArray[0];
         int totalExperience = playerArray[1] + addition;

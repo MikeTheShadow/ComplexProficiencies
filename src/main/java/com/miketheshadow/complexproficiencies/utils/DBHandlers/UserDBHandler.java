@@ -43,7 +43,6 @@ public class UserDBHandler {
         FindIterable<Document> cursor = collection.find(new BasicDBObject("uid", player.getUniqueId().toString()));
         if (cursor.first() == null) {
             CustomUser customPlayer = new CustomUser(player.getName(), player.getUniqueId().toString());
-            customPlayer.setLabor(1000);
             collection.insertOne(customPlayer.toDocument());
             Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "Adding new player: " + player.getName());
             if(!player.isOp()) {

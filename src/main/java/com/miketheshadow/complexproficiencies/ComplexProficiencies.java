@@ -29,8 +29,6 @@ import com.miketheshadow.complexproficiencies.regrading.listener.OpenRegradeWind
 import com.miketheshadow.complexproficiencies.regrading.listener.RegradeInventoryListener;
 import com.miketheshadow.complexproficiencies.utils.CustomUser;
 import com.miketheshadow.complexproficiencies.utils.DBHandlers.UserDBHandler;
-import com.miketheshadow.complexproficiencies.utils.LaborThread;
-import com.miketheshadow.complexproficiencies.utils.XPBoostExpansion;
 import de.leonhard.storage.Json;
 import me.realized.duels.api.Duels;
 import net.milkbowl.vault.economy.Economy;
@@ -46,7 +44,6 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 //TODO make it so that the person who has eaten the most carrots gets night-vision
 
@@ -58,7 +55,6 @@ public class ComplexProficiencies extends JavaPlugin {
     //Create a singleton here.
     public static ComplexProficiencies INSTANCE;
     public static Duels duelsApi;
-    public static XPBoostExpansion expansion;
     public static Json levelConfig;
     public static HashMap<Integer,Integer> levelMap;
 
@@ -110,16 +106,13 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new InventorySetupListener(),this);
         //register prof commands
         new ResetDBCommand();
-        new LaborCommand();
         new ProfCommand();
         new ProfTopCommand();
         new CaravanCreateCommand();
         new CaravanReturnCommand();
         new ComplexVersionCommand();
         new RemovePlayerCommand();
-        new AddLaborCommand();
         new ResetLaborCommand();
-        new ComplexAPICommand();
         new ComplexDataCommand();
         //xp plugin commands
         new MyStatsCommand();
@@ -140,10 +133,6 @@ public class ComplexProficiencies extends JavaPlugin {
             ComplexDebugCommand.error = "Error " + e.getMessage();
         }
          */
-
-
-        //start labor thread
-        service.schedule(new LaborThread(),5, TimeUnit.MINUTES);
 
     }
 
@@ -188,6 +177,7 @@ public class ComplexProficiencies extends JavaPlugin {
     }
 
     public static void rebuildLevelMap() {
+
         HashMap<Integer,Integer> map = new HashMap<>();
         int i = 1;
         int level = levelConfig.getInt("levels." + i);
@@ -195,6 +185,7 @@ public class ComplexProficiencies extends JavaPlugin {
             map.put(i,level);
             level = levelConfig.getInt("levels." + (i += 1));
         }
+        levelMap = map;
     }
 
     @Override
@@ -206,6 +197,7 @@ public class ComplexProficiencies extends JavaPlugin {
                 UserDBHandler.updatePlayer(user);
             }
         }
+        service.shutdown();
     }
     
     public void loadLevelConfig() {
@@ -221,8 +213,6 @@ public class ComplexProficiencies extends JavaPlugin {
         levelConfig.setDefault("2.2","broadcast you need more experience to level up!");
         levelConfig.setDefault("3.1","broadcast leveled %username% to level 2");
         levelConfig.setDefault("3.2","broadcast this is a second command woot!");
-        expansion = new XPBoostExpansion();
-        expansion.canRegister();
 
         levelConfig.setDefault("settings.experience","§8You gained §a % §8experience!");
         levelConfig.setDefault("settings.levelup","§6You leveled up to level %!");

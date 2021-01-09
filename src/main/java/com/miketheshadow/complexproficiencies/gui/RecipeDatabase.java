@@ -52,7 +52,7 @@ public class RecipeDatabase {
     }
 
     public static void removeRecipe(Recipe recipe) {
-        collection.deleteOne(new Document("_id",recipe.getId()));
+        collection.deleteOne(new Document("_id", recipe.getId())).getDeletedCount();
     }
 
     /**

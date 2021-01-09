@@ -92,9 +92,6 @@ public class Regrading {
         if(ComplexProficiencies.econ.getBalance(player) < moneyCost) {
             player.sendMessage(ChatColor.RED + "You don't have enough money!");
             return;
-        } else if(!UserAPI.userHasLabor(player,10)) {
-            player.sendMessage(ChatColor.RED + "You don't have enough Labor!");
-            return;
         } else if(!player.getInventory().containsAtLeast(scroll,1)) {
             player.sendMessage(ChatColor.RED + "you don't have enough " + scroll.getItemMeta().getDisplayName());
             return;

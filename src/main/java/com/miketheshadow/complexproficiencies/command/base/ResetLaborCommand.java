@@ -48,7 +48,6 @@ public class ResetLaborCommand extends ComplexCommand {
             for(CustomUser user : UserDBHandler.getAllPlayers()) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(user.getUid()));
                 if(player.isOp()) continue;
-                user.setLabor(0);
                 UserDBHandler.updatePlayer(user);
             }
             sender.sendMessage(ChatColor.GREEN + "You've reset all player labor!");

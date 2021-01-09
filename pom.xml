@@ -154,20 +154,6 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.12.1</version>
         </dependency>
-        <!--XPBoost-->
-        <dependency>
-            <groupId>cz.dubcat.plugins</groupId>
-            <artifactId>xpboost</artifactId>
-            <version>3.3.0</version>
-            <exclusions>
-                <exclusion>  <!-- declare the exclusion here -->
-                    <groupId>com.herocraftonline.heroes</groupId>
-                    <artifactId>Heroes</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

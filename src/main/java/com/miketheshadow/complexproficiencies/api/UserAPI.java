@@ -32,10 +32,6 @@ public class UserAPI {
         return UserDBHandler.getPlayer(player);
     }
 
-    public static boolean userHasLabor(Player player,int amount) {
-        return UserDBHandler.getPlayer(player).getLabor() >= amount;
-    }
-
     public static void updateUserProf(Player player, String prof, int amount) {
         prof = prof.toLowerCase();
         UserDBHandler.getPlayer(player).addExperience(prof,amount,player);
@@ -63,9 +59,5 @@ public class UserAPI {
         CustomUser user = UserDBHandler.getPlayer(player);
         user.addExperience(profname,experienceAmount,player);
         UserDBHandler.updatePlayer(user);
-    }
-
-    public static int getUserLabor(Player player) {
-        return UserDBHandler.getPlayer(player).getLabor();
     }
 }
