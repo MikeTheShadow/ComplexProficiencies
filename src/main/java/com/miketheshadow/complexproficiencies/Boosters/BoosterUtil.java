@@ -33,7 +33,6 @@ public class BoosterUtil {
     }
 
     public static void decreaseBoost(double boost) {
-        double currentBoost = ComplexProficiencies.boost;
         double newBoost = ComplexProficiencies.boost - boost;
         ComplexProficiencies.boost = Math.max(newBoost, 1);
     }
