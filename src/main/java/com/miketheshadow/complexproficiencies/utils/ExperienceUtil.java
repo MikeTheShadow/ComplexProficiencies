@@ -36,6 +36,7 @@ import static com.miketheshadow.complexproficiencies.ComplexProficiencies.levelM
 
 public class ExperienceUtil
 {
+
     /*
     public static void addPartyExperience(CustomUser user, Player player, int level, boolean mute, boolean isVanilla) {
         int addition = level * 5;
