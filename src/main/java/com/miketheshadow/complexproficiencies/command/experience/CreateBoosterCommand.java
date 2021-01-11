@@ -25,19 +25,21 @@ public class CreateBoosterCommand extends ComplexCommand {
             sender.sendMessage(ChatColor.RED + "This command cannot be executed from console");
             return true;
         }
-        Player player = (Player) sender;
-        try {
-            double boost = Double.parseDouble(args[0]);
-            Optional<Integer> time = Optional.of(Integer.parseInt(args[1]));
-            NBTItem item = BoosterNBT.createBoosterItem(new NBTItem(BoosterNBT.createBoosterItemStack(boost, time.get())), boost, time.get());
-            ItemStack booster = item.getItem();
-            Inventory inventory = player.getInventory();
-            HashMap<Integer, ItemStack> hashmap = inventory.addItem(booster);
-            if (hashmap.isEmpty()) return true;
-            player.sendMessage(ChatColor.RED + "Not enough space in inventory.");
+        if (cmd.getName().equalsIgnoreCase("CreateBooster")) {
+            Player player = (Player) sender;
+            try {
+                double boost = Double.parseDouble(args[0]);
+                Optional<Integer> time = Optional.of(Integer.parseInt(args[1]));
+                NBTItem item = BoosterNBT.createBoosterItem(new NBTItem(BoosterNBT.createBoosterItemStack(boost, time.get())), boost, time.get());
+                ItemStack booster = item.getItem();
+                Inventory inventory = player.getInventory();
+                HashMap<Integer, ItemStack> hashmap = inventory.addItem(booster);
+                if (hashmap.isEmpty()) return true;
+                player.sendMessage(ChatColor.RED + "Not enough space in inventory.");
 
-        } catch(Exception Ignored) {
-            sender.sendMessage(ChatColor.RED + "Illegal Arguments!");
+            } catch (Exception Ignored) {
+                sender.sendMessage(ChatColor.RED + "Illegal Arguments!");
+            }
         }
         return false;
     }
