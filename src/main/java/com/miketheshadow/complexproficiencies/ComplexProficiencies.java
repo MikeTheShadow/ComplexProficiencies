@@ -251,7 +251,6 @@ public class ComplexProficiencies extends JavaPlugin {
         levelConfig.setDefault("settings.levelup","§6You leveled up to level %!");
         levelConfig.setDefault("settings.attackMessage", "§6The level difference is too high!");
         levelConfig.setDefault("settings.levelDifference", 5);
-        levelConfig.setDefault("settings.DATABASE_URL","mongodb://localhost:27017");
         levelConfig.setDefault("reset",false);
     }
 
