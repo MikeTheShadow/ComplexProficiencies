@@ -65,6 +65,9 @@ public class ComplexProficiencies extends JavaPlugin {
     //version
     public static String VERSION = "3.1.1";
 
+    //XP Booster
+    public static double boost;
+
     //economy
     public static Economy econ;
 
@@ -94,6 +97,9 @@ public class ComplexProficiencies extends JavaPlugin {
             Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "WARNING RESET MODE IS ENABLED! PLEASE DISABLE IN THE CONFIG IF THIS WAS NOT INTENDED!");
         }
 
+        //XP Booster
+        boost = 1;
+
         //Duels
         duelsApi = (Duels) Bukkit.getServer().getPluginManager().getPlugin("Duels");
 
@@ -106,6 +112,7 @@ public class ComplexProficiencies extends JavaPlugin {
         pluginManager.registerEvents(new EntityDeathListener(),this);
         pluginManager.registerEvents(new PlayerVehicleListener(),this);
         pluginManager.registerEvents(new PlayerCraftListener(),this);
+        pluginManager.registerEvents(new PlayerInteractListener(), this);
         //regrade listener
         pluginManager.registerEvents(new OpenRegradeWindowListener(),this);
         pluginManager.registerEvents(new RegradeInventoryListener(),this);
@@ -128,6 +135,10 @@ public class ComplexProficiencies extends JavaPlugin {
         new SetLevelCommand();
         new AddExperienceCommand();
         new AddPartyExperienceCommand();
+        //booster commands
+        new SetBoostCommand();
+        new ClearBoostCommand();
+        new CreateBoosterCommand();
         //Only command that needs to be registered goes here
         new ComplexDebugCommand();
         new ComplexRecipeCommand();

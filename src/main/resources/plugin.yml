@@ -4,7 +4,7 @@ main: com.miketheshadow.complexproficiencies.ComplexProficiencies
 api-version: 1.13
 authors: [MikeTheShadow]
 description: Creates complex proficiencies For MC.
-depend: [NBTAPI,WorldGuard,XPBoost,Vault,Duels]
+depend: [NBTAPI,WorldGuard,Vault,Duels]
 commands:
   crecipe:
     description: Recipe modification command
@@ -114,5 +114,21 @@ commands:
   addpartyexperience:
     description: Adds experience to the party.
     usage: /<addpartyexperience> [player] level [levelNumber]
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+##EXPBOOSTERS
+  setboost:
+    description: Sets the current boost
+    usage: /<setboost> [amount] [time]
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+  clearboost:
+    description: Clears the current boost
+    usage: /<clearboost>
+    permission: ComplexProficiencies.levelAdmin
+    permission-message: You don't have ComplexProficiencies.levelAdmin permission
+  createbooster:
+    description: Generates a booster item
+    usage: /<createbooster> [amount] [time]
     permission: ComplexProficiencies.levelAdmin
     permission-message: You don't have ComplexProficiencies.levelAdmin permission
